@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+                name="vm"
+                type="com.sample.android.qapital.viewmodels.DetailViewModel"/>
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_light"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_normal"
+            app:visibleGone="@{!vm.isFeedsLoading &amp;&amp; !vm.isFeedsLoadingError}">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/this_week_savings"
+                android:textColor="@color/grey_darker"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_light"
+                android:text="@{vm.weekSumText}"
+                android:textColor="@android:color/black"
+                tools:text="$3.10"/>
+    </LinearLayout>
+
+</layout>

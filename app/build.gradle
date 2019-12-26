@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+androidExtensions {
+    experimental = true
+}
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["compileSdkVersion"]
+    defaultConfig {
+        applicationId "com.sample.android.qapital"
+        minSdkVersion globalConfiguration["minSdkVersion"]
+        targetSdkVersion globalConfiguration["targetSdkVersion"]
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "QAPITAL_BASE_URL", "\"http://qapital-ios-testtask.herokuapp.com/\""
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Support libraries
+    implementation Libs.kotlin
+    implementation Libs.appCompat
+    implementation Libs.ktxCore
+    implementation Libs.constraintLayout
+    implementation Libs.material
+    implementation Libs.legacy
+    implementation Libs.palette
+    implementation Libs.guava
+
+    // Architecture components
+    implementation Libs.lifecycle
+    implementation Libs.lifecycleExtensions
+    implementation Libs.room
+    kapt Libs.roomCompiler
+
+    // Dagger
+    implementation Dagger.dagger
+    kapt Dagger.daggerCompiler
+    implementation Dagger.daggerAndroid
+    implementation Dagger.daggerAndroidSupport
+    kapt Dagger.daggerProcessor
+
+    // Retrofit
+    implementation Square.retrofit
+    implementation Square.rxadapter
+    implementation Square.retrofitMoshi
+    implementation Square.retrofitMock
+
+    // Other
+    implementation Square.okhttp
+    implementation Square.moshi
+    implementation Network.timber
+    implementation Network.glide
+    kapt Network.glideCompiler
+    implementation Network.threetenabp
+    implementation Network.firebaseDispatcher
+    implementation Network.anko
+
+    //Android RX
+    implementation RxJava.rxJava
+    implementation RxJava.rxAndroid
+
+    // Testing
+    testImplementation TestLibs.junit
+    testImplementation TestLibs.mockito
+    testImplementation TestLibs.archCore
+    androidTestImplementation TestLibs.junitExt
+    androidTestImplementation TestLibs.androidRunner
+    androidTestImplementation TestLibs.androidRules
+    androidTestImplementation TestLibs.espressoCore
+    androidTestImplementation TestLibs.espressoContrib
+    implementation TestLibs.espressoIdlingResource
+}
+
+configurations {
+    all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+}

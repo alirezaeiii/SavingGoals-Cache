@@ -1,0 +1,102 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+
+    //Libraries
+    gradleVersion = '3.5.0'
+    kotlinVersion = '1.3.21'
+    supportLibraryVersion = '1.1.0'
+    ktxCoreVersion = '1.1.0-alpha04'
+    constraintLayoutVersion = '1.1.3'
+    materialVersion = '1.0.0'
+    legacyVersion = '1.0.0'
+    paletteVersion = '1.0.0'
+    rxJavaVersion = '2.1.9'
+    rxAndroidVersion = '2.1.0'
+    retrofitVersion = '2.5.0'
+    okhttpVersion = '3.12.0'
+    moshiVersion = '1.8.0'
+    timberVersion = '4.7.1'
+    glideVersion = '4.8.0'
+    daggerVersion = '2.21'
+    archLifecycleVersion = '1.1.1'
+    roomVersion = '2.1.0-alpha03'
+    guavaVersion = '18.0'
+    threetenabpVersion = '1.2.0'
+    firebaseDispacherVersion = '0.8.6'
+    ankoVersion = '0.10.8'
+
+    //Testing
+    jUnitVersion = '4.12'
+    jUnitVersionExt = '1.1.0'
+    mockitoVersion = '2.23.0'
+    espressoVersion = '3.1.1'
+    runnerVersion = '1.2.0-alpha03'
+    rulesVersion = '1.1.1'
+
+    Libs = [
+            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            appCompat          : "androidx.appcompat:appcompat:${supportLibraryVersion}",
+            ktxCore            : "androidx.core:core-ktx:${ktxCoreVersion}",
+            constraintLayout   : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+            material           : "com.google.android.material:material:${materialVersion}",
+            legacy             : "androidx.legacy:legacy-support-v4:${legacyVersion}",
+            palette            : "androidx.palette:palette:${paletteVersion}",
+            lifecycle          : "android.arch.lifecycle:runtime:${archLifecycleVersion}",
+            lifecycleExtensions: "android.arch.lifecycle:extensions:${archLifecycleVersion}",
+            room               : "android.arch.persistence.room:runtime:${roomVersion}",
+            roomCompiler       : "android.arch.persistence.room:compiler:${roomVersion}",
+            guava              : "com.google.guava:guava:${guavaVersion}"
+    ]
+
+    Dagger = [
+            dagger              : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler      : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            daggerAndroid       : "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerAndroidSupport: "com.google.dagger:dagger-android-support:${daggerVersion}",
+            daggerProcessor     : "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    ]
+
+    Square = [
+            retrofit     : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            rxadapter    : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            retrofitMoshi: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            retrofitMock : "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
+            okhttp       : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
+            moshi        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
+    ]
+
+    Network = [
+            glide             : "com.github.bumptech.glide:glide:${glideVersion}",
+            glideCompiler     : "com.github.bumptech.glide:compiler:${glideVersion}",
+            timber            : "com.jakewharton.timber:timber:${timberVersion}",
+            threetenabp       : "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}",
+            firebaseDispatcher: "com.firebase:firebase-jobdispatcher:${firebaseDispacherVersion}",
+            anko              : "org.jetbrains.anko:anko-appcompat-v7-commons:${ankoVersion}"
+    ]
+
+    RxJava = [
+            rxJava   : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid: "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    ]
+
+    TestLibs = [
+            junit                 : "junit:junit:${jUnitVersion}",
+            mockito               : "org.mockito:mockito-core:${mockitoVersion}",
+            archCore              : "android.arch.core:core-testing:${archLifecycleVersion}",
+            junitExt              : "androidx.test.ext:junit:${jUnitVersionExt}",
+            androidRunner         : "androidx.test:runner:${runnerVersion}",
+            androidRules          : "androidx.test:rules:${rulesVersion}",
+            espressoCore          : "androidx.test.espresso:espresso-core:${espressoVersion}",
+            espressoContrib       : "androidx.test.espresso:espresso-contrib:${espressoVersion}",
+            espressoIdlingResource: "androidx.test.espresso:espresso-idling-resource:${espressoVersion}"
+    ]
+}

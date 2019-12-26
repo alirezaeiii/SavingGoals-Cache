@@ -1,0 +1,101 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="savingsGoal"
+                type="com.sample.android.qapital.data.SavingsGoal"/>
+
+        <variable name="current_balance"
+                  type="String"/>
+
+        <variable name="target_amount"
+                  type="String"/>
+
+        <variable
+                name="callback"
+                type="com.sample.android.qapital.ui.goals.SavingsGoalClickCallback"/>
+
+        <variable
+                name="poster"
+                type="android.widget.ImageView"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/column_height"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="@dimen/z_app_bar"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{() -> callback.onClick(savingsGoal, poster)}"
+            app:cardElevation="@dimen/z_app_bar"
+            app:imageUrl="@{savingsGoal.imageUrl}"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginStart="@dimen/padding_normal"
+            android:layout_marginEnd="@dimen/padding_normal">
+
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent">
+
+            <ImageView
+                    android:id="@+id/image_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:transitionName="@string/view_name_header_image"
+                    tools:ignore="contentDescription"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{savingsGoal.name}"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="54dp"
+                    android:layout_marginStart="@dimen/padding_normal"
+                    android:textSize="26sp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"/>
+
+        </FrameLayout>
+
+        <View
+                android:id="@+id/title_background"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"
+                android:alpha="0.8"
+                android:gravity="center"
+                tools:background="@color/black_translucent_60"/>
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/padding_normal"
+                        android:paddingEnd="@dimen/padding_normal">
+            <TextView
+                    android:id="@+id/goal_current_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@{current_balance}"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text='@{target_amount != null ? @string/target_amount(target_amount) : ""}'
+                      android:textSize="18sp"
+                      android:paddingStart="@dimen/padding_micro"
+                      android:paddingEnd="@dimen/padding_micro"
+                      android:layout_toEndOf="@+id/goal_current_balance"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
