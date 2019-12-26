@@ -19,6 +19,7 @@ import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
 import com.sample.android.qapital.ui.detail.DetailActivity
+import com.sample.android.qapital.ui.detail.EXTRA_SAVINGS_GOAL
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
@@ -90,7 +91,7 @@ constructor() // Required empty public constructor
     override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
         val intent = Intent(context, DetailActivity::class.java).apply {
             putExtras(Bundle().apply {
-                putParcelable(DetailActivity.EXTRA_SAVINGS_GOAL, savingsGoal)
+                putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
             })
         }
         val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(

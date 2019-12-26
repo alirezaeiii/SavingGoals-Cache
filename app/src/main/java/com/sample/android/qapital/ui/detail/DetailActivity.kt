@@ -33,9 +33,6 @@ class DetailActivity : DaggerAppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    companion object {
-
-        const val EXTRA_SAVINGS_GOAL = "savingsGoal"
-    }
 }
+
+const val EXTRA_SAVINGS_GOAL = "savingsGoal"
