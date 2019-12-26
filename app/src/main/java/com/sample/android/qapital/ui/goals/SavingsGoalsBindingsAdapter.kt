@@ -52,4 +52,10 @@ object SavingsGoalsBindingsAdapter {
     fun showError(view: View, resource: Resource<List<SavingsGoal>>?) {
         view.visibility = if (resource is Resource.Failure) View.VISIBLE else View.GONE
     }
+
+    @JvmStatic
+    @BindingAdapter("showData")
+    fun showData(view: View, resource: Resource<List<SavingsGoal>>?) {
+        view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
+    }
 }
