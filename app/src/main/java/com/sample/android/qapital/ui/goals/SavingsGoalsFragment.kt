@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -67,18 +66,11 @@ constructor() // Required empty public constructor
             }
         }
 
-        val controller = AnimationUtils
-            .loadLayoutAnimation(
-                context,
-                R.anim.layout_animation_from_bottom
-            )
-
         viewModel.liveData.observe(this, Observer {
             if (it is Resource.Success) {
                 val adapter = SavingsGoalsAdapter(it.data!!, currencyFormatter, this)
                 root.list.apply {
                     setHasFixedSize(true)
-                    layoutAnimation = controller
                     list.adapter = adapter
                     scheduleLayoutAnimation()
                 }
