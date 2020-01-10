@@ -47,6 +47,7 @@ class SavingsGoalsViewModel(
 
     fun refresh() {
         dataSource.refreshGoals()
+        showSavingsGoals()
     }
 
     class SavingsGoalsViewModelFactory @Inject constructor(

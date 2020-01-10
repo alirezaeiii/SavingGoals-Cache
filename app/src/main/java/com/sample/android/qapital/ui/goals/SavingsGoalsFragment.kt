@@ -42,7 +42,7 @@ constructor() // Required empty public constructor
             ViewModelProviders.of(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
-        val binding = FragmentSavingsGoalsBinding.bind(root).apply {
+        FragmentSavingsGoalsBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
             lifecycleOwner = viewLifecycleOwner
         }
@@ -56,13 +56,12 @@ constructor() // Required empty public constructor
                 )
 
                 setOnRefreshListener {
-                    binding.vm?.refresh()
-                    binding.vm?.showSavingsGoals()
+                    viewModel.refresh()
                 }
             }
 
             retry_button.setOnClickListener {
-                binding.vm?.showSavingsGoals()
+                viewModel.showSavingsGoals()
             }
         }
 
