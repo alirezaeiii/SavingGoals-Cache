@@ -22,11 +22,21 @@ class SavingsGoalsViewModel(
         get() = _liveData
 
     init {
+        load()
+    }
+
+    fun load() {
+        _liveData.postValue(Resource.Loading())
         showSavingsGoals()
     }
 
-    fun showSavingsGoals() {
-        _liveData.postValue(Resource.Loading())
+    fun refresh() {
+        _liveData.postValue(Resource.Reloading())
+        dataSource.refreshGoals()
+        showSavingsGoals()
+    }
+
+    private fun showSavingsGoals() {
         EspressoIdlingResource.increment() // App is busy until further notice
         compositeDisposable.add(dataSource.getSavingsGoals()
             .subscribeOn(schedulerProvider.io())
@@ -43,11 +53,6 @@ class SavingsGoalsViewModel(
                 _liveData.postValue(Resource.Failure(it.localizedMessage))
                 Timber.e(it)
             })
-    }
-
-    fun refresh() {
-        dataSource.refreshGoals()
-        showSavingsGoals()
     }
 
     class SavingsGoalsViewModelFactory @Inject constructor(
