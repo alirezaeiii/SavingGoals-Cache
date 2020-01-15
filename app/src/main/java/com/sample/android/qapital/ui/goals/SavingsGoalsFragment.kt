@@ -42,7 +42,7 @@ constructor() // Required empty public constructor
             ViewModelProviders.of(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
-        FragmentSavingsGoalsBinding.bind(root).apply {
+        val binding = FragmentSavingsGoalsBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
             lifecycleOwner = viewLifecycleOwner
         }
@@ -67,7 +67,7 @@ constructor() // Required empty public constructor
 
         viewModel.liveData.observe(this, Observer {
             if (it is Resource.Success) {
-                root.list.apply {
+                binding.list.apply {
                     setHasFixedSize(true)
                     adapter =  SavingsGoalsAdapter(it.data!!, currencyFormatter, object : SavingsGoalClickCallback {
                         override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
