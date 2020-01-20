@@ -23,7 +23,7 @@ import javax.inject.Inject
 class DetailViewModel(
     private val schedulerProvider: BaseSchedulerProvider,
     private val dataSource: QapitalRemoteDataSource,
-    private val goal : SavingsGoal
+    private val goal: SavingsGoal
 ) : BaseViewModel() {
 
     private val currencyFormatter = CurrencyFormatterFraction(Locale.getDefault())
@@ -39,20 +39,13 @@ class DetailViewModel(
     val isRulesLoadingError = ObservableBoolean(false)
 
     init {
-        showFeeds()
-        showSavingsRules()
-    }
-
-    private fun showFeeds() {
         EspressoIdlingResource.increment() // App is busy until further notice
         _isFeedsLoading.postValue(true)
-        compositeDisposable.add(dataSource.getFeeds(goal.id)
+        isRulesLoading.set(true)
+        compositeDisposable.addAll(dataSource.getFeeds(goal.id)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doFinally {
-                if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                    EspressoIdlingResource.decrement() // Set app as idle.
-                }
                 _isFeedsLoading.postValue(false)
             }
             .subscribe({ feeds ->
@@ -70,42 +63,37 @@ class DetailViewModel(
             ) {
                 isFeedsLoadingError.set(true)
                 Timber.e(it)
-            })
-    }
-
-    private fun showSavingsRules() {
-        EspressoIdlingResource.increment() // App is busy until further notice
-        isRulesLoading.set(true)
-        compositeDisposable.addAll(dataSource.getSavingsRules()
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .doFinally {
-                if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                    EspressoIdlingResource.decrement() // Set app as idle.
-                }
-                isRulesLoading.set(false)
-            }
-            .subscribe({ rules ->
-                isRulesLoadingError.set(false)
-                var rule = ""
-                for (i in rules.indices) {
-                    rule += rules[i].type
-                    if (i != rules.size - 1) {
-                        rule += ", "
+            },
+            dataSource.getSavingsRules()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .doFinally {
+                    if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
+                        EspressoIdlingResource.decrement() // Set app as idle.
                     }
+                    isRulesLoading.set(false)
                 }
-                savingsRules.set(rule)
-            }
-            ) {
-                isRulesLoadingError.set(true)
-                Timber.e(it)
-            })
+                .subscribe({ rules ->
+                    isRulesLoadingError.set(false)
+                    var rule = ""
+                    for (i in rules.indices) {
+                        rule += rules[i].type
+                        if (i != rules.size - 1) {
+                            rule += ", "
+                        }
+                    }
+                    savingsRules.set(rule)
+                }
+                ) {
+                    isRulesLoadingError.set(true)
+                    Timber.e(it)
+                })
     }
 
     class DetailViewModelFactory @Inject constructor(
         private val schedulerProvider: BaseSchedulerProvider,
         private val dataSource: QapitalRemoteDataSource,
-        private val goal : SavingsGoal
+        private val goal: SavingsGoal
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
