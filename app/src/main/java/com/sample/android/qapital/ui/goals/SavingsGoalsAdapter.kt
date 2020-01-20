@@ -38,8 +38,6 @@ class SavingsGoalsAdapter(
             savingsGoal = savingsGoals[position]
             currentBalance = currencyFormatter.format(savingsGoals[position].currentBalance)
             targetAmount = savingsGoals[position].targetAmount?.let { numberFormat.format(it) }
-            poster = imagePoster
-            callback = clickCallback
             executePendingBindings()
         }
     }
@@ -51,6 +49,10 @@ class SavingsGoalsAdapter(
                 R.layout.savings_goal_item,
                 parent, false
             )
+        with(binding) {
+            poster = imagePoster
+            callback = clickCallback
+        }
         return SavingsGoalViewHolder(binding)
     }
 
