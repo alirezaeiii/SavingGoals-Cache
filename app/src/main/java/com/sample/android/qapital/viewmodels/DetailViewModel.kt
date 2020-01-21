@@ -21,9 +21,9 @@ import java.util.*
 import javax.inject.Inject
 
 class DetailViewModel(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val dataSource: QapitalRemoteDataSource,
-    private val goal: SavingsGoal
+    schedulerProvider: BaseSchedulerProvider,
+    dataSource: QapitalRemoteDataSource,
+    goal: SavingsGoal
 ) : BaseViewModel() {
 
     private val currencyFormatter = CurrencyFormatterFraction(Locale.getDefault())
