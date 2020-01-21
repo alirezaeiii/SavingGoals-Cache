@@ -39,13 +39,18 @@ class DetailViewModel(
     val isRulesLoadingError = ObservableBoolean(false)
 
     init {
-        EspressoIdlingResource.increment() // App is busy until further notice
+        for (i in 1..REQUEST_NUMBER) {
+            EspressoIdlingResource.increment() // App is busy until further notice
+        }
         _isFeedsLoading.postValue(true)
         isRulesLoading.set(true)
         compositeDisposable.addAll(dataSource.getFeeds(goal.id)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doFinally {
+                if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
+                    EspressoIdlingResource.decrement() // Set app as idle.
+                }
                 _isFeedsLoading.postValue(false)
             }
             .subscribe({ feeds ->
@@ -63,8 +68,8 @@ class DetailViewModel(
             ) {
                 isFeedsLoadingError.set(true)
                 Timber.e(it)
-            },
-            dataSource.getSavingsRules()
+            }
+            , dataSource.getSavingsRules()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .doFinally {
@@ -114,3 +119,5 @@ class DetailViewModel(
         } else 0f
     }
 }
+
+private const val REQUEST_NUMBER = 2
