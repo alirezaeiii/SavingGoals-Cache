@@ -46,11 +46,11 @@ class DetailViewModel(
             }
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
+            .doOnTerminate { _isFeedsLoading.postValue(false) }
             .doFinally {
                 if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
                     EspressoIdlingResource.decrement() // Set app as idle.
                 }
-                _isFeedsLoading.postValue(false)
             }
             .subscribe({ feeds ->
                 isFeedsLoadingError.set(false)
@@ -75,11 +75,11 @@ class DetailViewModel(
                 }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
+                .doOnTerminate { isRulesLoading.set(false) }
                 .doFinally {
                     if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
                         EspressoIdlingResource.decrement() // Set app as idle.
                     }
-                    isRulesLoading.set(false)
                 }
                 .subscribe({ rules ->
                     isRulesLoadingError.set(false)
