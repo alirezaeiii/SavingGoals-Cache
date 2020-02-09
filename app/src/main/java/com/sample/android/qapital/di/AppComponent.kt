@@ -18,7 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         ActivityBindingModule::class,
         AndroidSupportInjectionModule::class,
         NetworkModule::class,
-        AppModule::class]
+        AppModule::class,
+        BaseModule::class]
 )
 interface AppComponent : AndroidInjector<QapitalApp> {
 
@@ -26,7 +27,7 @@ interface AppComponent : AndroidInjector<QapitalApp> {
     interface Builder {
 
         @BindsInstance
-        fun application(application: Application): AppComponent.Builder
+        fun application(application: Application): Builder
 
         fun build(): AppComponent
     }

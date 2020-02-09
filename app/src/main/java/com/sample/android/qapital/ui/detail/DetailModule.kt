@@ -2,7 +2,6 @@ package com.sample.android.qapital.ui.detail
 
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.di.BaseModule
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import dagger.Binds
 import dagger.Module
@@ -10,7 +9,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class DetailModule : BaseModule() {
+abstract class DetailModule {
 
     @ContributesAndroidInjector
     internal abstract fun detailFragment(): DetailFragment

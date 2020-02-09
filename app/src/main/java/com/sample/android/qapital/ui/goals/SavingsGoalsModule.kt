@@ -1,14 +1,13 @@
 package com.sample.android.qapital.ui.goals
 
 import androidx.lifecycle.ViewModelProvider
-import com.sample.android.qapital.di.BaseModule
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class SavingsGoalsModule : BaseModule() {
+abstract class SavingsGoalsModule {
 
     @ContributesAndroidInjector
     internal abstract fun savingsGoalsFragment(): SavingsGoalsFragment

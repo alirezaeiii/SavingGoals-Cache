@@ -5,10 +5,10 @@ import com.sample.android.qapital.api.QapitalApi
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
-import com.sample.android.qapital.data.source.remote.QapitalRemoteDataSource
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
+import com.sample.android.qapital.usecase.DetailUseCase
 import io.reactivex.Observable
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -31,7 +31,6 @@ class DetailViewModelTest {
 
     @Mock
     private lateinit var api: QapitalApi
-    private lateinit var dataSource: QapitalRemoteDataSource
     private lateinit var schedulerProvider: BaseSchedulerProvider
 
     private lateinit var savingsGoal: SavingsGoal
@@ -42,7 +41,6 @@ class DetailViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        dataSource = QapitalRemoteDataSource(api)
         // Make the sure that all schedulers are immediate.
         schedulerProvider = ImmediateSchedulerProvider()
 
@@ -56,10 +54,12 @@ class DetailViewModelTest {
         val observableResponse1 = Observable.just(QapitalApi.FeedWrapper(listOf(feed)))
         `when`(api.requestFeeds(anyInt())).thenReturn(observableResponse1)
 
-        val observableResponse2 = Observable.just(QapitalApi.SavingsRuleWrapper(listOf(savingsRule)))
+        val observableResponse2 =
+            Observable.just(QapitalApi.SavingsRuleWrapper(listOf(savingsRule)))
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
-        val viewModel = DetailViewModel(schedulerProvider, dataSource, savingsGoal)
+        val useCase = DetailUseCase(schedulerProvider, api)
+        val viewModel = DetailViewModel(useCase, savingsGoal)
 
         with(viewModel) {
             assertFalse(feeds.isEmpty())

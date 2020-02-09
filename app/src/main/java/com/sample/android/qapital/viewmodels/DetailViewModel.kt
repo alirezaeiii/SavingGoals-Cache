@@ -10,10 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.source.remote.QapitalRemoteDataSource
 import com.sample.android.qapital.util.CurrencyFormatterFraction
-import com.sample.android.qapital.util.EspressoIdlingResource
-import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
+import com.sample.android.qapital.usecase.DetailUseCase
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
@@ -21,8 +19,7 @@ import java.util.*
 import javax.inject.Inject
 
 class DetailViewModel(
-    schedulerProvider: BaseSchedulerProvider,
-    dataSource: QapitalRemoteDataSource,
+    useCase: DetailUseCase,
     goal: SavingsGoal
 ) : BaseViewModel() {
 
@@ -39,19 +36,9 @@ class DetailViewModel(
     val isRulesLoadingError = ObservableBoolean(false)
 
     init {
-        compositeDisposable.addAll(dataSource.getFeeds(goal.id)
-            .doOnSubscribe {
-                EspressoIdlingResource.increment() // App is busy until further notice
-                _isFeedsLoading.postValue(true)
-            }
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
+        compositeDisposable.addAll(useCase.getFeeds(goal.id)
+            .doOnSubscribe { _isFeedsLoading.postValue(true) }
             .doOnTerminate { _isFeedsLoading.postValue(false) }
-            .doFinally {
-                if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                    EspressoIdlingResource.decrement() // Set app as idle.
-                }
-            }
             .subscribe({ feeds ->
                 isFeedsLoadingError.set(false)
                 with(this.feeds) {
@@ -68,19 +55,9 @@ class DetailViewModel(
                 isFeedsLoadingError.set(true)
                 Timber.e(it)
             }
-            , dataSource.getSavingsRules()
-                .doOnSubscribe {
-                    EspressoIdlingResource.increment() // App is busy until further notice
-                    isRulesLoading.set(true)
-                }
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+            , useCase.getSavingsRules()
+                .doOnSubscribe { isRulesLoading.set(true) }
                 .doOnTerminate { isRulesLoading.set(false) }
-                .doFinally {
-                    if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                        EspressoIdlingResource.decrement() // Set app as idle.
-                    }
-                }
                 .subscribe({ rules ->
                     isRulesLoadingError.set(false)
                     var rule = ""
@@ -99,16 +76,14 @@ class DetailViewModel(
     }
 
     class DetailViewModelFactory @Inject constructor(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val dataSource: QapitalRemoteDataSource,
+        private val useCase: DetailUseCase,
         private val goal: SavingsGoal
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return DetailViewModel(
-                schedulerProvider = schedulerProvider,
-                dataSource = dataSource,
+                useCase = useCase,
                 goal = goal
             ) as T
         }

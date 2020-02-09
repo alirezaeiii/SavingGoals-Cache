@@ -6,15 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
-import com.sample.android.qapital.util.EspressoIdlingResource
+import com.sample.android.qapital.usecase.SavingsGoalsUseCase
 import com.sample.android.qapital.util.Resource
-import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class SavingsGoalsViewModel(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val dataSource: GoalsRepository
+    private val dataSource: GoalsRepository,
+    private val useCase: SavingsGoalsUseCase
 ) : BaseViewModel() {
 
     private val _liveData = MutableLiveData<Resource<List<SavingsGoal>>>()
@@ -37,15 +36,7 @@ class SavingsGoalsViewModel(
     }
 
     private fun showSavingsGoals() {
-        EspressoIdlingResource.increment() // App is busy until further notice
-        compositeDisposable.add(dataSource.getSavingsGoals()
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .doFinally {
-                if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                    EspressoIdlingResource.decrement() // Set app as idle.
-                }
-            }
+        compositeDisposable.add(useCase.getSavingsGoals()
             .subscribe({ goals ->
                 _liveData.postValue(Resource.Success(goals))
             }
@@ -56,15 +47,15 @@ class SavingsGoalsViewModel(
     }
 
     class SavingsGoalsViewModelFactory @Inject constructor(
-        private val schedulerProvider: BaseSchedulerProvider,
-        private val dataSource: GoalsRepository
+        private val dataSource: GoalsRepository,
+        private val useCase: SavingsGoalsUseCase
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return SavingsGoalsViewModel(
-                schedulerProvider = schedulerProvider,
-                dataSource = dataSource
+                dataSource = dataSource,
+                useCase = useCase
             ) as T
         }
     }
