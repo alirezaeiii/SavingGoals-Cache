@@ -24,8 +24,8 @@ object DetailBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("items")
-    fun bindItems(recyclerView: RecyclerView, feeds: List<Feed>) {
-        val feedAdapter = FeedAdapter(feeds)
+    fun bindItems(recyclerView: RecyclerView, feeds: List<Feed>?) {
+        val feedAdapter = feeds?.let { FeedAdapter(it) }
         recyclerView.apply {
             setHasFixedSize(true)
             addItemDecoration(

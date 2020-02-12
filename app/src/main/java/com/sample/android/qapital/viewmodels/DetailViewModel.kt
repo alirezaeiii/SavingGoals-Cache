@@ -1,17 +1,13 @@
 package com.sample.android.qapital.viewmodels
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.usecase.DetailUseCase
+import com.sample.android.qapital.util.CurrencyFormatterFraction
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
@@ -25,41 +21,56 @@ class DetailViewModel(
 
     private val currencyFormatter = CurrencyFormatterFraction(Locale.getDefault())
 
-    val feeds: ObservableList<Feed> = ObservableArrayList()
-    val weekSumText = ObservableField<String>()
-    val savingsRules = ObservableField<String>()
+    private val _feeds = MutableLiveData<List<Feed>>()
+    val feeds: LiveData<List<Feed>>
+        get() = _feeds
+
+    private val _weekSumText = MutableLiveData<String>()
+    val weekSumText: LiveData<String>
+        get() = _weekSumText
+
+    private val _savingsRules = MutableLiveData<String>()
+    val savingsRules: LiveData<String>
+        get() = _savingsRules
+
     private val _isFeedsLoading = MutableLiveData<Boolean>()
     val isFeedsLoading: LiveData<Boolean>
         get() = _isFeedsLoading
-    val isRulesLoading = ObservableBoolean(false)
-    val isFeedsLoadingError = ObservableBoolean(false)
-    val isRulesLoadingError = ObservableBoolean(false)
+
+    private val _isRulesLoading = MutableLiveData<Boolean>()
+    val isRulesLoading: LiveData<Boolean>
+        get() = _isRulesLoading
+
+    private val _isFeedsLoadingError = MutableLiveData<Boolean>()
+    val isFeedsLoadingError: LiveData<Boolean>
+        get() = _isFeedsLoadingError
+
+    private val _isRulesLoadingError = MutableLiveData<Boolean>()
+    val isRulesLoadingError: LiveData<Boolean>
+        get() = _isRulesLoadingError
 
     init {
         compositeDisposable.addAll(useCase.getFeeds(goal.id)
             .doOnSubscribe { _isFeedsLoading.postValue(true) }
             .doOnTerminate { _isFeedsLoading.postValue(false) }
             .subscribe({ feeds ->
-                isFeedsLoadingError.set(false)
-                with(this.feeds) {
-                    clear()
-                    addAll(feeds)
-                }
+                _isFeedsLoadingError.postValue(false)
+                _feeds.postValue(feeds)
                 var weekSum = 0f
                 for (feed in feeds) {
                     weekSum += getAmountIfInCurrentWeek(feed)
                 }
-                weekSumText.set(currencyFormatter.format(weekSum))
+                _weekSumText.postValue(currencyFormatter.format(weekSum))
             }
             ) {
-                isFeedsLoadingError.set(true)
+                _isFeedsLoadingError.postValue(true)
                 Timber.e(it)
             }
             , useCase.getSavingsRules()
-                .doOnSubscribe { isRulesLoading.set(true) }
-                .doOnTerminate { isRulesLoading.set(false) }
+                .doOnSubscribe { _isRulesLoading.postValue(true) }
+                .doOnTerminate { _isRulesLoading.postValue(false) }
                 .subscribe({ rules ->
-                    isRulesLoadingError.set(false)
+                    _isRulesLoadingError.postValue(false)
                     var rule = ""
                     for (i in rules.indices) {
                         rule += rules[i].type
@@ -67,10 +78,10 @@ class DetailViewModel(
                             rule += ", "
                         }
                     }
-                    savingsRules.set(rule)
+                    _savingsRules.postValue(rule)
                 }
                 ) {
-                    isRulesLoadingError.set(true)
+                    _isRulesLoadingError.postValue(true)
                     Timber.e(it)
                 })
     }

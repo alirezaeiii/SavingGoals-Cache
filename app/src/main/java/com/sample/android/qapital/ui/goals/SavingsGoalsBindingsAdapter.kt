@@ -12,7 +12,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.sample.android.qapital.R
-import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.util.Resource
 
 object SavingsGoalsBindingsAdapter {
@@ -43,20 +42,20 @@ object SavingsGoalsBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("refreshing")
-    fun setSwipeRefreshLayout(view: SwipeRefreshLayout, resource: Resource<List<SavingsGoal>>?) {
+    fun setSwipeRefreshLayout(view: SwipeRefreshLayout, resource: Resource<*>?) {
         view.isRefreshing = resource is Resource.Loading || resource is Resource.Reloading
         view.visibility = if (resource is Resource.Failure) View.GONE else View.VISIBLE
     }
 
     @JvmStatic
     @BindingAdapter("showError")
-    fun showError(view: View, resource: Resource<List<SavingsGoal>>?) {
+    fun showError(view: View, resource: Resource<*>?) {
         view.visibility = if (resource is Resource.Failure) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
     @BindingAdapter("showData")
-    fun showData(view: View, resource: Resource<List<SavingsGoal>>?) {
+    fun showData(view: View, resource: Resource<*>?) {
         view.visibility = if (resource is Resource.Reloading || resource is Resource.Success) View.VISIBLE else View.GONE
     }
 }

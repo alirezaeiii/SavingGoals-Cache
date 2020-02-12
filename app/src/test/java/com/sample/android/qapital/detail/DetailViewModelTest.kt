@@ -62,9 +62,9 @@ class DetailViewModelTest {
         val viewModel = DetailViewModel(useCase, savingsGoal)
 
         with(viewModel) {
-            assertFalse(feeds.isEmpty())
-            assertTrue(feeds.size == 1)
-            assertFalse(savingsRules.get().isNullOrEmpty())
+            assertFalse(feeds.value!!.isEmpty())
+            assertTrue(feeds.value!!.size == 1)
+            assertFalse(savingsRules.value.isNullOrEmpty())
         }
     }
 }
