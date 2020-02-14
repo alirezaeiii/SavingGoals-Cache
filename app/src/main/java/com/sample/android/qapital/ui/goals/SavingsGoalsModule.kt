@@ -13,5 +13,5 @@ abstract class SavingsGoalsModule {
     internal abstract fun savingsGoalsFragment(): SavingsGoalsFragment
 
     @Binds
-    internal abstract fun bindViewModelFactory(factory: SavingsGoalsViewModel.SavingsGoalsViewModelFactory): ViewModelProvider.NewInstanceFactory
+    internal abstract fun bindViewModelFactory(factory: SavingsGoalsViewModel.SavingsGoalsViewModelFactory): ViewModelProvider.Factory
 }

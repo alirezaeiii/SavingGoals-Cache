@@ -49,7 +49,7 @@ class SavingsGoalsViewModel(
     class SavingsGoalsViewModelFactory @Inject constructor(
         private val dataSource: GoalsRepository,
         private val useCase: SavingsGoalsUseCase
-    ) : ViewModelProvider.NewInstanceFactory() {
+    ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")

@@ -24,5 +24,5 @@ abstract class DetailModule {
     }
 
     @Binds
-    internal abstract fun bindViewModelFactory(factory: DetailViewModel.DetailViewModelFactory): ViewModelProvider.NewInstanceFactory
+    internal abstract fun bindViewModelFactory(factory: DetailViewModel.DetailViewModelFactory): ViewModelProvider.Factory
 }

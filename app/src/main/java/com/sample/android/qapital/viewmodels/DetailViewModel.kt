@@ -89,7 +89,7 @@ class DetailViewModel(
     class DetailViewModelFactory @Inject constructor(
         private val useCase: DetailUseCase,
         private val goal: SavingsGoal
-    ) : ViewModelProvider.NewInstanceFactory() {
+    ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
