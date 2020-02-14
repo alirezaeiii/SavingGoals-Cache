@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
-import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.setupActionBar
@@ -26,9 +25,6 @@ constructor() // Required empty public constructor
     @Inject
     lateinit var currencyFormatter: CurrencyFormatter
 
-    @Inject
-    lateinit var savingsGoal: SavingsGoal
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory)[DetailViewModel::class.java]
@@ -36,7 +32,7 @@ constructor() // Required empty public constructor
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
-            goal = savingsGoal
+            goal = viewModelFactory.goal
             formatter = currencyFormatter
             lifecycleOwner = viewLifecycleOwner
         }

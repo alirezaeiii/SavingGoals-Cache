@@ -88,7 +88,7 @@ class DetailViewModel(
 
     class DetailViewModelFactory @Inject constructor(
         private val useCase: DetailUseCase,
-        private val goal: SavingsGoal
+        val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
