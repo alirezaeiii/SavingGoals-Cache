@@ -15,4 +15,6 @@ class SavingsGoalsUseCase @Inject constructor(
 
     fun getSavingsGoals(): Observable<List<SavingsGoal>> =
         composeObservable { repository.getSavingsGoals() }
+
+    fun refreshGoals() = repository.refreshGoals()
 }

@@ -5,16 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.usecase.SavingsGoalsUseCase
 import com.sample.android.qapital.util.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
-class SavingsGoalsViewModel(
-    private val dataSource: GoalsRepository,
-    private val useCase: SavingsGoalsUseCase
-) : BaseViewModel() {
+class SavingsGoalsViewModel(private val useCase: SavingsGoalsUseCase) : BaseViewModel() {
 
     private val _liveData = MutableLiveData<Resource<List<SavingsGoal>>>()
     val liveData: LiveData<Resource<List<SavingsGoal>>>
@@ -31,7 +27,7 @@ class SavingsGoalsViewModel(
 
     fun refresh() {
         _liveData.postValue(Resource.Reloading())
-        dataSource.refreshGoals()
+        useCase.refreshGoals()
         showSavingsGoals()
     }
 
@@ -47,16 +43,12 @@ class SavingsGoalsViewModel(
     }
 
     class SavingsGoalsViewModelFactory @Inject constructor(
-        private val dataSource: GoalsRepository,
         private val useCase: SavingsGoalsUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return SavingsGoalsViewModel(
-                dataSource = dataSource,
-                useCase = useCase
-            ) as T
+            return SavingsGoalsViewModel(useCase = useCase) as T
         }
     }
 }
