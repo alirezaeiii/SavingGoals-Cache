@@ -62,7 +62,7 @@ class SavingsGoalsViewModelTest {
         `when`(api.requestSavingGoals()).thenReturn(observableResponse)
 
         val useCase = SavingsGoalsUseCase(schedulerProvider, repository)
-        val viewModel = SavingsGoalsViewModel(repository, useCase)
+        val viewModel = SavingsGoalsViewModel(useCase)
 
         with(viewModel.liveData.value) {
             if (this is Resource.Success) {
