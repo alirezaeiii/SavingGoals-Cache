@@ -31,7 +31,7 @@ constructor() // Required empty public constructor
     : DaggerFragment() {
 
     @Inject
-    lateinit var viewModelFactory: SavingsGoalsViewModel.SavingsGoalsViewModelFactory
+    lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
 
     @Inject
     lateinit var currencyFormatter: CurrencyFormatter

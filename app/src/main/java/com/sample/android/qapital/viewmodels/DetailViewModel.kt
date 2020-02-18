@@ -86,17 +86,19 @@ class DetailViewModel(
                 })
     }
 
-    class DetailViewModelFactory @Inject constructor(
+    class Factory @Inject constructor(
         private val useCase: DetailUseCase,
         val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
-
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return DetailViewModel(
-                useCase = useCase,
-                goal = goal
-            ) as T
+            if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return DetailViewModel(
+                    useCase = useCase,
+                    goal = goal
+                ) as T
+            }
+            throw IllegalArgumentException("Unable to construct ViewModel")
         }
     }
 

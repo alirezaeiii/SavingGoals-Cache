@@ -42,13 +42,15 @@ class SavingsGoalsViewModel(private val useCase: SavingsGoalsUseCase) : BaseView
             })
     }
 
-    class SavingsGoalsViewModelFactory @Inject constructor(
+    class Factory @Inject constructor(
         private val useCase: SavingsGoalsUseCase
     ) : ViewModelProvider.Factory {
-
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return SavingsGoalsViewModel(useCase = useCase) as T
+            if (modelClass.isAssignableFrom(SavingsGoalsViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return SavingsGoalsViewModel(useCase = useCase) as T
+            }
+            throw IllegalArgumentException("Unable to construct ViewModel")
         }
     }
 }
