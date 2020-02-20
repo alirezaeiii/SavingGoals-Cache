@@ -8,6 +8,7 @@ import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.usecase.DetailUseCase
 import com.sample.android.qapital.util.CurrencyFormatterFraction
+import com.sample.android.qapital.util.Resource
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
@@ -21,41 +22,23 @@ class DetailViewModel(
 
     private val currencyFormatter = CurrencyFormatterFraction(Locale.getDefault())
 
-    private val _feeds = MutableLiveData<List<Feed>>()
-    val feeds: LiveData<List<Feed>>
+    private val _feeds = MutableLiveData<Resource<List<Feed>>>()
+    val feeds: LiveData<Resource<List<Feed>>>
         get() = _feeds
 
     private val _weekSumText = MutableLiveData<String>()
     val weekSumText: LiveData<String>
         get() = _weekSumText
 
-    private val _savingsRules = MutableLiveData<String>()
-    val savingsRules: LiveData<String>
+    private val _savingsRules = MutableLiveData<Resource<String>>()
+    val savingsRules: LiveData<Resource<String>>
         get() = _savingsRules
-
-    private val _isFeedsLoading = MutableLiveData<Boolean>()
-    val isFeedsLoading: LiveData<Boolean>
-        get() = _isFeedsLoading
-
-    private val _isRulesLoading = MutableLiveData<Boolean>()
-    val isRulesLoading: LiveData<Boolean>
-        get() = _isRulesLoading
-
-    private val _isFeedsLoadingError = MutableLiveData<Boolean>()
-    val isFeedsLoadingError: LiveData<Boolean>
-        get() = _isFeedsLoadingError
-
-    private val _isRulesLoadingError = MutableLiveData<Boolean>()
-    val isRulesLoadingError: LiveData<Boolean>
-        get() = _isRulesLoadingError
 
     init {
         compositeDisposable.addAll(useCase.getFeeds(goal.id)
-            .doOnSubscribe { _isFeedsLoading.postValue(true) }
-            .doOnTerminate { _isFeedsLoading.postValue(false) }
+            .doOnSubscribe { _feeds.postValue(Resource.Loading()) }
             .subscribe({ feeds ->
-                _isFeedsLoadingError.postValue(false)
-                _feeds.postValue(feeds)
+                _feeds.postValue(Resource.Success(feeds))
                 var weekSum = 0f
                 for (feed in feeds) {
                     weekSum += getAmountIfInCurrentWeek(feed)
@@ -63,14 +46,12 @@ class DetailViewModel(
                 _weekSumText.postValue(currencyFormatter.format(weekSum))
             }
             ) {
-                _isFeedsLoadingError.postValue(true)
+                _feeds.postValue(Resource.Failure(it.localizedMessage))
                 Timber.e(it)
             }
             , useCase.getSavingsRules()
-                .doOnSubscribe { _isRulesLoading.postValue(true) }
-                .doOnTerminate { _isRulesLoading.postValue(false) }
+                .doOnSubscribe { _savingsRules.postValue(Resource.Loading()) }
                 .subscribe({ rules ->
-                    _isRulesLoadingError.postValue(false)
                     var rule = ""
                     for (i in rules.indices) {
                         rule += rules[i].type
@@ -78,10 +59,10 @@ class DetailViewModel(
                             rule += ", "
                         }
                     }
-                    _savingsRules.postValue(rule)
+                    _savingsRules.postValue(Resource.Success(rule))
                 }
                 ) {
-                    _isRulesLoadingError.postValue(true)
+                    _savingsRules.postValue(Resource.Failure(it.localizedMessage))
                     Timber.e(it)
                 })
     }

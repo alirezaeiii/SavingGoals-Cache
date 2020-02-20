@@ -1,6 +1,7 @@
 package com.sample.android.qapital.ui.detail
 
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sample.android.qapital.data.Feed
+import com.sample.android.qapital.util.Resource
 
 
 object DetailBindingsAdapter {
@@ -16,25 +18,24 @@ object DetailBindingsAdapter {
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, imageUrl: String) {
-
-        Glide.with(imageView.context)
-            .load(imageUrl)
-            .into(imageView)
+        Glide.with(imageView.context).load(imageUrl).into(imageView)
     }
 
     @JvmStatic
     @BindingAdapter("items")
-    fun bindItems(recyclerView: RecyclerView, feeds: List<Feed>?) {
-        val feedAdapter = feeds?.let { FeedAdapter(it) }
-        recyclerView.apply {
-            setHasFixedSize(true)
-            addItemDecoration(
-                DividerItemDecoration(
-                    recyclerView.context,
-                    DividerItemDecoration.VERTICAL
+    fun bindItems(recyclerView: RecyclerView, resource: Resource<List<Feed>>?) {
+        if (resource is Resource.Success) {
+            val feedAdapter = resource.data?.let { FeedAdapter(it) }
+            recyclerView.apply {
+                setHasFixedSize(true)
+                addItemDecoration(
+                    DividerItemDecoration(
+                        recyclerView.context,
+                        DividerItemDecoration.VERTICAL
+                    )
                 )
-            )
-            adapter = feedAdapter
+                adapter = feedAdapter
+            }
         }
     }
 
@@ -53,13 +54,27 @@ object DetailBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("android:max")
-    fun setProgressBarMax(view : ProgressBar, value : Float) {
+    fun setProgressBarMax(view: ProgressBar, value: Float) {
         view.max = value.toInt()
     }
 
     @JvmStatic
     @BindingAdapter("android:progress")
-    fun setProgressBarProgress(view : ProgressBar, value : Float) {
+    fun setProgressBarProgress(view: ProgressBar, value: Float) {
         view.progress = value.toInt()
+    }
+
+    @JvmStatic
+    @BindingAdapter("android:text")
+    fun setText(textView: TextView, resource: Resource<String>?) {
+        if (resource is Resource.Success) {
+            textView.text = resource.data
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("showLoading")
+    fun showLoading(view: ProgressBar, resource: Resource<*>?) {
+        view.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
     }
 }

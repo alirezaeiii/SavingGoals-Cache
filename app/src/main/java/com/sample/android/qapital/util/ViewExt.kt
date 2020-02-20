@@ -2,6 +2,7 @@ package com.sample.android.qapital.util
 
 import android.os.Build
 import android.text.Html
+import android.text.Spanned
 import android.view.View
 import androidx.databinding.BindingAdapter
 
@@ -11,7 +12,7 @@ fun View.visibleGone(visible: Boolean) {
 }
 
 @Suppress("DEPRECATION")
-fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+fun String.fromHtml(): Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
     Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
 } else {
     Html.fromHtml(this)
