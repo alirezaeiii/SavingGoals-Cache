@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.usecase.SavingsGoalsUseCase
+import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.util.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
-class SavingsGoalsViewModel(private val useCase: SavingsGoalsUseCase) : BaseViewModel() {
+class SavingsGoalsViewModel(private val repository: GoalsRepository) : BaseViewModel() {
 
     private val _liveData = MutableLiveData<Resource<List<SavingsGoal>>>()
     val liveData: LiveData<Resource<List<SavingsGoal>>>
@@ -27,12 +27,12 @@ class SavingsGoalsViewModel(private val useCase: SavingsGoalsUseCase) : BaseView
 
     fun refresh() {
         _liveData.postValue(Resource.Reloading())
-        useCase.refreshGoals()
+        repository.refreshGoals()
         showSavingsGoals()
     }
 
     private fun showSavingsGoals() {
-        compositeDisposable.add(useCase.getSavingsGoals()
+        compositeDisposable.add(repository.getSavingsGoals()
             .subscribe({ goals ->
                 _liveData.postValue(Resource.Success(goals))
             }
@@ -43,12 +43,12 @@ class SavingsGoalsViewModel(private val useCase: SavingsGoalsUseCase) : BaseView
     }
 
     class Factory @Inject constructor(
-        private val useCase: SavingsGoalsUseCase
+        private val repository: GoalsRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SavingsGoalsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SavingsGoalsViewModel(useCase = useCase) as T
+                return SavingsGoalsViewModel(repository) as T
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }

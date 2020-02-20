@@ -1,7 +1,9 @@
 package com.sample.android.qapital.data.source
 
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.usecase.BaseUseCase
 import com.sample.android.qapital.util.DiskIOThreadExecutor
+import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
@@ -12,18 +14,19 @@ import javax.inject.Singleton
 class GoalsRepository @Inject constructor(
     @param:Remote private val remoteDataSource: GoalsDataSource,
     @param:Local private val localDataSource: GoalsDataSource,
-    private val appExecutors: DiskIOThreadExecutor
-) : GoalsDataSource {
+    private val appExecutors: DiskIOThreadExecutor,
+    schedulerProvider: BaseSchedulerProvider
+) : GoalsDataSource, BaseUseCase(schedulerProvider) {
 
     private var cacheIsDirty = false
 
     override fun getSavingsGoals(): Observable<List<SavingsGoal>> {
 
+        lateinit var items: Observable<List<SavingsGoal>>
         if (cacheIsDirty) {
-            return getGoalsFromRemoteDataSource()
+            items = getGoalsFromRemoteDataSource()
         } else {
             val countDownLatch = CountDownLatch(1)
-            lateinit var items: Observable<List<SavingsGoal>>
             localDataSource.getSavingsGoals(object : GoalsDataSource.LoadGoalsCallback {
                 override fun onGoalsLoaded(savingsGoals: List<SavingsGoal>) {
                     items = Observable.just(savingsGoals)
@@ -36,8 +39,8 @@ class GoalsRepository @Inject constructor(
                 }
             })
             countDownLatch.await()
-            return items
         }
+        return composeObservable { items }
     }
 
     override fun saveGoal(goal: SavingsGoal) {

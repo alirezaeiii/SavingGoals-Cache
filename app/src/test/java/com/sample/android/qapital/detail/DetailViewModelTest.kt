@@ -8,7 +8,7 @@ import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
-import com.sample.android.qapital.usecase.DetailUseCase
+import com.sample.android.qapital.data.usecase.DetailUseCase
 import io.reactivex.Observable
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

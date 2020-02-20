@@ -1,4 +1,4 @@
-package com.sample.android.qapital.usecase
+package com.sample.android.qapital.data.usecase
 
 import com.sample.android.qapital.util.EspressoIdlingResource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider

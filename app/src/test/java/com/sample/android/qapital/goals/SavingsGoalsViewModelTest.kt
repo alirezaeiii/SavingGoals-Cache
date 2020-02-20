@@ -7,7 +7,6 @@ import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.data.source.local.GoalsDao
 import com.sample.android.qapital.data.source.local.QapitalLocalDataSource
 import com.sample.android.qapital.data.source.remote.SavingsGoalsRemoteDataSource
-import com.sample.android.qapital.usecase.SavingsGoalsUseCase
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import com.sample.android.qapital.util.DiskIOThreadExecutor
 import com.sample.android.qapital.util.Resource
@@ -51,7 +50,7 @@ class SavingsGoalsViewModelTest {
         val executor = DiskIOThreadExecutor()
         val remoteDataSource = SavingsGoalsRemoteDataSource(api)
         val localDataSource = QapitalLocalDataSource(executor, dao)
-        repository = GoalsRepository(remoteDataSource, localDataSource, executor)
+        repository = GoalsRepository(remoteDataSource, localDataSource, executor, schedulerProvider)
 
         savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
     }
@@ -61,8 +60,7 @@ class SavingsGoalsViewModelTest {
         val observableResponse = Observable.just(QapitalApi.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(api.requestSavingGoals()).thenReturn(observableResponse)
 
-        val useCase = SavingsGoalsUseCase(schedulerProvider, repository)
-        val viewModel = SavingsGoalsViewModel(useCase)
+        val viewModel = SavingsGoalsViewModel(repository)
 
         with(viewModel.liveData.value) {
             if (this is Resource.Success) {

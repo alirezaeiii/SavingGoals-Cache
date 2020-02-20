@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.usecase.DetailUseCase
+import com.sample.android.qapital.data.usecase.DetailUseCase
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
