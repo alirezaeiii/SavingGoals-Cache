@@ -5,10 +5,11 @@ import com.sample.android.qapital.api.QapitalApi
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
-import com.sample.android.qapital.viewmodels.DetailViewModel
+import com.sample.android.qapital.data.usecase.DetailUseCase
+import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
-import com.sample.android.qapital.data.usecase.DetailUseCase
+import com.sample.android.qapital.viewmodels.DetailViewModel
 import io.reactivex.Observable
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -61,10 +62,16 @@ class DetailViewModelTest {
         val useCase = DetailUseCase(schedulerProvider, api)
         val viewModel = DetailViewModel(useCase, savingsGoal)
 
-        with(viewModel) {
-            assertFalse(feeds.value!!.isEmpty())
-            assertTrue(feeds.value!!.size == 1)
-            assertFalse(savingsRules.value.isNullOrEmpty())
+        with(viewModel.feeds.value) {
+            if (this is Resource.Success) {
+                assertFalse(data!!.isEmpty())
+                assertTrue(data!!.size == 1)
+            }
+        }
+        with(viewModel.savingsRules.value) {
+            if (this is Resource.Success) {
+                assertFalse(data.isNullOrEmpty())
+            }
         }
     }
 }
