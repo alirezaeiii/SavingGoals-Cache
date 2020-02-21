@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
                 name="vm"
-                type="com.sample.android.qapital.viewmodels.DetailViewModel"/>
+                type="com.sample.android.qapital.viewmodels.DetailViewModel" />
     </data>
 
     <LinearLayout
@@ -15,13 +16,14 @@
             android:background="@color/grey_light"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/padding_normal">
+            android:padding="@dimen/padding_normal"
+            app:showData="@{vm.feeds}">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/this_week_savings"
-                android:textColor="@color/grey_darker"/>
+                android:textColor="@color/grey_darker" />
 
         <TextView
                 android:layout_width="wrap_content"
@@ -29,7 +31,7 @@
                 android:background="@color/grey_light"
                 android:text="@{vm.weekSumText}"
                 android:textColor="@android:color/black"
-                tools:text="$3.10"/>
+                tools:text="$3.10" />
     </LinearLayout>
 
 </layout>
