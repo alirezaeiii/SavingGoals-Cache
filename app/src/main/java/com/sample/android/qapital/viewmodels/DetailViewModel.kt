@@ -12,15 +12,13 @@ import com.sample.android.qapital.util.Resource
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class DetailViewModel(
     useCase: DetailUseCase,
+    currencyFormatter: CurrencyFormatterFraction,
     goal: SavingsGoal
 ) : BaseViewModel() {
-
-    private val currencyFormatter = CurrencyFormatterFraction(Locale.getDefault())
 
     private val _feeds = MutableLiveData<Resource<List<Feed>>>()
     val feeds: LiveData<Resource<List<Feed>>>
@@ -69,6 +67,7 @@ class DetailViewModel(
 
     class Factory @Inject constructor(
         private val useCase: DetailUseCase,
+        private val currencyFormatter: CurrencyFormatterFraction,
         val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -76,6 +75,7 @@ class DetailViewModel(
                 @Suppress("UNCHECKED_CAST")
                 return DetailViewModel(
                     useCase = useCase,
+                    currencyFormatter = currencyFormatter,
                     goal = goal
                 ) as T
             }
