@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -55,7 +56,7 @@ object SavingsGoalsBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("showData")
-    fun showData(view: View, resource: Resource<*>?) {
+    fun showData(view: RecyclerView, resource: Resource<*>?) {
         view.visibility = if (resource is Resource.Reloading || resource is Resource.Success) View.VISIBLE else View.GONE
     }
 }

@@ -3,6 +3,7 @@ package com.sample.android.qapital.ui.detail
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -80,7 +81,7 @@ object DetailBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("showData")
-    fun showData(view: View, resource: Resource<*>?) {
+    fun showData(view: LinearLayout, resource: Resource<*>?) {
         view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
     }
 }
