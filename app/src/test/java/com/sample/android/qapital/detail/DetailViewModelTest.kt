@@ -6,6 +6,7 @@ import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.data.usecase.DetailUseCase
+import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
@@ -23,6 +24,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyInt
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class DetailViewModelTest {
@@ -60,7 +62,7 @@ class DetailViewModelTest {
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
         val useCase = DetailUseCase(schedulerProvider, api)
-        val viewModel = DetailViewModel(useCase, savingsGoal)
+        val viewModel = DetailViewModel(useCase, CurrencyFormatterFraction(Locale.getDefault()), savingsGoal)
 
         with(viewModel.feeds.value) {
             if (this is Resource.Success) {
