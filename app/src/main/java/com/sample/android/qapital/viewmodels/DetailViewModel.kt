@@ -50,14 +50,7 @@ class DetailViewModel(
             , useCase.getSavingsRules()
                 .doOnSubscribe { _savingsRules.postValue(Resource.Loading()) }
                 .subscribe({ rules ->
-                    var rule = ""
-                    for (i in rules.indices) {
-                        rule += rules[i].type
-                        if (i != rules.size - 1) {
-                            rule += ", "
-                        }
-                    }
-                    _savingsRules.postValue(Resource.Success(rule))
+                    _savingsRules.postValue(Resource.Success(rules.joinToString { it.type }))
                 }
                 ) {
                     _savingsRules.postValue(Resource.Failure(it.localizedMessage))
