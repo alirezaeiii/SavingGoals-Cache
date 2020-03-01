@@ -9,10 +9,9 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
-class GoalsFirebaseJobService : JobService() {
-
-    @Inject
-    lateinit var goalsRepository: GoalsRepository
+class GoalsFirebaseJobService @Inject constructor(
+    private val goalsRepository: GoalsRepository
+) : JobService() {
 
     /**
      * The entry point to your Job. Implementations should offload work to another thread of
