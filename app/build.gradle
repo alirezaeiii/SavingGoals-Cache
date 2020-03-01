@@ -80,8 +80,6 @@ dependencies {
     implementation Network.glide
     kapt Network.glideCompiler
     implementation Network.threetenabp
-    implementation Network.firebaseDispatcher
-    implementation Network.anko
 
     //Android RX
     implementation RxJava.rxJava

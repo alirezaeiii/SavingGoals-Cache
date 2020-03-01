@@ -2,7 +2,6 @@ package com.sample.android.qapital.ui.goals
 
 import android.os.Bundle
 import com.sample.android.qapital.R
-import com.sample.android.qapital.sync.GoalsSyncUtils
 import com.sample.android.qapital.util.addFragmentToActivity
 import com.sample.android.qapital.util.setupActionBar
 import dagger.android.support.DaggerAppCompatActivity
@@ -29,7 +28,5 @@ class SavingsGoalsActivity : DaggerAppCompatActivity() {
                 addFragmentToActivity(it, R.id.fragment_container)
             }
         }
-
-        GoalsSyncUtils.initialize(this)
     }
 }

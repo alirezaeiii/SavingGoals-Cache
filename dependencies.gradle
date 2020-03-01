@@ -31,8 +31,6 @@ ext {
     roomVersion = '2.1.0-alpha03'
     guavaVersion = '18.0'
     threetenabpVersion = '1.2.0'
-    firebaseDispacherVersion = '0.8.6'
-    ankoVersion = '0.10.8'
 
     //Testing
     jUnitVersion = '4.12'
@@ -78,9 +76,7 @@ ext {
             glide             : "com.github.bumptech.glide:glide:${glideVersion}",
             glideCompiler     : "com.github.bumptech.glide:compiler:${glideVersion}",
             timber            : "com.jakewharton.timber:timber:${timberVersion}",
-            threetenabp       : "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}",
-            firebaseDispatcher: "com.firebase:firebase-jobdispatcher:${firebaseDispacherVersion}",
-            anko              : "org.jetbrains.anko:anko-appcompat-v7-commons:${ankoVersion}"
+            threetenabp       : "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}"
     ]
 
     RxJava = [
