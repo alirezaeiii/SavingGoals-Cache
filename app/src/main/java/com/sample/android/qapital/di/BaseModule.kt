@@ -1,13 +1,20 @@
 package com.sample.android.qapital.di
 
-import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
-import com.sample.android.qapital.util.schedulers.SchedulerProvider
-import dagger.Binds
+import com.sample.android.qapital.util.CurrencyFormatter
+import com.sample.android.qapital.util.CurrencyFormatterFraction
 import dagger.Module
+import dagger.Provides
+import java.util.*
+import javax.inject.Singleton
 
 @Module
-abstract class BaseModule {
+class BaseModule {
 
-    @Binds
-    internal abstract fun bindSchedulerProvider(schedulerProvider: SchedulerProvider): BaseSchedulerProvider
+    @Provides
+    @Singleton
+    internal fun provideCurrencyFormatter() = CurrencyFormatter(Locale.getDefault())
+
+    @Provides
+    @Singleton
+    internal fun provideCurrencyFormatterFraction() = CurrencyFormatterFraction(Locale.getDefault())
 }

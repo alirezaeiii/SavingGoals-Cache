@@ -18,7 +18,6 @@ import dagger.android.support.AndroidSupportInjectionModule
         ActivityBindingModule::class,
         AndroidSupportInjectionModule::class,
         NetworkModule::class,
-        AppModule::class,
         BaseModule::class]
 )
 interface AppComponent : AndroidInjector<QapitalApp> {
