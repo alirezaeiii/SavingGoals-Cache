@@ -1,6 +1,6 @@
 package com.sample.android.qapital.data.usecase
 
-import com.sample.android.qapital.api.QapitalApi
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class DetailUseCase @Inject constructor(
     schedulerProvider: BaseSchedulerProvider,
-    private val api: QapitalApi
+    private val api: QapitalService
 ) : BaseUseCase(schedulerProvider) {
 
     fun getFeeds(id: Int): Observable<List<Feed>> =

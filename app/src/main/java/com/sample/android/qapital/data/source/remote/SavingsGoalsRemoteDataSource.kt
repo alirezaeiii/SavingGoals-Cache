@@ -1,6 +1,6 @@
 package com.sample.android.qapital.data.source.remote
 
-import com.sample.android.qapital.api.QapitalApi
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsDataSource
 import io.reactivex.Observable
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SavingsGoalsRemoteDataSource @Inject constructor(
-    private val api: QapitalApi
+    private val api: QapitalService
 ) : GoalsDataSource {
 
     override fun getSavingsGoals(): Observable<List<SavingsGoal>> =

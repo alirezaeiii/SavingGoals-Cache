@@ -1,7 +1,7 @@
 package com.sample.android.qapital.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sample.android.qapital.api.QapitalApi
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
@@ -33,7 +33,7 @@ class DetailViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var api: QapitalApi
+    private lateinit var api: QapitalService
     private lateinit var schedulerProvider: BaseSchedulerProvider
 
     private lateinit var savingsGoal: SavingsGoal
@@ -54,11 +54,11 @@ class DetailViewModelTest {
 
     @Test
     fun loadFeeds() {
-        val observableResponse1 = Observable.just(QapitalApi.FeedWrapper(listOf(feed)))
+        val observableResponse1 = Observable.just(QapitalService.FeedWrapper(listOf(feed)))
         `when`(api.requestFeeds(anyInt())).thenReturn(observableResponse1)
 
         val observableResponse2 =
-            Observable.just(QapitalApi.SavingsRuleWrapper(listOf(savingsRule)))
+            Observable.just(QapitalService.SavingsRuleWrapper(listOf(savingsRule)))
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
         val useCase = DetailUseCase(schedulerProvider, api)

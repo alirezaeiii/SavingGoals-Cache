@@ -3,6 +3,7 @@ package com.sample.android.qapital.di
 import android.app.Application
 import com.sample.android.qapital.QapitalApp
 import com.sample.android.qapital.data.source.GoalsRepositoryModule
+import com.sample.android.qapital.network.Network
 
 import javax.inject.Singleton
 
@@ -17,7 +18,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         ApplicationModule::class,
         ActivityBindingModule::class,
         AndroidSupportInjectionModule::class,
-        NetworkModule::class,
+        Network::class,
         BaseModule::class]
 )
 interface AppComponent : AndroidInjector<QapitalApp> {

@@ -1,7 +1,7 @@
 package com.sample.android.qapital.goals
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sample.android.qapital.api.QapitalApi
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.data.source.local.GoalsDao
@@ -33,7 +33,7 @@ class SavingsGoalsViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var api: QapitalApi
+    private lateinit var api: QapitalService
     @Mock
     private lateinit var dao: GoalsDao
     private lateinit var repository: GoalsRepository
@@ -57,7 +57,7 @@ class SavingsGoalsViewModelTest {
 
     @Test
     fun loadSavingsGoal() {
-        val observableResponse = Observable.just(QapitalApi.SavingsGoalWrapper(listOf(savingsGoal)))
+        val observableResponse = Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(api.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository)
