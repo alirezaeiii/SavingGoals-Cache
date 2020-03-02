@@ -60,7 +60,7 @@ class GoalsRepository @Inject constructor(
 
     override fun getSavingsGoals(callback: GoalsDataSource.LoadGoalsCallback) {}
 
-    fun getGoalsFromRemoteDataSource(): Observable<List<SavingsGoal>> {
+    private fun getGoalsFromRemoteDataSource(): Observable<List<SavingsGoal>> {
         val goals = remoteDataSource.getSavingsGoals()
         refreshLocalDataSource(goals)
         return goals

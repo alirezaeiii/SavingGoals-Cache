@@ -10,9 +10,25 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "goals")
 class SavingsGoal(
-    @field:Json(name = "goalImageURL") val imageUrl: String,
+    @Json(name = "goalImageURL")
+    val imageUrl: String,
     val targetAmount: Float?,
     val currentBalance: Float,
     val name: String,
-    @PrimaryKey @ColumnInfo(name = "entryid") val id: Int
+    @PrimaryKey @ColumnInfo(name = "entryid")
+    val id: Int
 ) : Parcelable
+
+class Feed(
+    val id: String,
+    val type: String,
+    val timestamp: String,
+    val message: String,
+    val amount: Float
+)
+
+class SavingsRule(
+    val id: Int,
+    val type: String,
+    val amount: Float
+)

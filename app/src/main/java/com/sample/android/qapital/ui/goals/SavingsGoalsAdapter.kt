@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.R
-import com.sample.android.qapital.databinding.SavingsGoalItemBinding
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.databinding.SavingsGoalItemBinding
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.layoutInflater
 import java.text.DecimalFormat

@@ -2,6 +2,8 @@ package com.sample.android.qapital.di
 
 import com.sample.android.qapital.BuildConfig
 import com.sample.android.qapital.api.QapitalApi
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,7 +36,7 @@ class NetworkModule {
     fun retrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.QAPITAL_BASE_URL)
         .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 
@@ -44,3 +46,11 @@ class NetworkModule {
     fun qapitalApi(retrofit: Retrofit): QapitalApi =
         retrofit.create(QapitalApi::class.java)
 }
+
+/**
+ * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
+ * full Kotlin compatibility.
+ */
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()

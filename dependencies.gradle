@@ -69,14 +69,15 @@ ext {
             retrofitMoshi: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
             retrofitMock : "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
             okhttp       : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
-            moshi        : "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
+            moshi        : "com.squareup.moshi:moshi:${moshiVersion}",
+            moshiKotlin  : "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
     ]
 
     Network = [
-            glide             : "com.github.bumptech.glide:glide:${glideVersion}",
-            glideCompiler     : "com.github.bumptech.glide:compiler:${glideVersion}",
-            timber            : "com.jakewharton.timber:timber:${timberVersion}",
-            threetenabp       : "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}"
+            glide        : "com.github.bumptech.glide:glide:${glideVersion}",
+            glideCompiler: "com.github.bumptech.glide:compiler:${glideVersion}",
+            timber       : "com.jakewharton.timber:timber:${timberVersion}",
+            threetenabp  : "com.jakewharton.threetenabp:threetenabp:${threetenabpVersion}"
     ]
 
     RxJava = [

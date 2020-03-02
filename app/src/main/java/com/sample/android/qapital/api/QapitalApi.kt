@@ -20,17 +20,17 @@ interface QapitalApi {
     fun requestSavingRules() : Observable<SavingsRuleWrapper>
 
     class SavingsGoalWrapper(
-        @field:Json(name = "savingsGoals")
+        @Json(name = "savingsGoals")
         val wrapper: List<SavingsGoal>
     )
 
     class FeedWrapper(
-        @field:Json(name = "feed")
+        @Json(name = "feed")
         val wrapper : List<Feed>
     )
 
     class SavingsRuleWrapper(
-        @field:Json(name = "savingsRules")
+        @Json(name = "savingsRules")
         val wrapper : List<SavingsRule>
     )
 }

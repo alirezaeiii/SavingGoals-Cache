@@ -69,20 +69,22 @@ constructor() // Required empty public constructor
             if (it is Resource.Success) {
                 binding.list.apply {
                     setHasFixedSize(true)
-                    adapter =  SavingsGoalsAdapter(it.data!!, currencyFormatter, object : SavingsGoalClickCallback {
-                        override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
-                            val intent = Intent(context, DetailActivity::class.java).apply {
-                                putExtras(Bundle().apply {
-                                    putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
-                                })
-                            }
-                            val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                requireActivity(),
-                                Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
-                            )
-                            ActivityCompat.startActivity(requireContext(), intent, activityOptions.toBundle())
+                    adapter = it.data?.let { data ->
+                            SavingsGoalsAdapter(data, currencyFormatter, object : SavingsGoalClickCallback {
+                                override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
+                                    val intent = Intent(context, DetailActivity::class.java).apply {
+                                        putExtras(Bundle().apply {
+                                            putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
+                                        })
+                                    }
+                                    val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        requireActivity(),
+                                        Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
+                                    )
+                                    ActivityCompat.startActivity(requireContext(), intent, activityOptions.toBundle())
+                                }
+                            })
                         }
-                    })
                     scheduleLayoutAnimation()
                 }
             }
