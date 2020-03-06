@@ -6,19 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.usecase.DetailUseCase
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.Resource
+import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
 import javax.inject.Inject
 
 class DetailViewModel(
-    useCase: DetailUseCase,
+    api: QapitalService,
+    schedulerProvider: BaseSchedulerProvider,
     currencyFormatter: CurrencyFormatterFraction,
     goal: SavingsGoal
-) : BaseViewModel() {
+) : BaseViewModel(schedulerProvider) {
 
     private val _feeds = MutableLiveData<Resource<List<Feed>>>()
     val feeds: LiveData<Resource<List<Feed>>>
@@ -33,7 +35,7 @@ class DetailViewModel(
         get() = _savingsRules
 
     init {
-        compositeDisposable.addAll(useCase.getFeeds(goal.id)
+        arrayOf(composeObservable { api.requestFeeds(goal.id).map { it.wrapper } }
             .doOnSubscribe { _feeds.postValue(Resource.Loading()) }
             .subscribe({ feeds ->
                 _feeds.postValue(Resource.Success(feeds))
@@ -42,24 +44,23 @@ class DetailViewModel(
                     weekSum += getAmountIfInCurrentWeek(feed)
                 }
                 _weekSumText.postValue(currencyFormatter.format(weekSum))
-            }
-            ) {
+            }) {
                 _feeds.postValue(Resource.Failure(it.localizedMessage))
                 Timber.e(it)
             }
-            , useCase.getSavingsRules()
+            , composeObservable { api.requestSavingRules().map { it.wrapper } }
                 .doOnSubscribe { _savingsRules.postValue(Resource.Loading()) }
                 .subscribe({ rules ->
                     _savingsRules.postValue(Resource.Success(rules.joinToString { it.type }))
-                }
-                ) {
+                }) {
                     _savingsRules.postValue(Resource.Failure(it.localizedMessage))
                     Timber.e(it)
-                })
+                }).also { compositeDisposable.addAll(*it) }
     }
 
     class Factory @Inject constructor(
-        private val useCase: DetailUseCase,
+        private val api: QapitalService,
+        private val schedulerProvider: BaseSchedulerProvider,
         private val currencyFormatter: CurrencyFormatterFraction,
         val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
@@ -67,7 +68,8 @@ class DetailViewModel(
             if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return DetailViewModel(
-                    useCase = useCase,
+                    api = api,
+                    schedulerProvider = schedulerProvider,
                     currencyFormatter = currencyFormatter,
                     goal = goal
                 ) as T

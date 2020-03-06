@@ -7,10 +7,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.util.Resource
+import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
-class SavingsGoalsViewModel(private val repository: GoalsRepository) : BaseViewModel() {
+class SavingsGoalsViewModel(
+    private val repository: GoalsRepository,
+    schedulerProvider: BaseSchedulerProvider
+) : BaseViewModel(schedulerProvider) {
 
     private val _liveData = MutableLiveData<Resource<List<SavingsGoal>>>()
     val liveData: LiveData<Resource<List<SavingsGoal>>>
@@ -32,23 +36,24 @@ class SavingsGoalsViewModel(private val repository: GoalsRepository) : BaseViewM
     }
 
     private fun showSavingsGoals() {
-        compositeDisposable.add(repository.getSavingsGoals()
+        composeObservable { repository.getSavingsGoals() }
             .subscribe({ goals ->
                 _liveData.postValue(Resource.Success(goals))
             }
             ) {
                 _liveData.postValue(Resource.Failure(it.localizedMessage))
                 Timber.e(it)
-            })
+            }.also { compositeDisposable.add(it) }
     }
 
     class Factory @Inject constructor(
-        private val repository: GoalsRepository
+        private val repository: GoalsRepository,
+        private val schedulerProvider: BaseSchedulerProvider
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SavingsGoalsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SavingsGoalsViewModel(repository) as T
+                return SavingsGoalsViewModel(repository, schedulerProvider) as T
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }

@@ -50,7 +50,7 @@ class SavingsGoalsViewModelTest {
         val executor = DiskIOThreadExecutor()
         val remoteDataSource = SavingsGoalsRemoteDataSource(api)
         val localDataSource = QapitalLocalDataSource(executor, dao)
-        repository = GoalsRepository(remoteDataSource, localDataSource, executor, schedulerProvider)
+        repository = GoalsRepository(remoteDataSource, localDataSource, executor)
 
         savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
     }
@@ -60,7 +60,7 @@ class SavingsGoalsViewModelTest {
         val observableResponse = Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(api.requestSavingGoals()).thenReturn(observableResponse)
 
-        val viewModel = SavingsGoalsViewModel(repository)
+        val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
 
         with(viewModel.liveData.value) {
             if (this is Resource.Success) {

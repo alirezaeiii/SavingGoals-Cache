@@ -5,7 +5,6 @@ import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
-import com.sample.android.qapital.data.usecase.DetailUseCase
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
@@ -61,8 +60,12 @@ class DetailViewModelTest {
             Observable.just(QapitalService.SavingsRuleWrapper(listOf(savingsRule)))
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
-        val useCase = DetailUseCase(schedulerProvider, api)
-        val viewModel = DetailViewModel(useCase, CurrencyFormatterFraction(Locale.getDefault()), savingsGoal)
+        val viewModel = DetailViewModel(
+            api,
+            schedulerProvider,
+            CurrencyFormatterFraction(Locale.getDefault()),
+            savingsGoal
+        )
 
         with(viewModel.feeds.value) {
             if (this is Resource.Success) {
