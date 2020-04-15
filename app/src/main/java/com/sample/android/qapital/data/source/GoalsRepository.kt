@@ -26,7 +26,7 @@ class GoalsRepository @Inject constructor(
             val countDownLatch = CountDownLatch(1)
             localDataSource.getSavingsGoals(object : GoalsDataSource.LoadGoalsCallback {
                 override fun onGoalsLoaded(savingsGoals: List<SavingsGoal>) {
-                    items = Observable.just(savingsGoals)
+                    items = Observable.create { emitter -> emitter.onNext(savingsGoals) }
                     countDownLatch.countDown()
                 }
 
