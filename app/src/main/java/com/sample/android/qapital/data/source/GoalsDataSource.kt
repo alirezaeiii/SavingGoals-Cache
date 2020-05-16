@@ -16,9 +16,7 @@ interface GoalsDataSource {
 
     fun getSavingsGoals(): Observable<List<SavingsGoal>>
 
-    fun saveGoal(goal: SavingsGoal)
-
-    fun deleteAllGoals()
+    fun saveGoals(goals: Array<SavingsGoal>)
 
     fun refreshGoals()
 }

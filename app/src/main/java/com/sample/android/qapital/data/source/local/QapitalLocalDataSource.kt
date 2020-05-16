@@ -28,13 +28,10 @@ class QapitalLocalDataSource @Inject constructor(
         }
     }
 
-    override fun saveGoal(goal: SavingsGoal) {
-        appExecutors.execute { goalsDao.insertGoal(goal) }
+    override fun saveGoals(goals: Array<SavingsGoal>) {
+        appExecutors.execute { goalsDao.insertAll(*goals) }
     }
 
-    override fun deleteAllGoals() {
-        appExecutors.execute { goalsDao.deleteGoals() }
-    }
 
     override fun refreshGoals() {
         // Not required because the {@link GoalsRepository} handles the logic of refreshing the

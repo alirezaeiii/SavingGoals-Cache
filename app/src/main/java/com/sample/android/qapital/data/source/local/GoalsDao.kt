@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sample.android.qapital.data.SavingsGoal
+import io.reactivex.Observable
 
 /**
  * Data Access Object for the goals table.
@@ -24,10 +25,5 @@ interface GoalsDao {
      *
      * @param goal the goal to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertGoal(goal: SavingsGoal)
-
-    /**
-     * Delete all goals.
-     */
-    @Query("DELETE FROM Goals") fun deleteGoals()
+    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertAll(vararg goals: SavingsGoal)
 }

@@ -16,9 +16,7 @@ class SavingsGoalsRemoteDataSource @Inject constructor(
         api.requestSavingGoals().map { it.wrapper }
 
 
-    override fun saveGoal(goal: SavingsGoal) {}
-
-    override fun deleteAllGoals() {}
+    override fun saveGoals(goals: Array<SavingsGoal>) {}
 
     override fun refreshGoals() {
         // Not required because the {@link GoalsRepository} handles the logic of refreshing the

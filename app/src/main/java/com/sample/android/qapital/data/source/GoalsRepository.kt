@@ -40,14 +40,9 @@ class GoalsRepository @Inject constructor(
         return items
     }
 
-    override fun saveGoal(goal: SavingsGoal) {
-        remoteDataSource.saveGoal(goal)
-        localDataSource.saveGoal(goal)
-    }
-
-    override fun deleteAllGoals() {
-        remoteDataSource.deleteAllGoals()
-        localDataSource.deleteAllGoals()
+    override fun saveGoals(goal: Array<SavingsGoal>) {
+        remoteDataSource.saveGoals(goal)
+        localDataSource.saveGoals(goal)
     }
 
     override fun refreshGoals() {
@@ -64,14 +59,11 @@ class GoalsRepository @Inject constructor(
     }
 
     private fun refreshLocalDataSource(goals: Observable<List<SavingsGoal>>) {
-        localDataSource.deleteAllGoals()
         appExecutors.execute {
             goals.doOnComplete {
                 cacheIsDirty = false
             }.subscribe({ savingsGoals ->
-                for (goal in savingsGoals) {
-                    localDataSource.saveGoal(goal)
-                }
+                localDataSource.saveGoals(savingsGoals.toTypedArray())
             }) { Timber.e(it) }
         }
     }
