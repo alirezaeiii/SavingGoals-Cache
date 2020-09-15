@@ -2,7 +2,7 @@ package com.sample.android.qapital.data.source
 
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.local.LocalDataSource
-import com.sample.android.qapital.data.source.remote.RemoteDataSource
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.DiskIOThreadExecutor
 import io.reactivex.Observable
 import timber.log.Timber
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class GoalsRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: QapitalService,
     private val localDataSource: LocalDataSource,
     private val appExecutors: DiskIOThreadExecutor
 ) {
@@ -47,7 +47,7 @@ class GoalsRepository @Inject constructor(
     }
 
     private fun getGoalsFromRemoteDataSource(): Observable<List<SavingsGoal>> {
-        val goals = remoteDataSource.getSavingsGoals()
+        val goals = remoteDataSource.requestSavingGoals().map { it.wrapper }
         refreshLocalDataSource(goals)
         return goals
     }

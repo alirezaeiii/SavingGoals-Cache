@@ -43,6 +43,6 @@ class FeedAdapter(
 
     override fun getItemCount() = feeds.size
 
-    inner class FeedViewHolder(internal val binding: FeedItemBinding) :
+    class FeedViewHolder(internal val binding: FeedItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

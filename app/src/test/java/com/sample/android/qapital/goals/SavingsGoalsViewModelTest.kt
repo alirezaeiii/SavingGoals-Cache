@@ -1,17 +1,16 @@
 package com.sample.android.qapital.goals
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.data.source.local.GoalsDao
 import com.sample.android.qapital.data.source.local.QapitalLocalDataSource
-import com.sample.android.qapital.data.source.remote.SavingsGoalsRemoteDataSource
-import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
+import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.DiskIOThreadExecutor
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
+import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import io.reactivex.Observable
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -33,7 +32,7 @@ class SavingsGoalsViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var api: QapitalService
+    private lateinit var remoteDataSource: QapitalService
     @Mock
     private lateinit var dao: GoalsDao
     private lateinit var repository: GoalsRepository
@@ -48,7 +47,6 @@ class SavingsGoalsViewModelTest {
         schedulerProvider = ImmediateSchedulerProvider()
 
         val executor = DiskIOThreadExecutor()
-        val remoteDataSource = SavingsGoalsRemoteDataSource(api)
         val localDataSource = QapitalLocalDataSource(executor, dao)
         repository = GoalsRepository(remoteDataSource, localDataSource, executor)
 
@@ -58,7 +56,7 @@ class SavingsGoalsViewModelTest {
     @Test
     fun loadSavingsGoal() {
         val observableResponse = Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
-        `when`(api.requestSavingGoals()).thenReturn(observableResponse)
+        `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
 

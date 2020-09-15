@@ -5,8 +5,6 @@ import androidx.room.Room
 import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.data.source.local.QapitalDatabase
 import com.sample.android.qapital.data.source.local.QapitalLocalDataSource
-import com.sample.android.qapital.data.source.remote.RemoteDataSource
-import com.sample.android.qapital.data.source.remote.SavingsGoalsRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,10 +17,6 @@ abstract class GoalsRepositoryModule {
     @Binds
     internal abstract fun provideGoalsLocalDataSource(dataSource: QapitalLocalDataSource): LocalDataSource
 
-    @Singleton
-    @Binds
-    internal abstract fun provideGoalsRemoteDataSource(dataSource: SavingsGoalsRemoteDataSource): RemoteDataSource
-
     @Module
     companion object {
 
@@ -30,12 +24,9 @@ abstract class GoalsRepositoryModule {
         @Provides
         @JvmStatic
         internal fun provideDb(context: Application) =
-            Room.databaseBuilder(
-                context.applicationContext,
+            Room.databaseBuilder(context.applicationContext,
                 QapitalDatabase::class.java,
-                "Goals.db"
-            )
-                .build()
+                "Goals.db").build()
 
         @Singleton
         @Provides

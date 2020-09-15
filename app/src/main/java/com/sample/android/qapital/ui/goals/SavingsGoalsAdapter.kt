@@ -59,6 +59,6 @@ class SavingsGoalsAdapter(
     override fun getItemCount() = savingsGoals.size
 
 
-    inner class SavingsGoalViewHolder(internal val binding: SavingsGoalItemBinding) :
+    class SavingsGoalViewHolder(internal val binding: SavingsGoalItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
