@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sample.android.qapital.data.SavingsGoal
-import io.reactivex.Observable
 
 /**
  * Data Access Object for the goals table.
