@@ -1,9 +1,7 @@
 package com.sample.android.qapital.data.source.local
 
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.source.GoalsDataSource
 import com.sample.android.qapital.util.DiskIOThreadExecutor
-import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,9 +12,9 @@ import javax.inject.Singleton
 class QapitalLocalDataSource @Inject constructor(
     private val appExecutors: DiskIOThreadExecutor,
     private val goalsDao: GoalsDao
-) : GoalsDataSource {
+) : LocalDataSource {
 
-    override fun getSavingsGoals(callback: GoalsDataSource.LoadGoalsCallback) {
+    override fun getSavingsGoals(callback: LocalDataSource.LoadGoalsCallback) {
         appExecutors.execute {
             val goals = goalsDao.getGoals()
             if (goals.isEmpty()) {
@@ -31,13 +29,4 @@ class QapitalLocalDataSource @Inject constructor(
     override fun saveGoals(goals: Array<SavingsGoal>) {
         appExecutors.execute { goalsDao.insertAll(*goals) }
     }
-
-
-    override fun refreshGoals() {
-        // Not required because the {@link GoalsRepository} handles the logic of refreshing the
-        // goals from all the available data sources.
-    }
-
-    override fun getSavingsGoals(): Observable<List<SavingsGoal>> =
-        Observable.just(goalsDao.getGoals())
 }

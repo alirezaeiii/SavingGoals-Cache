@@ -1,9 +1,8 @@
-package com.sample.android.qapital.data.source
+package com.sample.android.qapital.data.source.local
 
 import com.sample.android.qapital.data.SavingsGoal
-import io.reactivex.Observable
 
-interface GoalsDataSource {
+interface LocalDataSource {
 
     interface LoadGoalsCallback {
 
@@ -14,9 +13,5 @@ interface GoalsDataSource {
 
     fun getSavingsGoals(callback: LoadGoalsCallback)
 
-    fun getSavingsGoals(): Observable<List<SavingsGoal>>
-
     fun saveGoals(goals: Array<SavingsGoal>)
-
-    fun refreshGoals()
 }

@@ -2,8 +2,10 @@ package com.sample.android.qapital.data.source
 
 import android.app.Application
 import androidx.room.Room
+import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.data.source.local.QapitalDatabase
 import com.sample.android.qapital.data.source.local.QapitalLocalDataSource
+import com.sample.android.qapital.data.source.remote.RemoteDataSource
 import com.sample.android.qapital.data.source.remote.SavingsGoalsRemoteDataSource
 import dagger.Binds
 import dagger.Module
@@ -15,13 +17,11 @@ abstract class GoalsRepositoryModule {
 
     @Singleton
     @Binds
-    @Local
-    internal abstract fun provideGoalsLocalDataSource(dataSource: QapitalLocalDataSource): GoalsDataSource
+    internal abstract fun provideGoalsLocalDataSource(dataSource: QapitalLocalDataSource): LocalDataSource
 
     @Singleton
     @Binds
-    @Remote
-    internal abstract fun provideGoalsRemoteDataSource(dataSource: SavingsGoalsRemoteDataSource): GoalsDataSource
+    internal abstract fun provideGoalsRemoteDataSource(dataSource: SavingsGoalsRemoteDataSource): RemoteDataSource
 
     @Module
     companion object {
@@ -30,7 +30,11 @@ abstract class GoalsRepositoryModule {
         @Provides
         @JvmStatic
         internal fun provideDb(context: Application) =
-            Room.databaseBuilder(context.applicationContext, QapitalDatabase::class.java, "Goals.db")
+            Room.databaseBuilder(
+                context.applicationContext,
+                QapitalDatabase::class.java,
+                "Goals.db"
+            )
                 .build()
 
         @Singleton

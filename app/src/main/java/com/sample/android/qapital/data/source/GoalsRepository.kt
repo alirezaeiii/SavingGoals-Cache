@@ -1,6 +1,8 @@
 package com.sample.android.qapital.data.source
 
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.source.local.LocalDataSource
+import com.sample.android.qapital.data.source.remote.RemoteDataSource
 import com.sample.android.qapital.util.DiskIOThreadExecutor
 import io.reactivex.Observable
 import timber.log.Timber
@@ -10,21 +12,21 @@ import javax.inject.Singleton
 
 @Singleton
 class GoalsRepository @Inject constructor(
-    @param:Remote private val remoteDataSource: GoalsDataSource,
-    @param:Local private val localDataSource: GoalsDataSource,
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
     private val appExecutors: DiskIOThreadExecutor
-) : GoalsDataSource {
+) {
 
     private var cacheIsDirty = false
 
-    override fun getSavingsGoals(): Observable<List<SavingsGoal>> {
+    fun getSavingsGoals(): Observable<List<SavingsGoal>> {
 
         lateinit var items: Observable<List<SavingsGoal>>
         if (cacheIsDirty) {
             items = getGoalsFromRemoteDataSource()
         } else {
             val countDownLatch = CountDownLatch(1)
-            localDataSource.getSavingsGoals(object : GoalsDataSource.LoadGoalsCallback {
+            localDataSource.getSavingsGoals(object : LocalDataSource.LoadGoalsCallback {
                 override fun onGoalsLoaded(savingsGoals: List<SavingsGoal>) {
                     items = Observable.create { emitter -> emitter.onNext(savingsGoals) }
                     countDownLatch.countDown()
@@ -40,17 +42,9 @@ class GoalsRepository @Inject constructor(
         return items
     }
 
-    override fun saveGoals(goal: Array<SavingsGoal>) {
-        remoteDataSource.saveGoals(goal)
-        localDataSource.saveGoals(goal)
-    }
-
-    override fun refreshGoals() {
+    fun refreshGoals() {
         cacheIsDirty = true
     }
-
-
-    override fun getSavingsGoals(callback: GoalsDataSource.LoadGoalsCallback) {}
 
     private fun getGoalsFromRemoteDataSource(): Observable<List<SavingsGoal>> {
         val goals = remoteDataSource.getSavingsGoals()

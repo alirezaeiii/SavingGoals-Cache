@@ -11,7 +11,7 @@ ext {
     compileSdkVersion = 28
 
     //Libraries
-    gradleVersion = '3.5.0'
+    gradleVersion = '3.6.3'
     kotlinVersion = '1.3.21'
     supportLibraryVersion = '1.1.0'
     ktxCoreVersion = '1.1.0-alpha04'
