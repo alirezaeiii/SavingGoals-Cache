@@ -12,6 +12,4 @@ interface LocalDataSource {
     }
 
     fun getSavingsGoals(callback: LoadGoalsCallback)
-
-    fun saveGoals(goals: Array<SavingsGoal>)
 }

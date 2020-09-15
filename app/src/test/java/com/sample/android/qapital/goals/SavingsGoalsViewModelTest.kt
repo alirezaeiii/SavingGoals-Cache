@@ -33,6 +33,7 @@ class SavingsGoalsViewModelTest {
 
     @Mock
     private lateinit var remoteDataSource: QapitalService
+
     @Mock
     private lateinit var dao: GoalsDao
     private lateinit var repository: GoalsRepository
@@ -48,14 +49,15 @@ class SavingsGoalsViewModelTest {
 
         val executor = DiskIOThreadExecutor()
         val localDataSource = QapitalLocalDataSource(executor, dao)
-        repository = GoalsRepository(remoteDataSource, localDataSource, executor)
+        repository = GoalsRepository(remoteDataSource, localDataSource, dao, schedulerProvider)
 
         savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
     }
 
     @Test
     fun loadSavingsGoal() {
-        val observableResponse = Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
+        val observableResponse =
+            Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)

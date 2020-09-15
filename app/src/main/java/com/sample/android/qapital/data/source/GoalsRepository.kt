@@ -1,9 +1,10 @@
 package com.sample.android.qapital.data.source
 
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.source.local.GoalsDao
 import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.network.QapitalService
-import com.sample.android.qapital.util.DiskIOThreadExecutor
+import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
@@ -14,13 +15,13 @@ import javax.inject.Singleton
 class GoalsRepository @Inject constructor(
     private val remoteDataSource: QapitalService,
     private val localDataSource: LocalDataSource,
-    private val appExecutors: DiskIOThreadExecutor
+    private val goalsDao: GoalsDao,
+    private val schedulerProvider: BaseSchedulerProvider
 ) {
 
     private var cacheIsDirty = false
 
     fun getSavingsGoals(): Observable<List<SavingsGoal>> {
-
         lateinit var items: Observable<List<SavingsGoal>>
         if (cacheIsDirty) {
             items = getGoalsFromRemoteDataSource()
@@ -53,12 +54,11 @@ class GoalsRepository @Inject constructor(
     }
 
     private fun refreshLocalDataSource(goals: Observable<List<SavingsGoal>>) {
-        appExecutors.execute {
-            goals.doOnComplete {
-                cacheIsDirty = false
-            }.subscribe({ savingsGoals ->
-                localDataSource.saveGoals(savingsGoals.toTypedArray())
+        val disposable = goals.subscribeOn(schedulerProvider.io())
+            .doOnComplete { cacheIsDirty = false }
+            .subscribe({ savingsGoals ->
+                goalsDao.insertAll(*savingsGoals.toTypedArray())
             }) { Timber.e(it) }
-        }
+        disposable.dispose()
     }
 }
