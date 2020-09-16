@@ -22,25 +22,25 @@ class GoalsRepository @Inject constructor(
     private var cacheIsDirty = false
 
     fun getSavingsGoals(): Observable<List<SavingsGoal>> {
-        lateinit var items: Observable<List<SavingsGoal>>
+        lateinit var goals: Observable<List<SavingsGoal>>
         if (cacheIsDirty) {
-            items = getGoalsFromRemoteDataSource()
+            goals = getGoalsFromRemoteDataSource()
         } else {
             val countDownLatch = CountDownLatch(1)
             localDataSource.getSavingsGoals(object : LocalDataSource.LoadGoalsCallback {
                 override fun onGoalsLoaded(savingsGoals: List<SavingsGoal>) {
-                    items = Observable.create { emitter -> emitter.onNext(savingsGoals) }
+                    goals = Observable.create { emitter -> emitter.onNext(savingsGoals) }
                     countDownLatch.countDown()
                 }
 
                 override fun onDataNotAvailable() {
-                    items = getGoalsFromRemoteDataSource()
+                    goals = getGoalsFromRemoteDataSource()
                     countDownLatch.countDown()
                 }
             })
             countDownLatch.await()
         }
-        return items
+        return goals
     }
 
     fun refreshGoals() {
