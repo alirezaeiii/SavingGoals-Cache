@@ -85,7 +85,6 @@ constructor() // Required empty public constructor
                                 }
                             })
                         }
-                    scheduleLayoutAnimation()
                 }
             }
         })
