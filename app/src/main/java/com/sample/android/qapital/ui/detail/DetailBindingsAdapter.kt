@@ -84,4 +84,10 @@ object DetailBindingsAdapter {
     fun showData(view: LinearLayout, resource: Resource<*>?) {
         view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
     }
+
+    @JvmStatic
+    @BindingAdapter("visibleGone")
+    fun visibleGone(view: View, visible: Boolean) {
+        view.visibility = if (visible) View.VISIBLE else View.GONE
+    }
 }
