@@ -50,8 +50,8 @@ ext {
             palette            : "androidx.palette:palette:${paletteVersion}",
             lifecycle          : "android.arch.lifecycle:runtime:${archLifecycleVersion}",
             lifecycleExtensions: "android.arch.lifecycle:extensions:${archLifecycleVersion}",
-            room               : "android.arch.persistence.room:runtime:${roomVersion}",
-            roomCompiler       : "android.arch.persistence.room:compiler:${roomVersion}",
+            room               : "androidx.room:room-runtime:${roomVersion}",
+            roomCompiler       : "androidx.room:room-compiler:${roomVersion}",
             guava              : "com.google.guava:guava:${guavaVersion}"
     ]
 
