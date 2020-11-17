@@ -4,7 +4,7 @@
     <string name="retry">Retry</string>
     <string name="target_amount">of %s</string>
     <string name="view_name_header_image">detail:header:image</string>
-    <string name="goals_items_load_failed">Something went wrong while loading your goals.</string>
+    <string name="failed_loading_msg">Something went wrong &#8230;</string>
     <string name="this_week_savings">This week \u2022\u0020</string>
     <string name="your_rules">Your\nRules</string>
 </resources>

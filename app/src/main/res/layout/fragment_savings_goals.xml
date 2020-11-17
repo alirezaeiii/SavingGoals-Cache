@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/padding_normal"
                 android:gravity="center_horizontal"
-                android:text="@string/goals_items_load_failed"
+                android:text="@string/failed_loading_msg"
                 android:textColor="@android:color/black" />
 
             <Button
