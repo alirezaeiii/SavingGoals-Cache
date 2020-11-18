@@ -57,9 +57,9 @@ private val moshi = Moshi.Builder()
     .build()
 
 private fun getLoggerInterceptor(): Interceptor {
-    val logger = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+    val logger = HttpLoggingInterceptor {
         Timber.d(it)
-    })
+    }
     logger.level = HttpLoggingInterceptor.Level.BASIC
     return logger
 }
