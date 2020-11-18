@@ -36,7 +36,7 @@ class DetailViewModel(
 
     init {
         arrayOf(composeObservable { api.requestFeeds(goal.id).map { it.wrapper } }
-            .doOnSubscribe { _feeds.postValue(Resource.Loading()) }
+            .doOnSubscribe { _feeds.value = Resource.Loading() }
             .subscribe({ feeds ->
                 _feeds.postValue(Resource.Success(feeds))
                 var weekSum = 0f
@@ -49,7 +49,7 @@ class DetailViewModel(
                 Timber.e(it)
             }
             , composeObservable { api.requestSavingRules().map { it.wrapper } }
-                .doOnSubscribe { _savingsRules.postValue(Resource.Loading()) }
+                .doOnSubscribe { _savingsRules.value = Resource.Loading() }
                 .subscribe({ rules ->
                     _savingsRules.postValue(Resource.Success(rules.joinToString { it.type }))
                 }) {
