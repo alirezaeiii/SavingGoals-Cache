@@ -6,7 +6,7 @@ import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
 import javax.inject.Inject
@@ -21,6 +21,8 @@ class GoalsRepository @Inject constructor(
 ) {
 
     private var cacheIsDirty = false
+
+    private val compositeDisposable = CompositeDisposable()
 
     fun getSavingsGoals(): Observable<List<SavingsGoal>> {
         lateinit var goals: Observable<List<SavingsGoal>>
@@ -55,13 +57,12 @@ class GoalsRepository @Inject constructor(
     }
 
     private fun refreshLocalDataSource(goals: Observable<List<SavingsGoal>>) {
-        lateinit var disposable: Disposable
-        disposable = goals.subscribeOn(schedulerProvider.io())
+        goals.subscribeOn(schedulerProvider.io())
             .doOnComplete { cacheIsDirty = false }
-            .doFinally { disposable.dispose() }
+            .doFinally { compositeDisposable.clear() }
             .subscribe({ savingsGoals ->
                 goalsDao.insertAll(*savingsGoals.toTypedArray())
-            }) { Timber.e(it) }
+            }) { Timber.e(it) }.also { compositeDisposable.add(it) }
 
     }
 }
