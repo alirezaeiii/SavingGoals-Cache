@@ -44,7 +44,7 @@ object SavingsGoalsBindingsAdapter {
     @JvmStatic
     @BindingAdapter("refreshing")
     fun setSwipeRefreshLayout(view: SwipeRefreshLayout, resource: Resource<*>?) {
-        view.isRefreshing = resource is Resource.Loading || resource is Resource.Reloading
+        view.isRefreshing = resource is Resource.Loading
         view.isEnabled = resource !is Resource.Failure
     }
 
@@ -57,6 +57,6 @@ object SavingsGoalsBindingsAdapter {
     @JvmStatic
     @BindingAdapter("showData")
     fun showData(view: RecyclerView, resource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Reloading || resource is Resource.Success) View.VISIBLE else View.GONE
+        view.visibility = if (resource is Resource.Failure) View.GONE else View.VISIBLE
     }
 }
