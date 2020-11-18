@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-                name="vm"
-                type="com.sample.android.qapital.viewmodels.DetailViewModel"/>
+            name="vm"
+            type="com.sample.android.qapital.viewmodels.DetailViewModel" />
     </data>
 
     <LinearLayout
-            android:id="@+id/rules_layout"
-            android:layout_width="match_parent"
+        android:id="@+id/rules_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_normal"
+        app:showListData="@{vm.feeds}"
+        app:showDataDetail="@{vm.savingsRules}">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_normal"
-            app:showData="@{vm.savingsRules}">
+            android:layout_marginEnd="@dimen/padding_normal"
+            android:text="@string/your_rules"
+            android:textColor="@color/grey_darker" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/padding_normal"
-                android:text="@string/your_rules"
-                android:textColor="@color/grey_darker"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:layout_gravity="center_vertical"
-                android:text="@{vm.savingsRules}"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{vm.savingsRules}"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

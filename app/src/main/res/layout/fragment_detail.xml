@@ -1,131 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-                name="vm"
-                type="com.sample.android.qapital.viewmodels.DetailViewModel"/>
+            name="vm"
+            type="com.sample.android.qapital.viewmodels.DetailViewModel" />
 
         <variable
-                name="goal"
-                type="com.sample.android.qapital.data.SavingsGoal"/>
+            name="goal"
+            type="com.sample.android.qapital.data.SavingsGoal" />
 
-        <variable name="formatter"
-                type="com.sample.android.qapital.util.CurrencyFormatter"/>
+        <variable
+            name="formatter"
+            type="com.sample.android.qapital.util.CurrencyFormatter" />
     </data>
 
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="256dp"
-                        app:collapsedTitleTextAppearance="@style/CollapsedToolbar"
-                        app:contentScrim="?attr/colorPrimary"
-                        app:expandedTitleTextAppearance="@style/ExpandedToolbar"
-                        app:expandedTitleMarginBottom="68dp"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                        app:title="@{goal.name}">
+                    android:layout_width="match_parent"
+                    android:layout_height="256dp"
+                    app:collapsedTitleTextAppearance="@style/CollapsedToolbar"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:expandedTitleMarginBottom="68dp"
+                    app:expandedTitleTextAppearance="@style/ExpandedToolbar"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:title="@{goal.name}">
 
-                    <FrameLayout android:layout_width="match_parent"
-                                 android:layout_height="match_parent">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                         <ImageView
-                                android:id="@+id/movie_poster"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                app:layout_collapseMode="parallax"
-                                app:imageUrl="@{goal.imageUrl}"
-                                android:transitionName="@string/view_name_header_image"
-                                tools:ignore="contentDescription"/>
+                            android:id="@+id/movie_poster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:transitionName="@string/view_name_header_image"
+                            app:imageUrl="@{goal.imageUrl}"
+                            app:layout_collapseMode="parallax"
+                            tools:ignore="contentDescription" />
 
-                        <RelativeLayout android:layout_width="match_parent"
-                                        android:layout_height="48dp"
-                                        android:layout_gravity="bottom"
-                                        android:layout_marginBottom="@dimen/padding_normal"
-                                        android:paddingStart="@dimen/padding_large"
-                                        android:paddingEnd="@dimen/padding_large">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/padding_normal"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large">
 
                             <TextView
-                                    android:id="@+id/goal_current_balance"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="26sp"
-                                    android:text="@{formatter.format(goal.currentBalance)}"/>
+                                android:id="@+id/goal_current_balance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{formatter.format(goal.currentBalance)}"
+                                android:textSize="26sp" />
 
-                            <TextView android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:text='@{goal.targetAmount != null ? @string/target_amount(formatter.format(goal.targetAmount)) : ""}'
-                                      android:textSize="26sp"
-                                      android:paddingStart="@dimen/padding_micro"
-                                      android:paddingEnd="@dimen/padding_micro"
-                                      android:layout_toEndOf="@+id/goal_current_balance"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/goal_current_balance"
+                                android:paddingStart="@dimen/padding_micro"
+                                android:paddingEnd="@dimen/padding_micro"
+                                android:text='@{goal.targetAmount != null ? @string/target_amount(formatter.format(goal.targetAmount)) : ""}'
+                                android:textSize="26sp" />
 
                             <ProgressBar
-                                    style="?android:attr/progressBarStyleHorizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/progress"
-                                    android:progressBackgroundTint="@android:color/black"
-                                    android:progressTint="@android:color/white"
-                                    android:layout_below="@+id/goal_current_balance"
-                                    android:max="@{goal.targetAmount}"
-                                    android:progress="@{goal.currentBalance}"
-                                    app:visibleGone="@{goal.targetAmount != null}"/>
+                                android:id="@+id/progress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/goal_current_balance"
+                                android:max="@{goal.targetAmount}"
+                                android:progress="@{goal.currentBalance}"
+                                android:progressBackgroundTint="@android:color/black"
+                                android:progressTint="@android:color/white"
+                                app:visibleGone="@{goal.targetAmount != null}" />
 
                         </RelativeLayout>
 
                     </FrameLayout>
 
                     <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
-                            app:layout_collapseMode="pin"
-                            app:theme="@style/Toolbar"/>
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:theme="@style/Toolbar" />
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <include layout="@layout/rules_item"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             app:vm="@{vm}"/>
+                    <include
+                        layout="@layout/rules_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:vm="@{vm}" />
 
-                    <include layout="@layout/detail_sum_item"
-                             android:id="@+id/sticky"
-                             style="@style/Sticky"
-                             app:vm="@{vm}"/>
+                    <include
+                        android:id="@+id/sticky"
+                        style="@style/Sticky"
+                        layout="@layout/detail_sum_item"
+                        app:vm="@{vm}" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/list"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:layoutManager="LinearLayoutManager"
-                            app:items="@{vm.feeds}"/>
+                        android:id="@+id/list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:items="@{vm.feeds}"
+                        app:layoutManager="LinearLayoutManager" />
 
                 </LinearLayout>
 
@@ -134,12 +141,13 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="145dp"
-                app:showLoading="@{vm.feeds}"/>
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="145dp"
+            app:showLoadingDetail="@{vm.savingsRules}"
+            app:showLoading="@{vm.feeds}" />
 
     </FrameLayout>
 

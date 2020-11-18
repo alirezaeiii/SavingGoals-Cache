@@ -3,7 +3,6 @@ package com.sample.android.qapital.ui.detail
 import android.text.format.DateUtils
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -74,15 +73,17 @@ object DetailBindingsAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("showLoading")
-    fun showLoading(view: ProgressBar, resource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
+    @BindingAdapter("showLoading", "showLoadingDetail")
+    fun showLoading(view: ProgressBar, resource: Resource<*>?, detailResource: Resource<*>?) {
+        view.visibility = if (resource is Resource.Loading || detailResource is Resource.Loading)
+            View.VISIBLE else View.GONE
     }
 
     @JvmStatic
-    @BindingAdapter("showData")
-    fun showData(view: LinearLayout, resource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
+    @BindingAdapter(value = ["showListData", "showDataDetail"], requireAll = false)
+    fun showDetailData(view: View, resource: Resource<*>?, detailResource: Resource<*>?) {
+        view.visibility = if (resource is Resource.Success && detailResource is Resource.Success)
+            View.VISIBLE else View.GONE
     }
 
     @JvmStatic
