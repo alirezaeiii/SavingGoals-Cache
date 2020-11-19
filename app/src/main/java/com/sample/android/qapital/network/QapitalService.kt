@@ -53,7 +53,7 @@ interface QapitalService {
  * full Kotlin compatibility.
  */
 private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
+    .addLast(KotlinJsonAdapterFactory())
     .build()
 
 private fun getLoggerInterceptor(): Interceptor {
