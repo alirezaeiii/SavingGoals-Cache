@@ -54,10 +54,6 @@ constructor() // Required empty public constructor
                     ContextCompat.getColor(context, R.color.colorPrimary),
                     ContextCompat.getColor(context, R.color.colorPrimaryDark)
                 )
-
-                setOnRefreshListener {
-                    viewModel.refresh()
-                }
             }
 
             retry_button.setOnClickListener {

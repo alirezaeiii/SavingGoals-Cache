@@ -21,16 +21,18 @@ class SavingsGoalsViewModel(
         get() = _liveData
 
     init {
-        load()
-    }
-
-    fun load() {
         _liveData.value = Resource.Loading()
         showSavingsGoals()
     }
 
     fun refresh() {
         _liveData.value = Resource.Reloading()
+        repository.refreshGoals()
+        showSavingsGoals()
+    }
+
+    fun load() {
+        _liveData.value = Resource.Loading()
         repository.refreshGoals()
         showSavingsGoals()
     }

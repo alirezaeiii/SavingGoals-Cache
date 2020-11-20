@@ -19,6 +19,7 @@
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:onRefreshListener="@{vm::refresh}"
             app:refreshing="@{vm.liveData}">
 
             <androidx.recyclerview.widget.RecyclerView
