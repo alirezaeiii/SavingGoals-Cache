@@ -17,24 +17,20 @@ import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
+import com.sample.android.qapital.ui.detail.BaseFragment
 import com.sample.android.qapital.ui.detail.DetailActivity
 import com.sample.android.qapital.ui.detail.EXTRA_SAVINGS_GOAL
-import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_savings_goals.view.*
 import javax.inject.Inject
 
 class SavingsGoalsFragment @Inject
 constructor() // Required empty public constructor
-    : DaggerFragment() {
+    : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
-
-    @Inject
-    lateinit var currencyFormatter: CurrencyFormatter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

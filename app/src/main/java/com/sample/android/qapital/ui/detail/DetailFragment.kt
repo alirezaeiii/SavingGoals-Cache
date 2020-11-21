@@ -9,21 +9,16 @@ import androidx.lifecycle.ViewModelProviders
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentDetailBinding
-import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : DaggerFragment() {
+    : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
-
-    @Inject
-    lateinit var currencyFormatter: CurrencyFormatter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
