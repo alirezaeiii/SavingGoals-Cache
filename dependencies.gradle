@@ -17,7 +17,7 @@ ext {
     constraintLayoutVersion = '1.1.3'
     materialVersion = '1.2.0'
     recyclerViewVersion = '1.1.0'
-    swipeefreshVersion = '1.1.0'
+    swipeRefreshVersion = '1.1.0'
     paletteVersion = '1.0.0'
     rxJavaVersion = '2.1.9'
     rxAndroidVersion = '2.1.0'
@@ -46,7 +46,7 @@ ext {
             constraintLayout   : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
             material           : "com.google.android.material:material:${materialVersion}",
             recyclerView       : "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
-            swipeRefreshLayout : "androidx.swiperefreshlayout:swiperefreshlayout:${swipeefreshVersion}",
+            swipeRefreshLayout : "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshVersion}",
             palette            : "androidx.palette:palette:${paletteVersion}",
             lifecycle          : "android.arch.lifecycle:runtime:${archLifecycleVersion}",
             lifecycleExtensions: "android.arch.lifecycle:extensions:${archLifecycleVersion}",
