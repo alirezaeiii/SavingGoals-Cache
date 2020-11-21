@@ -47,10 +47,10 @@ dependencies {
     // Support libraries
     implementation Libs.kotlin
     implementation Libs.appCompat
-    implementation Libs.ktxCore
     implementation Libs.constraintLayout
     implementation Libs.material
-    implementation Libs.legacy
+    implementation Libs.recyclerView
+    implementation Libs.swipeRefreshLayout
     implementation Libs.palette
     implementation Libs.guava
 

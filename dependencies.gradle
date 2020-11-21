@@ -13,11 +13,11 @@ ext {
     //Libraries
     gradleVersion = '3.6.3'
     kotlinVersion = '1.3.72'
-    supportLibraryVersion = '1.1.0'
-    ktxCoreVersion = '1.1.0-alpha04'
+    supportLibraryVersion = '1.2.0'
     constraintLayoutVersion = '1.1.3'
-    materialVersion = '1.0.0'
-    legacyVersion = '1.0.0'
+    materialVersion = '1.2.0'
+    recyclerViewVersion = '1.1.0'
+    swipeefreshVersion = '1.1.0'
     paletteVersion = '1.0.0'
     rxJavaVersion = '2.1.9'
     rxAndroidVersion = '2.1.0'
@@ -43,10 +43,10 @@ ext {
     Libs = [
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
             appCompat          : "androidx.appcompat:appcompat:${supportLibraryVersion}",
-            ktxCore            : "androidx.core:core-ktx:${ktxCoreVersion}",
             constraintLayout   : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
             material           : "com.google.android.material:material:${materialVersion}",
-            legacy             : "androidx.legacy:legacy-support-v4:${legacyVersion}",
+            recyclerView       : "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
+            swipeRefreshLayout : "androidx.swiperefreshlayout:swiperefreshlayout:${swipeefreshVersion}",
             palette            : "androidx.palette:palette:${paletteVersion}",
             lifecycle          : "android.arch.lifecycle:runtime:${archLifecycleVersion}",
             lifecycleExtensions: "android.arch.lifecycle:extensions:${archLifecycleVersion}",
