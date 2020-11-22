@@ -1,4 +1,4 @@
-package com.sample.android.qapital.ui.detail
+package com.sample.android.qapital.ui
 
 import com.sample.android.qapital.util.CurrencyFormatter
 import dagger.android.support.DaggerFragment

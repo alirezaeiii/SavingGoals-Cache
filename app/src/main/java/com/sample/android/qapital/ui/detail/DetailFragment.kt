@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentDetailBinding
+import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject

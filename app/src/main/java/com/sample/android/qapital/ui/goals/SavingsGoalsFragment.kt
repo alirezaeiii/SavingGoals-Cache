@@ -17,7 +17,7 @@ import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
-import com.sample.android.qapital.ui.detail.BaseFragment
+import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.ui.detail.DetailActivity
 import com.sample.android.qapital.ui.detail.EXTRA_SAVINGS_GOAL
 import com.sample.android.qapital.util.Resource
