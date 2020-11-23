@@ -53,7 +53,7 @@ constructor() // Required empty public constructor
             }
 
             retry_button.setOnClickListener {
-                viewModel.load()
+                viewModel.loadSavingsGoals(false)
             }
         }
 

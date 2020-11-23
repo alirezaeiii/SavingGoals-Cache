@@ -21,21 +21,14 @@ class SavingsGoalsViewModel(
         get() = _liveData
 
     init {
-        load()
+        loadSavingsGoals(false)
     }
 
-    fun load() {
-        _liveData.value = Resource.Loading()
-        showSavingsGoals()
-    }
-
-    fun refresh() {
-        _liveData.value = Resource.Loading(true)
-        repository.refreshGoals()
-        showSavingsGoals()
-    }
-
-    private fun showSavingsGoals() {
+    fun loadSavingsGoals(isRefreshing: Boolean) {
+        _liveData.value = Resource.Loading(isRefreshing)
+        if (isRefreshing) {
+            repository.refreshGoals()
+        }
         composeObservable { repository.getSavingsGoals() }
             .subscribe({ goals ->
                 _liveData.postValue(Resource.Success(goals))
