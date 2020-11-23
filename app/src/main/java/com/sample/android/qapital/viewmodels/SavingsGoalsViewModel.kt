@@ -30,7 +30,7 @@ class SavingsGoalsViewModel(
     }
 
     fun refresh() {
-        _liveData.value = Resource.Reloading()
+        _liveData.value = Resource.Loading(true)
         repository.refreshGoals()
         showSavingsGoals()
     }
