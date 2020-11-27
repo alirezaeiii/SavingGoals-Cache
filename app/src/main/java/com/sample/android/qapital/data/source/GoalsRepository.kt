@@ -53,10 +53,10 @@ class GoalsRepository @Inject constructor(
     }
 
     private fun refreshLocalDataSource(goals: Observable<List<SavingsGoal>>) {
-        lateinit var disposable: Disposable
+        var disposable: Disposable? = null
         disposable = goals.subscribeOn(schedulerProvider.io())
             .doOnComplete { cacheIsDirty = false }
-            .doFinally { disposable.dispose() }
+            .doFinally { disposable?.dispose() }
             .subscribe({ savingsGoals ->
                 localDataSource.insertAll(savingsGoals)
             }) { Timber.e(it) }
