@@ -1,7 +1,6 @@
 package com.sample.android.qapital.data.source
 
 import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.source.local.GoalsDao
 import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
@@ -16,7 +15,6 @@ import javax.inject.Singleton
 class GoalsRepository @Inject constructor(
     private val remoteDataSource: QapitalService,
     private val localDataSource: LocalDataSource,
-    private val goalsDao: GoalsDao,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
@@ -60,8 +58,7 @@ class GoalsRepository @Inject constructor(
             .doOnComplete { cacheIsDirty = false }
             .doFinally { disposable.dispose() }
             .subscribe({ savingsGoals ->
-                goalsDao.insertAll(*savingsGoals.toTypedArray())
+                localDataSource.insertAll(savingsGoals)
             }) { Timber.e(it) }
-
     }
 }

@@ -1,5 +1,6 @@
 package com.sample.android.qapital.data.source.local
 
+import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.util.DiskIOThreadExecutor
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,5 +24,9 @@ class QapitalLocalDataSource @Inject constructor(
                 callback.onGoalsLoaded(goals)
             }
         }
+    }
+
+    override fun insertAll(savingsGoals: List<SavingsGoal>) {
+        goalsDao.insertAll(*savingsGoals.toTypedArray())
     }
 }

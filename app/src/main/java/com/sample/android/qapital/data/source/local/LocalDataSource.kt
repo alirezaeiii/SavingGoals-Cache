@@ -12,4 +12,6 @@ interface LocalDataSource {
     }
 
     fun getSavingsGoals(callback: LoadGoalsCallback)
+
+    fun insertAll(savingsGoals: List<SavingsGoal>)
 }
