@@ -49,7 +49,7 @@ class SavingsGoalsViewModelTest {
 
         val executor = DiskIOThreadExecutor()
         val localDataSource = QapitalLocalDataSource(executor, dao)
-        repository = GoalsRepository(remoteDataSource, localDataSource, dao, schedulerProvider)
+        repository = GoalsRepository(remoteDataSource, localDataSource, schedulerProvider)
 
         savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
     }
