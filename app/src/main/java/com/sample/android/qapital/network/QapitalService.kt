@@ -81,7 +81,7 @@ class Network {
                 .build()
         )
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
         .build()
 
     @Provides
