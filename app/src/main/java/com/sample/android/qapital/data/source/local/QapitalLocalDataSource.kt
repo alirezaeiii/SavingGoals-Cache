@@ -16,13 +16,14 @@ class QapitalLocalDataSource @Inject constructor(
 
     override fun getSavingsGoals(): Single<List<SavingsGoal>> =
         Single.create { singleSubscriber ->
-            goalsDao.getGoals().subscribe {
-                if (it.isEmpty()) {
-                    singleSubscriber.onError(NoDataException())
-                } else {
-                    singleSubscriber.onSuccess(it)
+            goalsDao.getGoals()
+                .subscribe {
+                    if (it.isEmpty()) {
+                        singleSubscriber.onError(NoDataException())
+                    } else {
+                        singleSubscriber.onSuccess(it)
+                    }
                 }
-            }
         }
 
     override fun insertAll(savingsGoals: List<SavingsGoal>) {

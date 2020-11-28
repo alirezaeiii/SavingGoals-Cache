@@ -27,16 +27,14 @@ class GoalsRepository @Inject constructor(
         } else {
             val latch = CountDownLatch(1)
             var disposable: Disposable? = null
-            disposable = localDataSource.getSavingsGoals().observeOn(schedulerProvider.io())
+            disposable = localDataSource.getSavingsGoals()
+                .observeOn(schedulerProvider.io())
                 .doFinally {
                     latch.countDown()
                     disposable?.dispose()
-                }
-                .subscribe({
+                }.subscribe({
                     goals = Observable.create { emitter -> emitter.onNext(it) }
-                }, {
-                    goals = getGoalsFromRemoteDataSource()
-                })
+                }, { goals = getGoalsFromRemoteDataSource() })
             latch.await()
         }
         return goals

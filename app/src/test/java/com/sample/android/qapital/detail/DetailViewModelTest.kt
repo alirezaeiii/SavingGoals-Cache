@@ -48,7 +48,7 @@ class DetailViewModelTest {
 
         savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
         feed = Feed("id", "type", "timestamp", "msg", 12f)
-        savingsRule = SavingsRule(1, "type", 12f)
+        savingsRule = SavingsRule(1, "type")
     }
 
     @Test
