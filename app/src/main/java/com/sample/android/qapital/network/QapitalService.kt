@@ -1,12 +1,10 @@
 package com.sample.android.qapital.network
 
+import com.google.gson.annotations.SerializedName
 import com.sample.android.qapital.BuildConfig
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
-import com.squareup.moshi.Json
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Observable
@@ -15,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import timber.log.Timber
@@ -33,28 +31,20 @@ interface QapitalService {
     fun requestSavingRules(): Observable<SavingsRuleWrapper>
 
     class SavingsGoalWrapper(
-        @Json(name = "savingsGoals")
+        @SerializedName("savingsGoals")
         val wrapper: List<SavingsGoal>
     )
 
     class FeedWrapper(
-        @Json(name = "feed")
+        @SerializedName("feed")
         val wrapper: List<Feed>
     )
 
     class SavingsRuleWrapper(
-        @Json(name = "savingsRules")
+        @SerializedName("savingsRules")
         val wrapper: List<SavingsRule>
     )
 }
-
-/**
- * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
- * full Kotlin compatibility.
- */
-private val moshi = Moshi.Builder()
-    .addLast(KotlinJsonAdapterFactory())
-    .build()
 
 private fun getLoggerInterceptor(): Interceptor {
     val logger = HttpLoggingInterceptor {
@@ -80,7 +70,7 @@ class Network {
                 .addInterceptor(getLoggerInterceptor())
                 .build()
         )
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
         .build()
 

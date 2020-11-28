@@ -23,7 +23,7 @@ ext {
     rxAndroidVersion = '2.1.0'
     retrofitVersion = '2.5.0'
     okhttpVersion = '3.12.0'
-    moshiVersion = '1.11.0'
+    gsonVersion = '2.8.6'
     timberVersion = '4.7.1'
     glideVersion = '4.8.0'
     daggerVersion = '2.21'
@@ -53,7 +53,8 @@ ext {
             room               : "androidx.room:room-runtime:${roomVersion}",
             roomCompiler       : "androidx.room:room-compiler:${roomVersion}",
             roomRxJava         : "androidx.room:room-rxjava2:${roomVersion}",
-            guava              : "com.google.guava:guava:${guavaVersion}"
+            guava              : "com.google.guava:guava:${guavaVersion}",
+            gson               : "com.google.code.gson:gson:${gsonVersion}"
     ]
 
     Dagger = [
@@ -67,11 +68,9 @@ ext {
     Square = [
             retrofit     : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             rxadapter    : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            retrofitMoshi: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            retrofitMoshi: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             retrofitMock : "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
             okhttp       : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
-            moshi        : "com.squareup.moshi:moshi:${moshiVersion}",
-            moshiKotlin  : "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
     ]
 
     Network = [

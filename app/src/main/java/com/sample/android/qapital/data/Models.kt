@@ -4,13 +4,13 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "goals")
 class SavingsGoal(
-    @Json(name = "goalImageURL")
+    @SerializedName("goalImageURL")
     val imageUrl: String,
     val targetAmount: Float?,
     val currentBalance: Float,
@@ -29,6 +29,5 @@ class Feed(
 
 class SavingsRule(
     val id: Int,
-    val type: String,
-    val amount: Float
+    val type: String
 )

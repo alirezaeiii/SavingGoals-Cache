@@ -53,6 +53,7 @@ dependencies {
     implementation Libs.swipeRefreshLayout
     implementation Libs.palette
     implementation Libs.guava
+    implementation Libs.gson
 
     // Architecture components
     implementation Libs.lifecycle
@@ -76,8 +77,6 @@ dependencies {
 
     // Other
     implementation Square.okhttp
-    implementation Square.moshi
-    implementation Square.moshiKotlin
     implementation Network.timber
     implementation Network.glide
     kapt Network.glideCompiler
