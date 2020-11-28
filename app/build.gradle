@@ -58,6 +58,7 @@ dependencies {
     implementation Libs.lifecycle
     implementation Libs.lifecycleExtensions
     implementation Libs.room
+    implementation Libs.roomRxJava
     kapt Libs.roomCompiler
 
     // Dagger
