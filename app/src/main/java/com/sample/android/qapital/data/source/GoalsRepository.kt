@@ -7,7 +7,6 @@ import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
-import java.util.concurrent.CountDownLatch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,25 +19,18 @@ class GoalsRepository @Inject constructor(
 
     private var cacheIsDirty = false
 
-    fun getSavingsGoals(): Observable<List<SavingsGoal>> {
-        lateinit var goals: Observable<List<SavingsGoal>>
-        if (cacheIsDirty) {
-            goals = getGoalsFromRemoteDataSource()
-        } else {
-            val latch = CountDownLatch(1)
-            var disposable: Disposable? = null
-            disposable = localDataSource.getSavingsGoals()
-                .observeOn(schedulerProvider.io())
-                .doFinally {
-                    latch.countDown()
-                    disposable?.dispose()
-                }.subscribe({
-                    goals = Observable.create { emitter -> emitter.onNext(it) }
-                }, { goals = getGoalsFromRemoteDataSource() })
-            latch.await()
-        }
-        return goals
-    }
+    fun getSavingsGoals(): Observable<List<SavingsGoal>> =
+        Observable.fromCallable { cacheIsDirty }
+            .flatMap {
+                if (it) {
+                    getGoalsFromRemoteDataSource()
+                } else {
+                    localDataSource.getSavingsGoals()
+                        .observeOn(schedulerProvider.io())
+                        .toObservable()
+                        .onErrorResumeNext(getGoalsFromRemoteDataSource())
+                }
+            }
 
     fun refreshGoals() {
         cacheIsDirty = true
