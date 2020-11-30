@@ -56,8 +56,7 @@ object SavingsGoalsBindingsAdapter {
     @JvmStatic
     @BindingAdapter("showData")
     fun showData(view: RecyclerView, resource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Loading && resource.isRefreshing
-            || resource is Resource.Success) View.VISIBLE else View.GONE
-
+        view.visibility = if (resource is Resource.Loading && resource.isRefreshing!! ||
+            resource is Resource.Success) View.VISIBLE else View.GONE
     }
 }
