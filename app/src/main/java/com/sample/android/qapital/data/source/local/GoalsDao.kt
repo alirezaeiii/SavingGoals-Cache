@@ -23,7 +23,7 @@ interface GoalsDao {
     /**
      * Insert a goal in the database. If the goal already exists, replace it.
      *
-     * @param goal the goal to be inserted.
+     * @param goals the goals to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertAll(vararg goals: SavingsGoal)
 }
