@@ -6,6 +6,7 @@ import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,6 +47,8 @@ class GoalsRepository @Inject constructor(
         disposable = savingsGoals.subscribeOn(schedulerProvider.io())
             .doOnComplete { cacheIsDirty = false }
             .doFinally { disposable?.dispose() }
-            .subscribe { localDataSource.insertAll(it) }
+            .subscribe({ localDataSource.insertAll(it) }, {
+                Timber.e(it)
+            })
     }
 }
