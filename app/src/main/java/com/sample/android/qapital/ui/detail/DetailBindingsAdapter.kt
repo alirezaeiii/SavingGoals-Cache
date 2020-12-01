@@ -80,7 +80,7 @@ object DetailBindingsAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["showListData", "showDataDetail"], requireAll = false)
+    @BindingAdapter("showListData", "showDataDetail")
     fun showDetailData(view: View, resource: Resource<*>?, detailResource: Resource<*>?) {
         view.visibility = if (resource is Resource.Success && detailResource is Resource.Success)
             View.VISIBLE else View.GONE
