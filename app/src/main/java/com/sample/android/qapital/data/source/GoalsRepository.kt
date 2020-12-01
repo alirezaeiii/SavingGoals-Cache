@@ -1,11 +1,11 @@
 package com.sample.android.qapital.data.source
 
+import android.annotation.SuppressLint
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -42,11 +42,10 @@ class GoalsRepository @Inject constructor(
         return savingsGoals
     }
 
+    @SuppressLint("CheckResult")
     private fun refreshLocalDataSource(savingsGoals: Observable<List<SavingsGoal>>) {
-        var disposable: Disposable? = null
-        disposable = savingsGoals.subscribeOn(schedulerProvider.io())
+        savingsGoals.subscribeOn(schedulerProvider.io())
             .doOnComplete { cacheIsDirty = false }
-            .doFinally { disposable?.dispose() }
             .subscribe({ localDataSource.insertAll(it) }, {
                 Timber.e(it)
             })
