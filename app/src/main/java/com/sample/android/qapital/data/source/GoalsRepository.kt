@@ -26,7 +26,6 @@ class GoalsRepository @Inject constructor(
                     getGoalsFromRemoteDataSource()
                 } else {
                     localDataSource.getSavingsGoals()
-                        .observeOn(schedulerProvider.io())
                         .toObservable()
                         .onErrorResumeNext(getGoalsFromRemoteDataSource())
                 }
