@@ -22,7 +22,6 @@ import com.sample.android.qapital.ui.detail.DetailActivity
 import com.sample.android.qapital.ui.detail.EXTRA_SAVINGS_GOAL
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
-import kotlinx.android.synthetic.main.fragment_savings_goals.view.*
 import javax.inject.Inject
 
 class SavingsGoalsFragment @Inject
@@ -32,7 +31,9 @@ constructor() // Required empty public constructor
     @Inject
     lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         val viewModel =
             ViewModelProviders.of(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
@@ -43,8 +44,28 @@ constructor() // Required empty public constructor
             lifecycleOwner = viewLifecycleOwner
         }
 
-        with(root) {
-            swipe_refresh.apply {
+        val viewModelAdapter =
+            SavingsGoalsAdapter(currencyFormatter, object : SavingsGoalClickCallback {
+                override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
+                    val intent = Intent(context, DetailActivity::class.java).apply {
+                        putExtras(Bundle().apply {
+                            putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
+                        })
+                    }
+                    val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        requireActivity(),
+                        Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
+                    )
+                    ActivityCompat.startActivity(
+                        requireContext(),
+                        intent,
+                        activityOptions.toBundle()
+                    )
+                }
+            })
+
+        with(binding) {
+            swipeRefresh.apply {
                 setColorSchemeColors(
                     ContextCompat.getColor(context, R.color.colorAccent),
                     ContextCompat.getColor(context, R.color.colorPrimary),
@@ -52,35 +73,21 @@ constructor() // Required empty public constructor
                 )
             }
 
-            retry_button.setOnClickListener {
+            retryButton.setOnClickListener {
                 viewModel.loadSavingsGoals(false)
+            }
+
+            recyclerView.apply {
+                setHasFixedSize(true)
+                adapter = viewModelAdapter
             }
         }
 
         viewModel.liveData.observe(this, Observer {
             if (it is Resource.Success) {
-                binding.list.apply {
-                    setHasFixedSize(true)
-                    adapter = it.data?.let { data ->
-                            SavingsGoalsAdapter(data, currencyFormatter, object : SavingsGoalClickCallback {
-                                override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
-                                    val intent = Intent(context, DetailActivity::class.java).apply {
-                                        putExtras(Bundle().apply {
-                                            putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
-                                        })
-                                    }
-                                    val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                        requireActivity(),
-                                        Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
-                                    )
-                                    ActivityCompat.startActivity(requireContext(), intent, activityOptions.toBundle())
-                                }
-                            })
-                        }
-                }
+                viewModelAdapter.submitList(it.data)
             }
         })
-
-        return root
+        return binding.root
     }
 }

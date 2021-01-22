@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "goals")
-class SavingsGoal(
+data class SavingsGoal(
     @SerializedName("goalImageURL")
     val imageUrl: String,
     val targetAmount: Float?,

@@ -56,7 +56,7 @@ object SavingsGoalsBindingsAdapter {
     @BindingAdapter("showData")
     fun showData(recyclerView: RecyclerView, resource: Resource<*>?) {
         if (resource is Resource.Failure) {
-            recyclerView.adapter = null
+            (recyclerView.adapter as SavingsGoalsAdapter).submitList(null)
         }
     }
 }

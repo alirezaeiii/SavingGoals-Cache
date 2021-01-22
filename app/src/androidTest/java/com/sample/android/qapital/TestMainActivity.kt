@@ -53,19 +53,19 @@ class TestMainActivity {
 
     @Test
     fun shouldBeAbleToLoadList() {
-        onView(withId(R.id.list)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()))
     }
 
     @Test
     fun shouldBeAbleToScrollViewAndDisplayRuleDetails() {
-        onView(withId(R.id.list)).perform(RecyclerViewActions
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions
             .actionOnItemAtPosition<SavingsGoalsAdapter.SavingsGoalViewHolder>(5, click()))
         onView(withText(R.string.your_rules)).check(matches(isDisplayed()))
     }
 
     @Test
     fun shouldBeAbleToScrollViewAndDisplayWeekDetails() {
-        onView(withId(R.id.list)).perform(RecyclerViewActions
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions
             .actionOnItemAtPosition<SavingsGoalsAdapter.SavingsGoalViewHolder>(4, click()))
         onView(withText(R.string.this_week_savings)).check(matches(isDisplayed()))
     }
