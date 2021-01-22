@@ -29,11 +29,11 @@ class SavingsGoalsAdapter(
     }
 
     override fun onBindViewHolder(holder: SavingsGoalViewHolder, position: Int) {
-        val savingsGoals = getItem(position)
+        val savingsGoalItem = getItem(position)
         with(holder.binding) {
-            savingsGoal = savingsGoals
-            currentBalance = currencyFormatter.format(savingsGoals.currentBalance)
-            targetAmount = savingsGoals.targetAmount?.let { numberFormat.format(it) }
+            savingsGoal = savingsGoalItem
+            currentBalance = currencyFormatter.format(savingsGoalItem.currentBalance)
+            targetAmount = savingsGoalItem.targetAmount?.let { numberFormat.format(it) }
             executePendingBindings()
         }
     }
