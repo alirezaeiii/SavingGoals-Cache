@@ -21,7 +21,9 @@ constructor() // Required empty public constructor
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
 
@@ -41,6 +43,6 @@ constructor() // Required empty public constructor
             }
         }
 
-        return root
+        return binding.root
     }
 }
