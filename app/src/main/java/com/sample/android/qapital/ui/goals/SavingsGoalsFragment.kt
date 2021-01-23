@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
@@ -36,7 +36,7 @@ constructor() // Required empty public constructor
     ): View {
 
         val viewModel =
-            ViewModelProviders.of(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
         val binding = FragmentSavingsGoalsBinding.bind(root).apply {
@@ -83,7 +83,7 @@ constructor() // Required empty public constructor
             }
         }
 
-        viewModel.liveData.observe(this, Observer {
+        viewModel.liveData.observe(viewLifecycleOwner, Observer {
             if (it is Resource.Success) {
                 viewModelAdapter.submitList(it.data)
             }

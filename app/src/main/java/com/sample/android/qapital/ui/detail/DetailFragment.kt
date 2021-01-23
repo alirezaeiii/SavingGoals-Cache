@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentDetailBinding
@@ -23,7 +23,7 @@ constructor() // Required empty public constructor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val viewModel = ViewModelProviders.of(this, viewModelFactory)[DetailViewModel::class.java]
+        val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
