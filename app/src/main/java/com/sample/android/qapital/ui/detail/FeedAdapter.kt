@@ -23,10 +23,11 @@ class FeedAdapter(
         }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
+        val feed = feeds[position]
         with(holder.binding) {
-            message.text = feeds[position].message.fromHtml()
-            amount.text = currencyFormatterFraction.format(feeds[position].amount)
-            timestamp = dateTimeParser.toMillis(feeds[position].timestamp)
+            message.text = feed.message.fromHtml()
+            amount.text = currencyFormatterFraction.format(feed.amount)
+            timestamp = dateTimeParser.toMillis(feed.timestamp)
             executePendingBindings()
         }
     }
@@ -43,6 +44,5 @@ class FeedAdapter(
 
     override fun getItemCount() = feeds.size
 
-    class FeedViewHolder(internal val binding: FeedItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class FeedViewHolder(val binding: FeedItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

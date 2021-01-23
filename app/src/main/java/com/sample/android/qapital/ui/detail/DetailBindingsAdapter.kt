@@ -29,10 +29,7 @@ object DetailBindingsAdapter {
             recyclerView.apply {
                 setHasFixedSize(true)
                 addItemDecoration(
-                    DividerItemDecoration(
-                        recyclerView.context,
-                        DividerItemDecoration.VERTICAL
-                    )
+                    DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
                 )
                 adapter = feedAdapter
             }
