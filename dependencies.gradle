@@ -27,7 +27,7 @@ ext {
     timberVersion = '4.7.1'
     glideVersion = '4.8.0'
     daggerVersion = '2.21'
-    archLifecycleVersion = '1.1.1'
+    archLifecycleVersion = '2.2.0'
     roomVersion = '2.1.0-alpha03'
     guavaVersion = '18.0'
     threetenabpVersion = '1.2.0'
@@ -48,8 +48,7 @@ ext {
             recyclerView       : "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
             swipeRefreshLayout : "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshVersion}",
             palette            : "androidx.palette:palette:${paletteVersion}",
-            lifecycle          : "android.arch.lifecycle:runtime:${archLifecycleVersion}",
-            lifecycleExtensions: "android.arch.lifecycle:extensions:${archLifecycleVersion}",
+            lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${archLifecycleVersion}",
             room               : "androidx.room:room-runtime:${roomVersion}",
             roomCompiler       : "androidx.room:room-compiler:${roomVersion}",
             roomRxJava         : "androidx.room:room-rxjava2:${roomVersion}",

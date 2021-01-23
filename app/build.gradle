@@ -56,7 +56,6 @@ dependencies {
     implementation Libs.gson
 
     // Architecture components
-    implementation Libs.lifecycle
     implementation Libs.lifecycleExtensions
     implementation Libs.room
     implementation Libs.roomRxJava
