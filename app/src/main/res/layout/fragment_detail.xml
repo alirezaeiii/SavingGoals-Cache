@@ -62,6 +62,7 @@
                             android:paddingEnd="@dimen/padding_large">
 
                             <TextView
+                                android:id="@+id/goal_current_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{formatter.format(goal.currentBalance)}"
