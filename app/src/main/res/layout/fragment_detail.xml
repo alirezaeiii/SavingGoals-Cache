@@ -45,7 +45,6 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/movie_poster"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -63,7 +62,6 @@
                             android:paddingEnd="@dimen/padding_large">
 
                             <TextView
-                                android:id="@+id/goal_current_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{formatter.format(goal.currentBalance)}"
@@ -79,7 +77,6 @@
                                 android:textSize="26sp" />
 
                             <ProgressBar
-                                android:id="@+id/progress"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -122,13 +119,11 @@
                         app:vm="@{vm}" />
 
                     <include
-                        android:id="@+id/sticky"
                         style="@style/Sticky"
                         layout="@layout/detail_sum_item"
                         app:vm="@{vm}" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:items="@{vm.feeds}"
@@ -143,7 +138,6 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
