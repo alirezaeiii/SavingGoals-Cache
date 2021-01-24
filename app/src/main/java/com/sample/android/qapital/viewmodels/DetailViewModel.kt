@@ -22,7 +22,9 @@ class DetailViewModel(
     goal: SavingsGoal
 ) : BaseViewModel(schedulerProvider) {
 
-    private val _feeds = MutableLiveData<Resource<List<Feed>>>()
+    private val _feeds = MutableLiveData<Resource<List<Feed>>>().apply {
+        postValue(Resource.Loading())
+    }
     val feeds: LiveData<Resource<List<Feed>>>
         get() = _feeds
 
@@ -30,13 +32,13 @@ class DetailViewModel(
     val weekSumText: LiveData<String>
         get() = _weekSumText
 
-    private val _savingsRules = MutableLiveData<Resource<String>>()
+    private val _savingsRules = MutableLiveData<Resource<String>>().apply {
+        postValue(Resource.Loading())
+    }
     val savingsRules: LiveData<Resource<String>>
         get() = _savingsRules
 
     init {
-        _feeds.postValue(Resource.Loading())
-        _savingsRules.postValue(Resource.Loading())
         arrayOf(composeObservable { api.requestFeeds(goal.id).map { it.wrapper } }
             .subscribe({ feeds ->
                 _feeds.postValue(Resource.Success(feeds))
