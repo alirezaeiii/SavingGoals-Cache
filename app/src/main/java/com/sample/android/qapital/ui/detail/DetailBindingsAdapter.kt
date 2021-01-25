@@ -9,9 +9,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.util.Resource
-
+import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 
 object DetailBindingsAdapter {
 
@@ -23,9 +22,9 @@ object DetailBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("items")
-    fun bindItems(recyclerView: RecyclerView, resource: Resource<List<Feed>>?) {
+    fun bindItems(recyclerView: RecyclerView, resource: Resource<DetailWrapper>?) {
         if (resource is Resource.Success) {
-            val feedAdapter = resource.data?.let { FeedAdapter(it) }
+            val feedAdapter = resource.data?.let { FeedAdapter(it.feeds) }
             recyclerView.apply {
                 setHasFixedSize(true)
                 addItemDecoration(
@@ -62,25 +61,31 @@ object DetailBindingsAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("android:text")
-    fun setText(textView: TextView, resource: Resource<String>?) {
+    @BindingAdapter("sum")
+    fun setSumText(textView: TextView, resource: Resource<DetailWrapper>?) {
         if (resource is Resource.Success) {
-            textView.text = resource.data
+            textView.text = resource.data?.weekSumText
         }
     }
 
     @JvmStatic
-    @BindingAdapter("showLoading", "showLoadingDetail")
-    fun showLoading(view: ProgressBar, resource: Resource<*>?, detailResource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Loading || detailResource is Resource.Loading)
-            View.VISIBLE else View.GONE
+    @BindingAdapter("rules")
+    fun setRulesText(textView: TextView, resource: Resource<DetailWrapper>?) {
+        if (resource is Resource.Success) {
+            textView.text = resource.data?.savingRules
+        }
     }
 
     @JvmStatic
-    @BindingAdapter("showListData", "showDataDetail")
-    fun showDetailData(view: View, resource: Resource<*>?, detailResource: Resource<*>?) {
-        view.visibility = if (resource is Resource.Success && detailResource is Resource.Success)
-            View.VISIBLE else View.GONE
+    @BindingAdapter("showLoading")
+    fun showLoading(view: ProgressBar, resource: Resource<*>?) {
+        view.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
+    }
+
+    @JvmStatic
+    @BindingAdapter("showListData")
+    fun showDetailData(view: View, resource: Resource<*>?) {
+        view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
     }
 
     @JvmStatic

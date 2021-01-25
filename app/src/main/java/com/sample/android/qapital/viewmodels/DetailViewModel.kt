@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
@@ -18,47 +21,38 @@ import javax.inject.Inject
 class DetailViewModel(
     api: QapitalService,
     schedulerProvider: BaseSchedulerProvider,
-    currencyFormatter: CurrencyFormatterFraction,
+    private val currencyFormatter: CurrencyFormatterFraction,
     goal: SavingsGoal
 ) : BaseViewModel(schedulerProvider) {
 
-    private val _feeds = MutableLiveData<Resource<List<Feed>>>().apply {
+    private val _liveData = MutableLiveData<Resource<DetailWrapper>>().apply {
         postValue(Resource.Loading())
     }
-    val feeds: LiveData<Resource<List<Feed>>>
-        get() = _feeds
-
-    private val _weekSumText = MutableLiveData<String>()
-    val weekSumText: LiveData<String>
-        get() = _weekSumText
-
-    private val _savingsRules = MutableLiveData<Resource<String>>().apply {
-        postValue(Resource.Loading())
-    }
-    val savingsRules: LiveData<Resource<String>>
-        get() = _savingsRules
+    val liveData: LiveData<Resource<DetailWrapper>>
+        get() = _liveData
 
     init {
-        arrayOf(composeObservable { api.requestFeeds(goal.id).map { it.wrapper } }
-            .subscribe({ feeds ->
-                _feeds.postValue(Resource.Success(feeds))
-                var weekSum = 0f
-                for (feed in feeds) {
-                    weekSum += getAmountIfInCurrentWeek(feed)
-                }
-                _weekSumText.postValue(currencyFormatter.format(weekSum))
-            }) {
-                _feeds.postValue(Resource.Failure(it.localizedMessage))
-                Timber.e(it)
-            }
-            , composeObservable { api.requestSavingRules().map { it.wrapper } }
-                .subscribe({ rules ->
-                    _savingsRules.postValue(Resource.Success(rules.joinToString { it.type }))
-                }) {
-                    _savingsRules.postValue(Resource.Failure(it.localizedMessage))
-                    Timber.e(it)
-                }).also { compositeDisposable.addAll(*it) }
+        val source1 = api.requestFeeds(goal.id).map { it.wrapper }
+        val source2 = api.requestSavingRules().map { it.wrapper }
+
+        composeObservable { Observable.zip(source1, source2,
+                BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
+                { feeds, savingRules -> DetailWrapper(feeds,
+                    savingRules.joinToString { it.type },
+                    getWeekSumText(feeds))})
+        }.subscribe({
+            _liveData.postValue(Resource.Success(it))
+        }) {
+            _liveData.postValue(Resource.Failure(it.localizedMessage))
+            Timber.e(it)
+        }.also { compositeDisposable.add(it) }
     }
+
+    class DetailWrapper(
+        val feeds: List<Feed>,
+        val savingRules: String,
+        val weekSumText: String
+    )
 
     class Factory @Inject constructor(
         private val api: QapitalService,
@@ -69,15 +63,18 @@ class DetailViewModel(
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return DetailViewModel(
-                    api = api,
-                    schedulerProvider = schedulerProvider,
-                    currencyFormatter = currencyFormatter,
-                    goal = goal
-                ) as T
+                return DetailViewModel(api, schedulerProvider, currencyFormatter, goal) as T
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }
+    }
+
+    private fun getWeekSumText(feeds : List<Feed>) : String {
+        var weekSum = 0f
+        for (feed in feeds) {
+            weekSum += getAmountIfInCurrentWeek(feed)
+        }
+        return currencyFormatter.format(weekSum)
     }
 
     private fun getAmountIfInCurrentWeek(feed: Feed): Float {

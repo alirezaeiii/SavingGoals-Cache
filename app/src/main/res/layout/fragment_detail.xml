@@ -127,10 +127,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:items="@{vm.feeds}"
+                        app:items="@{vm.liveData}"
                         app:layoutManager="LinearLayoutManager"
-                        app:showDataDetail="@{vm.savingsRules}"
-                        app:showListData="@{vm.feeds}" />
+                        app:showListData="@{vm.liveData}" />
 
                 </LinearLayout>
 
@@ -143,8 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="145dp"
-            app:showLoading="@{vm.feeds}"
-            app:showLoadingDetail="@{vm.savingsRules}" />
+            app:showLoading="@{vm.liveData}" />
 
     </FrameLayout>
 

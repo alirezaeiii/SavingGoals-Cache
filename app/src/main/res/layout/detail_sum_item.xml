@@ -17,8 +17,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/padding_normal"
-        app:showDataDetail="@{vm.savingsRules}"
-        app:showListData="@{vm.feeds}">
+        app:showListData="@{vm.liveData}">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/grey_light"
-            android:text="@{vm.weekSumText}"
             android:textColor="@android:color/black"
+            app:sum="@{vm.liveData}"
             tools:text="$3.10" />
     </LinearLayout>
 

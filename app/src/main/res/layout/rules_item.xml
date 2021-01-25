@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/padding_normal"
-        app:showListData="@{vm.feeds}"
-        app:showDataDetail="@{vm.savingsRules}">
+        app:showListData="@{vm.liveData}">
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@{vm.savingsRules}"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            app:rules="@{vm.liveData}" />
 
     </LinearLayout>
 
