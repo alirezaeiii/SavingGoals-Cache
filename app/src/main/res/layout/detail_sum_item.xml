@@ -16,8 +16,7 @@
         android:background="@color/grey_light"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_normal"
-        app:showListData="@{vm.liveData}">
+        android:padding="@dimen/padding_normal">
 
         <TextView
             android:layout_width="wrap_content"
