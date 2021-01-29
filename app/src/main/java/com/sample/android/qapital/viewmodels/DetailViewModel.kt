@@ -5,14 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
+import com.sample.android.qapital.data.asWeekSumText
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.temporal.ChronoUnit
 import javax.inject.Inject
 
 class DetailViewModel(
@@ -20,17 +19,14 @@ class DetailViewModel(
     schedulerProvider: BaseSchedulerProvider,
     private val currencyFormatter: CurrencyFormatterFraction,
     goal: SavingsGoal
-) : BaseViewModel<DetailWrapper>(schedulerProvider) {
-
-    override val requestObservable: Observable<DetailWrapper> =
-        Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
-            api.requestSavingRules().map { it.wrapper },
-            BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
-            { feeds, savingRules -> DetailWrapper(feeds,
-                    savingRules.joinToString { it.type },
-                    getWeekSumText(feeds)
-                )
-            })
+) : BaseViewModel<DetailWrapper>(schedulerProvider,
+    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
+        api.requestSavingRules().map { it.wrapper },
+        BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
+        { feeds, savingRules -> DetailWrapper(feeds,
+            savingRules.joinToString { it.type },
+            feeds.asWeekSumText(currencyFormatter)
+        ) })) {
 
     init {
         sendRequest()
@@ -55,21 +51,5 @@ class DetailViewModel(
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }
-    }
-
-    private fun getWeekSumText(feeds: List<Feed>): String {
-        var weekSum = 0f
-        for (feed in feeds) {
-            weekSum += getAmountIfInCurrentWeek(feed)
-        }
-        return currencyFormatter.format(weekSum)
-    }
-
-    private fun getAmountIfInCurrentWeek(feed: Feed): Float {
-        val timestamp = ZonedDateTime.parse(feed.timestamp)
-        val now = ZonedDateTime.now()
-        return if (now.minus(1, ChronoUnit.WEEKS).isBefore(timestamp)) {
-            feed.amount
-        } else 0f
     }
 }

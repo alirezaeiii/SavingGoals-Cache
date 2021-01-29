@@ -5,15 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
 import javax.inject.Inject
 
 class SavingsGoalsViewModel(
     private val repository: GoalsRepository,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel<List<SavingsGoal>>(schedulerProvider) {
-
-    override val requestObservable: Observable<List<SavingsGoal>> = repository.getSavingsGoals()
+) : BaseViewModel<List<SavingsGoal>>(schedulerProvider, repository.getSavingsGoals()) {
 
     init {
         loadSavingsGoals(false)

@@ -10,16 +10,16 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
-abstract class BaseViewModel<T>(private val schedulerProvider: BaseSchedulerProvider) :
-    ViewModel() {
+open class BaseViewModel<T>(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val requestObservable: Observable<T>
+) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
     private val _liveData = MutableLiveData<Resource<T>>()
     val liveData: LiveData<Resource<T>>
         get() = _liveData
-
-    protected abstract val requestObservable: Observable<T>
 
     protected fun sendRequest() {
         _liveData.postValue(Resource.Loading)
