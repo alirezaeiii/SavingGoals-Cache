@@ -1,7 +1,5 @@
 package com.sample.android.qapital.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.Feed
@@ -11,11 +9,11 @@ import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterFraction
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
+import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
-import timber.log.Timber
 import javax.inject.Inject
 
 class DetailViewModel(
@@ -23,30 +21,24 @@ class DetailViewModel(
     schedulerProvider: BaseSchedulerProvider,
     private val currencyFormatter: CurrencyFormatterFraction,
     goal: SavingsGoal
-) : BaseViewModel(schedulerProvider) {
+) : BaseViewModel<DetailWrapper>(schedulerProvider) {
 
-    private val _liveData = MutableLiveData<Resource<DetailWrapper>>().apply {
-        postValue(Resource.Loading())
-    }
-    val liveData: LiveData<Resource<DetailWrapper>>
-        get() = _liveData
+    override val requestObservable: Observable<DetailWrapper> =
+        Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
+            api.requestSavingRules().map { it.wrapper },
+            BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
+            { feeds, savingRules ->
+                DetailWrapper(feeds,
+                    savingRules.joinToString { it.type },
+                    getWeekSumText(feeds)
+                )
+            })
 
     init {
-        val source1 = api.requestFeeds(goal.id).map { it.wrapper }
-        val source2 = api.requestSavingRules().map { it.wrapper }
-
-        composeObservable { Observable.zip(source1, source2,
-                BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
-                { feeds, savingRules -> DetailWrapper(feeds,
-                    savingRules.joinToString { it.type },
-                    getWeekSumText(feeds))})
-        }.subscribe({
-            _liveData.postValue(Resource.Success(it))
-        }) {
-            _liveData.postValue(Resource.Failure(it.localizedMessage))
-            Timber.e(it)
-        }.also { compositeDisposable.add(it) }
+        goalLiveData.postValue(Resource.Loading())
+        super.sendRequest()
     }
+
 
     class DetailWrapper(
         val feeds: List<Feed>,
@@ -69,7 +61,7 @@ class DetailViewModel(
         }
     }
 
-    private fun getWeekSumText(feeds : List<Feed>) : String {
+    private fun getWeekSumText(feeds: List<Feed>): String {
         var weekSum = 0f
         for (feed in feeds) {
             weekSum += getAmountIfInCurrentWeek(feed)

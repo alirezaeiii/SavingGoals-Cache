@@ -1,42 +1,31 @@
 package com.sample.android.qapital.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
-import timber.log.Timber
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class SavingsGoalsViewModel(
     private val repository: GoalsRepository,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel(schedulerProvider) {
+) : BaseViewModel<List<SavingsGoal>>(schedulerProvider) {
 
-    private val _liveData = MutableLiveData<Resource<List<SavingsGoal>>>()
-    val liveData: LiveData<Resource<List<SavingsGoal>>>
-        get() = _liveData
+    override val requestObservable: Observable<List<SavingsGoal>> = repository.getSavingsGoals()
 
     init {
         loadSavingsGoals(false)
     }
 
     fun loadSavingsGoals(isRefreshing: Boolean) {
-        _liveData.value = Resource.Loading(isRefreshing)
+        goalLiveData.value = Resource.Loading(isRefreshing)
         if (isRefreshing) {
             repository.refreshGoals()
         }
-        composeObservable { repository.getSavingsGoals() }
-            .subscribe({ goals ->
-                _liveData.postValue(Resource.Success(goals))
-            }
-            ) {
-                _liveData.postValue(Resource.Failure(it.localizedMessage))
-                Timber.e(it)
-            }.also { compositeDisposable.add(it) }
+        super.sendRequest()
     }
 
     class Factory @Inject constructor(
