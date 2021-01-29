@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.source.GoalsRepository
-import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import javax.inject.Inject
