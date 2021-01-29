@@ -15,17 +15,18 @@ abstract class BaseViewModel<T>(private val schedulerProvider: BaseSchedulerProv
 
     private val compositeDisposable = CompositeDisposable()
 
-    protected val mutableLiveData = MutableLiveData<Resource<T>>()
+    private val _liveData = MutableLiveData<Resource<T>>()
     val liveData: LiveData<Resource<T>>
-        get() = mutableLiveData
+        get() = _liveData
 
     protected abstract val requestObservable: Observable<T>
 
     protected fun sendRequest() {
+        _liveData.postValue(Resource.Loading)
         composeObservable { requestObservable }.subscribe({
-            mutableLiveData.postValue(Resource.Success(it))
+            _liveData.postValue(Resource.Success(it))
         }) {
-            mutableLiveData.postValue(Resource.Failure(it.localizedMessage))
+            _liveData.postValue(Resource.Failure(it.localizedMessage))
             Timber.e(it)
         }.also { compositeDisposable.add(it) }
     }

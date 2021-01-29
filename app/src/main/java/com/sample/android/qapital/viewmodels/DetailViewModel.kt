@@ -7,7 +7,6 @@ import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterFraction
-import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
@@ -34,10 +33,8 @@ class DetailViewModel(
             })
 
     init {
-        mutableLiveData.postValue(Resource.Loading())
-        super.sendRequest()
+        sendRequest()
     }
-
 
     class DetailWrapper(
         val feeds: List<Feed>,
