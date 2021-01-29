@@ -73,10 +73,6 @@ constructor() // Required empty public constructor
                 )
             }
 
-            retryButton.setOnClickListener {
-                viewModel.loadSavingsGoals(false)
-            }
-
             recyclerView.apply {
                 setHasFixedSize(true)
                 adapter = viewModelAdapter
