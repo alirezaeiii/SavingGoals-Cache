@@ -14,11 +14,8 @@ import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
-class DetailViewModel(
-    api: QapitalService,
-    schedulerProvider: BaseSchedulerProvider,
-    private val currencyFormatter: CurrencyFormatterFraction,
-    goal: SavingsGoal
+class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvider,
+    currencyFormatter: CurrencyFormatterFraction, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
     Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
         api.requestSavingRules().map { it.wrapper },
