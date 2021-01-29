@@ -27,15 +27,14 @@ class DetailViewModel(
         Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
             api.requestSavingRules().map { it.wrapper },
             BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
-            { feeds, savingRules ->
-                DetailWrapper(feeds,
+            { feeds, savingRules -> DetailWrapper(feeds,
                     savingRules.joinToString { it.type },
                     getWeekSumText(feeds)
                 )
             })
 
     init {
-        goalLiveData.postValue(Resource.Loading())
+        mutableLiveData.postValue(Resource.Loading())
         super.sendRequest()
     }
 

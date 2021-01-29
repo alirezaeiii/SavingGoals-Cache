@@ -21,7 +21,7 @@ class SavingsGoalsViewModel(
     }
 
     fun loadSavingsGoals(isRefreshing: Boolean) {
-        goalLiveData.value = Resource.Loading(isRefreshing)
+        mutableLiveData.value = Resource.Loading(isRefreshing)
         if (isRefreshing) {
             repository.refreshGoals()
         }
