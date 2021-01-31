@@ -1,4 +1,4 @@
-package com.sample.android.qapital.goals
+package com.sample.android.qapital
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.qapital.data.SavingsGoal
