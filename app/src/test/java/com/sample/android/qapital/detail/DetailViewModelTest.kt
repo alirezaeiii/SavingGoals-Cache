@@ -5,7 +5,7 @@ import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
-import com.sample.android.qapital.util.CurrencyFormatterFraction
+import com.sample.android.qapital.util.CurrencyFormatterDefault
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
@@ -63,19 +63,15 @@ class DetailViewModelTest {
         val viewModel = DetailViewModel(
             api,
             schedulerProvider,
-            CurrencyFormatterFraction(Locale.getDefault()),
+            CurrencyFormatterDefault(Locale.getDefault()),
             savingsGoal
         )
 
-        with(viewModel.feeds.value) {
+        with(viewModel.liveData.value) {
             if (this is Resource.Success) {
-                assertFalse(data!!.isEmpty())
-                assertTrue(data!!.size == 1)
-            }
-        }
-        with(viewModel.savingsRules.value) {
-            if (this is Resource.Success) {
-                assertFalse(data.isNullOrEmpty())
+                assertFalse(data?.feeds.isNullOrEmpty())
+                assertTrue(data?.feeds?.size == 1)
+                assertFalse(data?.savingRules.isNullOrEmpty())
             }
         }
     }

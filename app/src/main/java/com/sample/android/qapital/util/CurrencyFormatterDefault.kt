@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CurrencyFormatterFraction @Inject constructor(locale: Locale) {
+class CurrencyFormatterDefault @Inject constructor(locale: Locale) {
 
     private val formatter: NumberFormat = NumberFormat.getCurrencyInstance(locale)
 

@@ -8,13 +8,12 @@ import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.ui.detail.FeedAdapter.FeedViewHolder
 import com.sample.android.qapital.databinding.FeedItemBinding
 import com.sample.android.qapital.util.*
-import java.util.*
 
 class FeedAdapter(
-    feeds: List<Feed>
+    feeds: List<Feed>,
+    private val currencyFormatter: CurrencyFormatterDefault
 ) : RecyclerView.Adapter<FeedViewHolder>() {
 
-    private val currencyFormatterFraction = CurrencyFormatterFraction(Locale.getDefault())
     private val dateTimeParser = DateTimeParser
 
     private var feeds: List<Feed> = feeds
@@ -27,7 +26,7 @@ class FeedAdapter(
         val feed = feeds[position]
         with(holder.binding) {
             message.text = feed.message.fromHtml()
-            amount.text = currencyFormatterFraction.format(feed.amount)
+            amount.text = currencyFormatter.format(feed.amount)
             timestamp = dateTimeParser.toMillis(feed.timestamp)
             executePendingBindings()
         }

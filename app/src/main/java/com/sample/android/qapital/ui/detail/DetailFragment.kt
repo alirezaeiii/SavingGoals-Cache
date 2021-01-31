@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentDetailBinding
 import com.sample.android.qapital.ui.BaseFragment
+import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject
@@ -20,6 +24,9 @@ constructor() // Required empty public constructor
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
+
+    @Inject
+    lateinit var currencyFormatterDefault: CurrencyFormatterDefault
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,6 +50,18 @@ constructor() // Required empty public constructor
             }
         }
 
+        with(binding) {
+            viewModel.liveData.observe(viewLifecycleOwner, Observer { resource ->
+                if (resource is Resource.Success) {
+                    val feedAdapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
+                    recyclerView.apply {
+                        setHasFixedSize(true)
+                        addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+                        adapter = feedAdapter
+                    }
+                }
+            })
+        }
         return binding.root
     }
 }

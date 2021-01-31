@@ -20,6 +20,7 @@ import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
 import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.ui.detail.DetailActivity
 import com.sample.android.qapital.ui.detail.EXTRA_SAVINGS_GOAL
+import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import javax.inject.Inject
@@ -30,6 +31,9 @@ constructor() // Required empty public constructor
 
     @Inject
     lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
+
+    @Inject
+    lateinit var numberFormatter: NumberFormatter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,7 +49,7 @@ constructor() // Required empty public constructor
         }
 
         val viewModelAdapter =
-            SavingsGoalsAdapter(currencyFormatter, object : SavingsGoalClickCallback {
+            SavingsGoalsAdapter(currencyFormatter, numberFormatter, object : SavingsGoalClickCallback {
                 override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
                     val intent = Intent(context, DetailActivity::class.java).apply {
                         putExtras(Bundle().apply {

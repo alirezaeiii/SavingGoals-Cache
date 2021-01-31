@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.sample.android.qapital.util.CurrencyFormatterFraction
+import com.sample.android.qapital.util.CurrencyFormatterDefault
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
@@ -35,7 +35,7 @@ class SavingsRule(
     val type: String
 )
 
-fun List<Feed>.asWeekSumText(currencyFormatter: CurrencyFormatterFraction): String {
+fun List<Feed>.asWeekSumText(currencyFormatter: CurrencyFormatterDefault): String {
     var weekSum = 0f
     for (feed in this) {
         weekSum += getAmountIfInCurrentWeek(feed)

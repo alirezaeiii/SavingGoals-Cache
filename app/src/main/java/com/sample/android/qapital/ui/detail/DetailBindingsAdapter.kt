@@ -6,8 +6,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
@@ -18,21 +16,6 @@ object DetailBindingsAdapter {
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, imageUrl: String) {
         Glide.with(imageView.context).load(imageUrl).into(imageView)
-    }
-
-    @JvmStatic
-    @BindingAdapter("items")
-    fun bindItems(recyclerView: RecyclerView, resource: Resource<DetailWrapper>?) {
-        if (resource is Resource.Success) {
-            val feedAdapter = resource.data?.let { FeedAdapter(it.feeds) }
-            recyclerView.apply {
-                setHasFixedSize(true)
-                addItemDecoration(
-                    DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
-                )
-                adapter = feedAdapter
-            }
-        }
     }
 
     @JvmStatic

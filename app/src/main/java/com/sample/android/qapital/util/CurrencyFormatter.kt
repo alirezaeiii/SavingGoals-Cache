@@ -15,5 +15,4 @@ class CurrencyFormatter @Inject constructor(locale: Locale) {
     }
 
     fun format(number: Any): String = formatter.format(number)
-
 }

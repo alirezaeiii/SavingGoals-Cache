@@ -3,7 +3,8 @@ package com.sample.android.qapital.di
 import android.app.Application
 import android.content.Context
 import com.sample.android.qapital.util.CurrencyFormatter
-import com.sample.android.qapital.util.CurrencyFormatterFraction
+import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.SchedulerProvider
 import dagger.Binds
@@ -32,8 +33,13 @@ abstract class ApplicationModule {
         @Provides
         @Singleton
         @JvmStatic
-        internal fun provideCurrencyFormatterFraction() =
-            CurrencyFormatterFraction(Locale.getDefault())
+        internal fun provideCurrencyFormatterDefault() =
+            CurrencyFormatterDefault(Locale.getDefault())
+
+        @Provides
+        @Singleton
+        @JvmStatic
+        internal fun provideNumberFormatter() = NumberFormatter()
     }
 }
 

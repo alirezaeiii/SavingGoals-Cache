@@ -10,31 +10,22 @@ import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter.SavingsGoalViewHolder
 import com.sample.android.qapital.databinding.SavingsGoalItemBinding
 import com.sample.android.qapital.util.CurrencyFormatter
+import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.layoutInflater
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 
 class SavingsGoalsAdapter(
     private val currencyFormatter: CurrencyFormatter,
+    private val numberFormatter: NumberFormatter,
     private val clickCallback: SavingsGoalClickCallback
 ) : ListAdapter<SavingsGoal, SavingsGoalViewHolder>(DiffCallback) {
-
-    private val numberFormat = NumberFormat.getCurrencyInstance()
-
-    init {
-        val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
-        decimalFormatSymbols.currencySymbol = ""
-        numberFormat.decimalFormatSymbols = decimalFormatSymbols
-        numberFormat.maximumFractionDigits = 0
-    }
 
     override fun onBindViewHolder(holder: SavingsGoalViewHolder, position: Int) {
         val savingsGoalItem = getItem(position)
         with(holder.binding) {
             savingsGoal = savingsGoalItem
             currentBalance = currencyFormatter.format(savingsGoalItem.currentBalance)
-            targetAmount = savingsGoalItem.targetAmount?.let { numberFormat.format(it) }
+            targetAmount = savingsGoalItem.targetAmount?.let { numberFormatter.format(it) }
             executePendingBindings()
         }
     }

@@ -7,7 +7,7 @@ import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.data.asWeekSumText
 import com.sample.android.qapital.network.QapitalService
-import com.sample.android.qapital.util.CurrencyFormatterFraction
+import com.sample.android.qapital.util.CurrencyFormatterDefault
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
@@ -15,7 +15,7 @@ import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvider,
-    currencyFormatter: CurrencyFormatterFraction, goal: SavingsGoal
+    currencyFormatter: CurrencyFormatterDefault, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
     Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
         api.requestSavingRules().map { it.wrapper },
@@ -38,7 +38,7 @@ class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvi
     class Factory @Inject constructor(
         private val api: QapitalService,
         private val schedulerProvider: BaseSchedulerProvider,
-        private val currencyFormatter: CurrencyFormatterFraction,
+        private val currencyFormatter: CurrencyFormatterDefault,
         val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
