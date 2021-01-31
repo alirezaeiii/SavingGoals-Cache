@@ -65,6 +65,7 @@
                             <TextView
                                 android:id="@+id/goal_current_balance"
                                 android:layout_width="wrap_content"
+                                android:fontFamily="@font/product_sans_bold"
                                 android:layout_height="wrap_content"
                                 android:text="@{formatter.format(goal.currentBalance)}"
                                 android:textSize="26sp" />
@@ -74,6 +75,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@+id/goal_current_balance"
                                 android:paddingStart="@dimen/padding_micro"
+                                android:fontFamily="@font/product_sans_bold"
                                 android:paddingEnd="@dimen/padding_micro"
                                 android:text='@{goal.targetAmount != null ? @string/target_amount(formatter.format(goal.targetAmount)) : ""}'
                                 android:textSize="26sp" />
