@@ -5,13 +5,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.Feed
+import com.sample.android.qapital.ui.detail.FeedAdapter.FeedViewHolder
 import com.sample.android.qapital.databinding.FeedItemBinding
 import com.sample.android.qapital.util.*
 import java.util.*
 
 class FeedAdapter(
     feeds: List<Feed>
-) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
+) : RecyclerView.Adapter<FeedViewHolder>() {
 
     private val currencyFormatterFraction = CurrencyFormatterFraction(Locale.getDefault())
     private val dateTimeParser = DateTimeParser

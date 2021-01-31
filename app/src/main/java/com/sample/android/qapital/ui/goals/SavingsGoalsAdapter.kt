@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter.SavingsGoalViewHolder
 import com.sample.android.qapital.databinding.SavingsGoalItemBinding
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.layoutInflater
@@ -17,7 +18,7 @@ import java.text.NumberFormat
 class SavingsGoalsAdapter(
     private val currencyFormatter: CurrencyFormatter,
     private val clickCallback: SavingsGoalClickCallback
-) : ListAdapter<SavingsGoal, SavingsGoalsAdapter.SavingsGoalViewHolder>(DiffCallback) {
+) : ListAdapter<SavingsGoal, SavingsGoalViewHolder>(DiffCallback) {
 
     private val numberFormat = NumberFormat.getCurrencyInstance()
 
