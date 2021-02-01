@@ -14,8 +14,6 @@ class FeedAdapter(
     private val currencyFormatter: CurrencyFormatterDefault
 ) : RecyclerView.Adapter<FeedViewHolder>() {
 
-    private val dateTimeParser = DateTimeParser
-
     private var feeds: List<Feed> = feeds
         set(feeds) {
             field = feeds
@@ -27,7 +25,7 @@ class FeedAdapter(
         with(holder.binding) {
             message.text = feed.message.fromHtml()
             amount.text = currencyFormatter.format(feed.amount)
-            timestamp = dateTimeParser.toMillis(feed.timestamp)
+            timestamp = DateTimeParser.toMillis(feed.timestamp)
             executePendingBindings()
         }
     }
