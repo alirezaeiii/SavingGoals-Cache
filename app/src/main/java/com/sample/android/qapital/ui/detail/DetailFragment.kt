@@ -53,11 +53,10 @@ constructor() // Required empty public constructor
         with(binding) {
             viewModel.liveData.observe(viewLifecycleOwner, Observer { resource ->
                 if (resource is Resource.Success) {
-                    val feedAdapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                     recyclerView.apply {
                         setHasFixedSize(true)
                         addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-                        adapter = feedAdapter
+                        adapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                     }
                 }
             })
