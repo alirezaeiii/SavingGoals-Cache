@@ -58,10 +58,10 @@ class SavingsGoalsViewModelTest {
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
 
-        with(viewModel.liveData.value) {
-            if (this is Resource.Success) {
-                assertFalse(data!!.isEmpty())
-                assertTrue(data?.size == 1)
+        viewModel.liveData.value.let {
+            if (it is Resource.Success) {
+                assertFalse(it.data.isNullOrEmpty())
+                assertTrue(it.data?.size == 1)
             }
         }
     }

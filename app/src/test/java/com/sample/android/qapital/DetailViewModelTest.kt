@@ -67,11 +67,11 @@ class DetailViewModelTest {
             savingsGoal
         )
 
-        with(viewModel.liveData.value) {
-            if (this is Resource.Success) {
-                assertFalse(data?.feeds.isNullOrEmpty())
-                assertTrue(data?.feeds?.size == 1)
-                assertFalse(data?.savingRules.isNullOrEmpty())
+        viewModel.liveData.value.let {
+            if (it is Resource.Success) {
+                assertFalse(it.data?.feeds.isNullOrEmpty())
+                assertTrue(it.data?.feeds?.size == 1)
+                assertFalse(it.data?.savingRules.isNullOrEmpty())
             }
         }
     }
