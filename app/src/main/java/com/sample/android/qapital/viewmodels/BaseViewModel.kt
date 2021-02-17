@@ -31,7 +31,7 @@ open class BaseViewModel<T>(
         }.also { compositeDisposable.add(it) }
     }
 
-    private fun <T> composeObservable(task: () -> Observable<T>): Observable<T> = task()
+    private inline fun <T> composeObservable(task: () -> Observable<T>): Observable<T> = task()
         .doOnSubscribe { EspressoIdlingResource.increment() }
         .subscribeOn(schedulerProvider.io())
         .observeOn(schedulerProvider.ui())
