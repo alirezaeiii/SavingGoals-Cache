@@ -10,7 +10,7 @@ import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
-import io.reactivex.Observable
+import io.reactivex.Single
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -53,7 +53,7 @@ class SavingsGoalsViewModelTest {
 
         val savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
         val observableResponse =
-            Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
+            Single.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
