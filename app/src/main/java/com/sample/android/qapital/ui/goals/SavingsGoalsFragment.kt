@@ -25,10 +25,15 @@ import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import javax.inject.Inject
 
-class SavingsGoalsFragment @Inject constructor(
-        private val viewModelFactory: SavingsGoalsViewModel.Factory,
-        private val numberFormatter: NumberFormatter
-) : BaseFragment() {
+class SavingsGoalsFragment @Inject
+constructor() // Required empty public constructor
+    : BaseFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
+
+    @Inject
+    lateinit var numberFormatter: NumberFormatter
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

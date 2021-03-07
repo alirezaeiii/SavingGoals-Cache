@@ -19,11 +19,19 @@ import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject
 
-class DetailFragment @Inject constructor(
-        private val viewModelFactory: DetailViewModel.Factory,
-        private val currencyFormatterDefault: CurrencyFormatterDefault,
-        private val goal: SavingsGoal
-) : BaseFragment() {
+class DetailFragment @Inject
+constructor() // Required empty public constructor
+    : BaseFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: DetailViewModel.Factory
+
+    @Inject
+    lateinit var goal: SavingsGoal
+
+    @Inject
+    lateinit var currencyFormatterDefault: CurrencyFormatterDefault
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
