@@ -20,17 +20,13 @@ import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject
 
 class DetailFragment @Inject constructor(
-    private val goalItem: SavingsGoal
+        private val viewModelFactory: DetailViewModel.Factory,
+        private val goal: SavingsGoal,
+        private val currencyFormatterDefault: CurrencyFormatterDefault
 ) : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: DetailViewModel.Factory
-
-    @Inject
-    lateinit var currencyFormatterDefault: CurrencyFormatterDefault
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
@@ -38,7 +34,7 @@ class DetailFragment @Inject constructor(
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
-            goal = goalItem
+            goal = this@DetailFragment.goal
             formatter = currencyFormatter
             lifecycleOwner = viewLifecycleOwner
         }
@@ -57,13 +53,13 @@ class DetailFragment @Inject constructor(
                     recyclerView.apply {
                         setHasFixedSize(true)
                         addItemDecoration(
-                            DividerItemDecoration(
-                                recyclerView.context,
-                                DividerItemDecoration.VERTICAL
-                            )
+                                DividerItemDecoration(
+                                        recyclerView.context,
+                                        DividerItemDecoration.VERTICAL
+                                )
                         )
                         adapter =
-                            resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
+                                resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                     }
                 }
             })

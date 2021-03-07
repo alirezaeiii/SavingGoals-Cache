@@ -25,22 +25,17 @@ import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import javax.inject.Inject
 
-class SavingsGoalsFragment @Inject
-constructor() // Required empty public constructor
-    : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
-
-    @Inject
-    lateinit var numberFormatter: NumberFormatter
+class SavingsGoalsFragment @Inject constructor(
+        private val viewModelFactory: SavingsGoalsViewModel.Factory,
+        private val numberFormatter: NumberFormatter
+) : BaseFragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         val viewModel =
-            ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
+                ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
         val binding = FragmentSavingsGoalsBinding.bind(root).apply {
@@ -49,31 +44,31 @@ constructor() // Required empty public constructor
         }
 
         val viewModelAdapter =
-            SavingsGoalsAdapter(currencyFormatter, numberFormatter, object : SavingsGoalClickCallback {
-                override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
-                    val intent = Intent(context, DetailActivity::class.java).apply {
-                        putExtras(Bundle().apply {
-                            putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
-                        })
+                SavingsGoalsAdapter(currencyFormatter, numberFormatter, object : SavingsGoalClickCallback {
+                    override fun onClick(savingsGoal: SavingsGoal, poster: ImageView) {
+                        val intent = Intent(context, DetailActivity::class.java).apply {
+                            putExtras(Bundle().apply {
+                                putParcelable(EXTRA_SAVINGS_GOAL, savingsGoal)
+                            })
+                        }
+                        val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                requireActivity(),
+                                Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
+                        )
+                        ActivityCompat.startActivity(
+                                requireContext(),
+                                intent,
+                                activityOptions.toBundle()
+                        )
                     }
-                    val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        requireActivity(),
-                        Pair<View, String>(poster, ViewCompat.getTransitionName(poster))
-                    )
-                    ActivityCompat.startActivity(
-                        requireContext(),
-                        intent,
-                        activityOptions.toBundle()
-                    )
-                }
-            })
+                })
 
         with(binding) {
             swipeRefresh.apply {
                 setColorSchemeColors(
-                    ContextCompat.getColor(context, R.color.colorAccent),
-                    ContextCompat.getColor(context, R.color.colorPrimary),
-                    ContextCompat.getColor(context, R.color.colorPrimaryDark)
+                        ContextCompat.getColor(context, R.color.colorAccent),
+                        ContextCompat.getColor(context, R.color.colorPrimary),
+                        ContextCompat.getColor(context, R.color.colorPrimaryDark)
                 )
             }
 
