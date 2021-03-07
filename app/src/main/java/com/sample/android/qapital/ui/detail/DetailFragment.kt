@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
+import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
 import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.util.CurrencyFormatterDefault
@@ -18,9 +19,9 @@ import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject
 
-class DetailFragment @Inject
-constructor() // Required empty public constructor
-    : BaseFragment() {
+class DetailFragment @Inject constructor(
+    private val goalItem: SavingsGoal
+) : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
@@ -37,7 +38,7 @@ constructor() // Required empty public constructor
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
-            goal = viewModelFactory.goal
+            goal = goalItem
             formatter = currencyFormatter
             lifecycleOwner = viewLifecycleOwner
         }
@@ -55,8 +56,14 @@ constructor() // Required empty public constructor
                 if (resource is Resource.Success) {
                     recyclerView.apply {
                         setHasFixedSize(true)
-                        addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-                        adapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
+                        addItemDecoration(
+                            DividerItemDecoration(
+                                recyclerView.context,
+                                DividerItemDecoration.VERTICAL
+                            )
+                        )
+                        adapter =
+                            resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                     }
                 }
             })

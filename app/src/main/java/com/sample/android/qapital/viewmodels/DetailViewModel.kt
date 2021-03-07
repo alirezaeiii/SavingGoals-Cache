@@ -39,7 +39,7 @@ class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvi
         private val api: QapitalService,
         private val schedulerProvider: BaseSchedulerProvider,
         private val currencyFormatter: CurrencyFormatterDefault,
-        val goal: SavingsGoal
+        private val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
