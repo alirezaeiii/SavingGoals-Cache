@@ -21,8 +21,8 @@ import javax.inject.Inject
 
 class DetailFragment @Inject constructor(
         private val viewModelFactory: DetailViewModel.Factory,
-        private val goal: SavingsGoal,
-        private val currencyFormatterDefault: CurrencyFormatterDefault
+        private val currencyFormatterDefault: CurrencyFormatterDefault,
+        private val goal: SavingsGoal
 ) : BaseFragment() {
 
     override fun onCreateView(
@@ -34,9 +34,9 @@ class DetailFragment @Inject constructor(
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
             setVariable(BR.vm, viewModel)
+            lifecycleOwner = viewLifecycleOwner
             goal = this@DetailFragment.goal
             formatter = currencyFormatter
-            lifecycleOwner = viewLifecycleOwner
         }
 
         with(activity as AppCompatActivity) {
@@ -48,19 +48,14 @@ class DetailFragment @Inject constructor(
         }
 
         with(binding) {
+            recyclerView.apply {
+                setHasFixedSize(true)
+                addItemDecoration(DividerItemDecoration(recyclerView.context,
+                        DividerItemDecoration.VERTICAL))
+            }
             viewModel.liveData.observe(viewLifecycleOwner, Observer { resource ->
                 if (resource is Resource.Success) {
-                    recyclerView.apply {
-                        setHasFixedSize(true)
-                        addItemDecoration(
-                                DividerItemDecoration(
-                                        recyclerView.context,
-                                        DividerItemDecoration.VERTICAL
-                                )
-                        )
-                        adapter =
-                                resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
-                    }
+                    recyclerView.adapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                 }
             })
         }
