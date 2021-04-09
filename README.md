@@ -6,7 +6,7 @@ A sample to showcase Kotlin, MVVM, Dagger, RxJava, Room, Retrofit, DataBinding, 
 * Jetpack Libraries and Architecture Components.
 
 ## Testing
-Testing is done for ViewModel layer.
+Local unit testing is done for ViewModel layer.
 
 ## Libraries
 * [Android Jetpack](https://developer.android.com/jetpack)
