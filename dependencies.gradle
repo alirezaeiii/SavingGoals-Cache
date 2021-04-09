@@ -67,7 +67,7 @@ ext {
     Square = [
             retrofit     : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             rxadapter    : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            retrofitMoshi: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitGson: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             retrofitMock : "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
             okhttp       : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
     ]

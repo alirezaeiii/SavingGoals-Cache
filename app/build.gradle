@@ -71,7 +71,7 @@ dependencies {
     // Retrofit
     implementation Square.retrofit
     implementation Square.rxadapter
-    implementation Square.retrofitMoshi
+    implementation Square.retrofitGson
     implementation Square.retrofitMock
 
     // Other
