@@ -18,7 +18,7 @@ Local unit testing is done for ViewModel layer.
 * [Dagger](https://developer.android.com/training/dependency-injection/dagger-multi-module) is a fully static, compile-time dependency injection framework for Java, Kotlin, and Android.
 * [RxJava](https://github.com/ReactiveX/RxJava) is a library for composing asynchronous code using observable sequences.
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid) is a module that adds the minimum classes to RxJava to make writing reactive components in Android.
-* [Retrofit](https://square.github.io/retrofit/) is a Type-safe HTTP client for Android and Java and Kotlin by Square.
+* [Retrofit](https://square.github.io/retrofit/) is a Type-safe HTTP client for Android, Java and Kotlin by Square.
 * [Gson](https://github.com/google/gson) is a serialization/deserialization library to convert objects into JSON and back.
 * [OkHttp interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor) Logs HTTP requests and responses.
 * [Material Design](https://material.io/develop/android/) Build beautiful, usable products using Material Components for Android.
