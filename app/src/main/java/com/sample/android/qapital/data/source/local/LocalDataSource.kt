@@ -1,11 +1,12 @@
 package com.sample.android.qapital.data.source.local
 
 import com.sample.android.qapital.data.SavingsGoal
-import io.reactivex.Single
+import io.reactivex.Completable
+import io.reactivex.Observable
 
 interface LocalDataSource {
 
-    fun getSavingsGoals() : Single<List<SavingsGoal>>
+    fun getSavingsGoals() : Observable<List<SavingsGoal>>
 
-    fun insertAll(savingsGoals: List<SavingsGoal>)
+    fun insertAll(savingsGoals: List<SavingsGoal>) : Completable
 }

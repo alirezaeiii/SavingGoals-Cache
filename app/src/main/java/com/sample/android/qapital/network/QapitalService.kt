@@ -7,7 +7,7 @@ import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Single
+import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,13 +22,13 @@ import javax.inject.Singleton
 interface QapitalService {
 
     @GET("/savingsgoals")
-    fun requestSavingGoals(): Single<SavingsGoalWrapper>
+    fun requestSavingGoals(): Observable<SavingsGoalWrapper>
 
     @GET("/savingsgoals/{id}/feed")
-    fun requestFeeds(@Path("id") id: Int): Single<FeedWrapper>
+    fun requestFeeds(@Path("id") id: Int): Observable<FeedWrapper>
 
     @GET("/savingsrules")
-    fun requestSavingRules(): Single<SavingsRuleWrapper>
+    fun requestSavingRules(): Observable<SavingsRuleWrapper>
 
     class SavingsGoalWrapper(
         @SerializedName("savingsGoals")

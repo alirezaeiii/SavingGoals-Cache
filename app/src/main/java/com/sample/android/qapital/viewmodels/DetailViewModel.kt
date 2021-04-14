@@ -10,14 +10,14 @@ import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.util.CurrencyFormatterDefault
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvider,
     currencyFormatter: CurrencyFormatterDefault, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
-    Single.zip(api.requestFeeds(goal.id).map { it.wrapper },
+    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
         api.requestSavingRules().map { it.wrapper },
         BiFunction<List<Feed>, List<SavingsRule>, DetailWrapper>
         { feeds, savingRules -> DetailWrapper(feeds,

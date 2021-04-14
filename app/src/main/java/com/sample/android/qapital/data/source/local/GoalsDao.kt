@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sample.android.qapital.data.SavingsGoal
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 /**
@@ -25,5 +26,5 @@ interface GoalsDao {
      *
      * @param goals the goals to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertAll(vararg goals: SavingsGoal)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertAll(vararg goals: SavingsGoal) : Completable
 }

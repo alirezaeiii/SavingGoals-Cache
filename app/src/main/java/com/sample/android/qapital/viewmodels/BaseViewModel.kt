@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.sample.android.qapital.util.EspressoIdlingResource
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
 open class BaseViewModel<T>(
     private val schedulerProvider: BaseSchedulerProvider,
-    private val requestSingle: Single<T>
+    private val requestObservable: Observable<T>
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -23,7 +23,7 @@ open class BaseViewModel<T>(
 
     protected fun sendRequest() {
         _liveData.postValue(Resource.Loading)
-        composeSingle { requestSingle }.subscribe({
+        composeObservable { requestObservable }.subscribe({
             _liveData.postValue(Resource.Success(it))
         }) {
             _liveData.postValue(Resource.Failure(it.localizedMessage))
@@ -31,7 +31,7 @@ open class BaseViewModel<T>(
         }.also { compositeDisposable.add(it) }
     }
 
-    private inline fun <T> composeSingle(task: () -> Single<T>): Single<T> = task()
+    private inline fun <T> composeObservable(task: () -> Observable<T>): Observable<T> = task()
         .doOnSubscribe { EspressoIdlingResource.increment() }
         .subscribeOn(schedulerProvider.io())
         .observeOn(schedulerProvider.ui())
