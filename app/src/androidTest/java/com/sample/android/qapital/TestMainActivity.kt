@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.sample.android.qapital.ui.goals.SavingsGoalsActivity
+import com.sample.android.qapital.ui.MainActivity
 import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter
 import com.sample.android.qapital.util.EspressoIdlingResource
 import org.junit.After
@@ -25,7 +25,7 @@ class TestMainActivity {
 
     @Rule
     @JvmField
-    val activityTestRule = ActivityTestRule(SavingsGoalsActivity::class.java)
+    val activityTestRule = ActivityTestRule(MainActivity::class.java)
 
     /**
      * Prepare your test fixture for this test. In this case we register an IdlingResources with

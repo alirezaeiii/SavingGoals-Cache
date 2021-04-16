@@ -10,6 +10,7 @@ import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel
+import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -53,10 +54,10 @@ class DetailViewModelTest {
 
     @Test
     fun loadFeeds() {
-        val observableResponse1 = Single.just(QapitalService.FeedWrapper(listOf(feed)))
+        val observableResponse1 = Observable.just(QapitalService.FeedWrapper(listOf(feed)))
         `when`(api.requestFeeds(anyInt())).thenReturn(observableResponse1)
 
-        val observableResponse2 = Single.just(QapitalService.SavingsRuleWrapper(listOf(savingsRule)))
+        val observableResponse2 = Observable.just(QapitalService.SavingsRuleWrapper(listOf(savingsRule)))
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
         val viewModel = DetailViewModel(

@@ -11,11 +11,13 @@ ext {
     compileSdkVersion = 28
 
     //Libraries
-    gradleVersion = '3.6.3'
+    gradleVersion = '4.1.3'
     kotlinVersion = '1.3.72'
     supportLibraryVersion = '1.2.0'
+    coreVersion = '1.3.2'
     constraintLayoutVersion = '1.1.3'
     materialVersion = '1.2.0'
+    navigationVersion = '2.3.5'
     recyclerViewVersion = '1.1.0'
     swipeRefreshVersion = '1.1.0'
     paletteVersion = '1.0.0'
@@ -26,7 +28,7 @@ ext {
     gsonVersion = '2.8.6'
     timberVersion = '4.7.1'
     glideVersion = '4.8.0'
-    daggerVersion = '2.21'
+    daggerVersion = '2.26'
     archLifecycleVersion = '2.2.0'
     roomVersion = '2.1.0-alpha03'
     guavaVersion = '18.0'
@@ -43,8 +45,11 @@ ext {
     Libs = [
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
             appCompat          : "androidx.appcompat:appcompat:${supportLibraryVersion}",
+            core               : "androidx.core:core-ktx:${coreVersion}",
             constraintLayout   : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
             material           : "com.google.android.material:material:${materialVersion}",
+            navigation_fragment: "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
+            navigation_ui      : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
             recyclerView       : "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
             swipeRefreshLayout : "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshVersion}",
             palette            : "androidx.palette:palette:${paletteVersion}",
@@ -65,11 +70,11 @@ ext {
     ]
 
     Square = [
-            retrofit     : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            rxadapter    : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            retrofit    : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            rxadapter   : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             retrofitGson: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            retrofitMock : "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
-            okhttp       : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
+            retrofitMock: "com.squareup.retrofit2:retrofit-mock:${retrofitVersion}",
+            okhttp      : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
     ]
 
     Network = [

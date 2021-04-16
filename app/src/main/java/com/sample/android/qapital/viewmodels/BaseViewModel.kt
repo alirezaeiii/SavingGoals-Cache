@@ -22,7 +22,7 @@ open class BaseViewModel<T>(
         get() = _liveData
 
     protected fun sendRequest() {
-        _liveData.postValue(Resource.Loading)
+        _liveData.value = Resource.Loading
         composeObservable { requestObservable }.subscribe({
             _liveData.postValue(Resource.Success(it))
         }) {
