@@ -1,13 +1,14 @@
 package com.sample.android.qapital.ui.detail
 
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sample.android.qapital.R
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.databinding.FeedItemBinding
 import com.sample.android.qapital.ui.detail.FeedAdapter.FeedViewHolder
-import com.sample.android.qapital.util.*
+import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.DateTimeParser
+import com.sample.android.qapital.util.fromHtml
+import com.sample.android.qapital.util.layoutInflater
 
 class FeedAdapter(
     feeds: List<Feed>,
@@ -25,7 +26,7 @@ class FeedAdapter(
         with(holder.binding) {
             message.text = feed.message.fromHtml()
             amount.text = currencyFormatter.format(feed.amount)
-            //timestamp = DateTimeParser.toMillis(feed.timestamp)
+            timestamp = DateTimeParser.toMillis(feed.timestamp)
             executePendingBindings()
         }
     }

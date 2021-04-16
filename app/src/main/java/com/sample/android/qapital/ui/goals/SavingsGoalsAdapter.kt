@@ -20,20 +20,22 @@ class SavingsGoalsAdapter(
 
     override fun onBindViewHolder(holder: SavingsGoalViewHolder, position: Int) {
         val savingsGoalItem = getItem(position)
-//        with(holder.binding) {
-//            savingsGoal = savingsGoalItem
-//            callback = clickCallback
-//            currentBalance = currencyFormatter.format(savingsGoalItem.currentBalance)
-//            targetAmount = savingsGoalItem.targetAmount?.let { numberFormatter.format(it) }
-//            executePendingBindings()
-//        }
+        with(holder.binding) {
+            savingsGoal = savingsGoalItem
+            currentBalance = currencyFormatter.format(savingsGoalItem.currentBalance)
+            targetAmount = savingsGoalItem.targetAmount?.let { numberFormatter.format(it) }
+            executePendingBindings()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavingsGoalViewHolder {
         val binding = SavingsGoalItemBinding.inflate(
-                parent.context.layoutInflater,
-                parent, false
-            )
+            parent.context.layoutInflater,
+            parent, false
+        )
+        with(binding) {
+            callback = clickCallback
+        }
         return SavingsGoalViewHolder(binding)
     }
 
@@ -55,7 +57,7 @@ class SavingsGoalsAdapter(
         }
     }
 
-    class SavingsGoalViewHolder(binding: SavingsGoalItemBinding) :
+    class SavingsGoalViewHolder(val binding: SavingsGoalItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     /**

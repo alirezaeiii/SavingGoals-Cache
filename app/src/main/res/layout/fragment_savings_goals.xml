@@ -30,6 +30,7 @@
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:refreshing="@{vm.liveData}">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -64,8 +65,8 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/product_sans_regular"
                 android:layout_gravity="center"
+                android:fontFamily="@font/product_sans_regular"
                 android:text="@string/retry" />
 
         </LinearLayout>

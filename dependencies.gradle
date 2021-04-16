@@ -30,7 +30,7 @@ ext {
     glideVersion = '4.8.0'
     daggerVersion = '2.26'
     archLifecycleVersion = '2.2.0'
-    roomVersion = '2.1.0-alpha03'
+    roomVersion = '2.2.6'
     guavaVersion = '18.0'
     threetenabpVersion = '1.2.0'
 
