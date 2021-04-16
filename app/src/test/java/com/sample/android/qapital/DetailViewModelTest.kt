@@ -11,7 +11,6 @@ import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import io.reactivex.Observable
-import io.reactivex.Single
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before

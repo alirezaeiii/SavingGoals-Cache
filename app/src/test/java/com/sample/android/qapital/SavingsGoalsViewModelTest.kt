@@ -11,7 +11,6 @@ import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import io.reactivex.Observable
-import io.reactivex.Single
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -63,6 +62,23 @@ class SavingsGoalsViewModelTest {
             if (it is Resource.Success) {
                 assertFalse(it.data.isNullOrEmpty())
                 assertTrue(it.data?.size == 1)
+            }
+        }
+    }
+
+    @Test
+    fun errorLoadingSavingsGoal() {
+        val localDataSource = QapitalLocalDataSource(dao)
+        val repository = GoalsRepository(remoteDataSource, localDataSource)
+
+        val observableResponse = Observable.error<QapitalService.SavingsGoalWrapper>(Exception("error"))
+        `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
+
+        val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
+
+        viewModel.liveData.value.let {
+            if (it is Resource.Failure) {
+                assertTrue(it.cause == "error")
             }
         }
     }
