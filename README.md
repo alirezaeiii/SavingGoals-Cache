@@ -1,5 +1,5 @@
 # SavingGoals-Cache
-A sample to showcase Kotlin, MVVM, Dagger, RxJava, Room, Retrofit, DataBinding, Espresso and Unit test.
+A sample to showcase Kotlin, MVVM, Navigation, Dagger, RxJava, Room, Retrofit, DataBinding, Espresso and Unit test.
 
 ## Features
 * MVVM Architecture + Repository design Pattern.
@@ -13,6 +13,7 @@ Local unit testing is done for ViewModel layer.
    * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) ViewModel is designed to store and manage UI-related data in a lifecycle conscious way. This allows data to survive configuration changes such as screen rotations.
    * [DataBinding](https://developer.android.com/topic/libraries/data-binding/) is a Library in the support library that allows you to bind UI components in your layouts to data sources in your app using a declarative format rather than programmatically.
    * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) is lifecycle-aware, meaning it respects the lifecycle of other app components updating app component observers that are in an active lifecycle state.
+   * [Navigation](https://developer.android.com/guide/navigation/) Android Jetpack's Navigation component helps you implement effective navigation.
    * [Room](https://developer.android.com/topic/libraries/architecture/room) is a library for data storage persistence which provides an abstraction layer over SQLite.
 * [Glide](https://github.com/bumptech/glide) is an image loading and caching library for Android.
 * [Dagger](https://github.com/google/dagger) is a fully static, compile-time dependency injection framework for Java, Kotlin, and Android.
