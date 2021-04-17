@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
@@ -34,7 +34,7 @@ constructor() // Required empty public constructor
 
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
 
         val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
@@ -56,12 +56,15 @@ constructor() // Required empty public constructor
         }
 
         with(binding) {
+            toolbar.apply {
+                setNavigationOnClickListener { findNavController().navigateUp() }
+            }
             recyclerView.apply {
                 setHasFixedSize(true)
                 addItemDecoration(DividerItemDecoration(recyclerView.context,
                         DividerItemDecoration.VERTICAL))
             }
-            viewModel.liveData.observe(viewLifecycleOwner, Observer { resource ->
+            viewModel.liveData.observe(viewLifecycleOwner, { resource ->
                 if (resource is Resource.Success) {
                     recyclerView.adapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
                 }

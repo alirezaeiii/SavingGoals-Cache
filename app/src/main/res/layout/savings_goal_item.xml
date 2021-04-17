@@ -20,9 +20,6 @@
             name="callback"
             type="com.sample.android.qapital.ui.goals.SavingsGoalsAdapter.OnClickListener" />
 
-        <variable
-            name="poster"
-            type="android.widget.ImageView" />
     </data>
 
     <androidx.cardview.widget.CardView
