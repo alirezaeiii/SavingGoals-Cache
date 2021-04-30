@@ -52,7 +52,7 @@ class SavingsGoalsViewModelTest {
 
     @Test
     fun loadSavingsGoal() {
-        val repository by lazy { GoalsRepository(remoteDataSource, localDataSource) }
+        val repository = GoalsRepository(remoteDataSource, localDataSource)
 
         val savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
         val observableResponse =
@@ -71,7 +71,7 @@ class SavingsGoalsViewModelTest {
 
     @Test
     fun errorLoadingSavingsGoal() {
-        val repository by lazy { GoalsRepository(remoteDataSource, localDataSource) }
+        val repository = GoalsRepository(remoteDataSource, localDataSource)
 
         val observableResponse = Observable.error<QapitalService.SavingsGoalWrapper>(Exception("error"))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
