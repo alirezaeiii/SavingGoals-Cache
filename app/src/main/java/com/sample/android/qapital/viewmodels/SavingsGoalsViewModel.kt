@@ -10,7 +10,7 @@ import javax.inject.Inject
 class SavingsGoalsViewModel(
     private val repository: GoalsRepository,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel<List<SavingsGoal>>(schedulerProvider, repository.getSavingsGoals()) {
+) : BaseViewModel<List<SavingsGoal>>(schedulerProvider, repository.result) {
 
     init {
         loadSavingsGoals(false)
@@ -18,7 +18,7 @@ class SavingsGoalsViewModel(
 
     fun loadSavingsGoals(isRefreshing: Boolean) {
         if (isRefreshing) {
-            repository.refreshGoals()
+            repository.refresh()
         }
         super.sendRequest()
     }

@@ -9,29 +9,15 @@ import javax.inject.Singleton
 
 @Singleton
 class GoalsRepository @Inject constructor(
-        private val remoteDataSource: QapitalService,
-        private val localDataSource: LocalDataSource
-) {
+        remoteDataSource: QapitalService,
+        localDataSource: LocalDataSource,
+) : BaseRepository<List<SavingsGoal>>() {
 
-    private var cacheIsDirty = false
+    override val resultRemoteDataSource: Observable<List<SavingsGoal>> =
+            remoteDataSource.requestSavingGoals().map { it.wrapper }.flatMap {
+                localDataSource.insertAll(it).andThen(Observable.fromCallable { it })
+            }.doOnComplete { cacheIsDirty = false }
 
-    fun getSavingsGoals(): Observable<List<SavingsGoal>> =
-            Observable.fromCallable { cacheIsDirty }
-                    .flatMap {
-                        if (it) {
-                            getGoalsFromRemoteDataSource()
-                        } else {
-                            localDataSource.getSavingsGoals()
-                                    .onErrorResumeNext(getGoalsFromRemoteDataSource())
-                        }
-                    }
-
-    fun refreshGoals() {
-        cacheIsDirty = true
-    }
-
-    private fun getGoalsFromRemoteDataSource(): Observable<List<SavingsGoal>> =
-        remoteDataSource.requestSavingGoals().map { it.wrapper }.flatMap {
-                    localDataSource.insertAll(it).andThen(Observable.fromCallable { it })
-                }.doOnComplete { cacheIsDirty = false }
+    override val resultLocalDataSource: Observable<List<SavingsGoal>> =
+            localDataSource.getSavingsGoals().onErrorResumeNext(resultRemoteDataSource)
 }
