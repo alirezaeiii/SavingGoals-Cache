@@ -19,5 +19,5 @@ class GoalsRepository @Inject constructor(
         }.doOnComplete { cacheIsDirty = false }
 
     override val resultLocalDataSource: Observable<List<SavingsGoal>>
-        get() = localDataSource.getSavingsGoals().onErrorResumeNext(resultRemoteDataSource)
+        get() = localDataSource.getSavingsGoals()
 }

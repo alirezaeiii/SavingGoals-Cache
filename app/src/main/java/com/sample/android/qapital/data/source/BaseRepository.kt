@@ -14,7 +14,7 @@ abstract class BaseRepository<T> {
         if (it) {
             resultRemoteDataSource
         } else {
-            resultLocalDataSource
+            resultLocalDataSource.onErrorResumeNext(resultRemoteDataSource)
         }
     }
 
