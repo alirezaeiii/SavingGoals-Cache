@@ -38,22 +38,25 @@ class SavingsGoalsViewModelTest {
 
     private lateinit var schedulerProvider: BaseSchedulerProvider
 
+    private lateinit var localDataSource: QapitalLocalDataSource
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
         // Make the sure that all schedulers are immediate.
         schedulerProvider = ImmediateSchedulerProvider()
+
+        localDataSource = QapitalLocalDataSource(dao)
     }
 
     @Test
     fun loadSavingsGoal() {
-        val localDataSource = QapitalLocalDataSource(dao)
-        val repository = GoalsRepository(remoteDataSource, localDataSource)
+        val repository by lazy { GoalsRepository(remoteDataSource, localDataSource) }
 
         val savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
         val observableResponse =
-            Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
+                Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
@@ -68,8 +71,7 @@ class SavingsGoalsViewModelTest {
 
     @Test
     fun errorLoadingSavingsGoal() {
-        val localDataSource = QapitalLocalDataSource(dao)
-        val repository = GoalsRepository(remoteDataSource, localDataSource)
+        val repository by lazy { GoalsRepository(remoteDataSource, localDataSource) }
 
         val observableResponse = Observable.error<QapitalService.SavingsGoalWrapper>(Exception("error"))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
