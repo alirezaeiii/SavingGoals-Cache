@@ -42,19 +42,19 @@ object SavingsGoalsBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("refreshing")
-    fun setSwipeRefreshLayout(view: SwipeRefreshLayout, resource: Resource<*>?) {
+    fun <T> setSwipeRefreshLayout(view: SwipeRefreshLayout, resource: Resource<T>?) {
         view.isRefreshing = resource is Resource.Loading
     }
 
     @JvmStatic
     @BindingAdapter("showError")
-    fun showError(view: View, resource: Resource<*>?) {
+    fun <T> showError(view: View, resource: Resource<T>?) {
         view.visibility = if (resource is Resource.Failure) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
     @BindingAdapter("showData")
-    fun showData(recyclerView: RecyclerView, resource: Resource<*>?) {
+    fun <T> showData(recyclerView: RecyclerView, resource: Resource<T>?) {
         if (resource is Resource.Failure) {
             (recyclerView.adapter as SavingsGoalsAdapter).submitList(null)
         }

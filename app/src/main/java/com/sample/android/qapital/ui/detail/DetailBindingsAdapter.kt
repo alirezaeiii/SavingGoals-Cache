@@ -61,13 +61,13 @@ object DetailBindingsAdapter {
 
     @JvmStatic
     @BindingAdapter("showLoading")
-    fun showLoading(view: ProgressBar, resource: Resource<*>?) {
+    fun <T> showLoading(view: ProgressBar, resource: Resource<T>?) {
         view.visibility = if (resource is Resource.Loading) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
     @BindingAdapter("showData")
-    fun showData(view: View, resource: Resource<*>?) {
+    fun <T> showData(view: View, resource: Resource<T>?) {
         view.visibility = if (resource is Resource.Success) View.VISIBLE else View.GONE
     }
 
