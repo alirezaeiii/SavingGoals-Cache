@@ -57,7 +57,7 @@ ext {
             lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${archLifecycleVersion}",
             room               : "androidx.room:room-runtime:${roomVersion}",
             roomCompiler       : "androidx.room:room-compiler:${roomVersion}",
-            roomKtx         : "androidx.room:room-ktx:${roomVersion}",
+            roomKtx            : "androidx.room:room-ktx:${roomVersion}",
             guava              : "com.google.guava:guava:${guavaVersion}",
             gson               : "com.google.code.gson:gson:${gsonVersion}"
     ]
