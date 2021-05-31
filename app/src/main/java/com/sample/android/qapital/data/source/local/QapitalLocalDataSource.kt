@@ -1,6 +1,8 @@
 package com.sample.android.qapital.data.source.local
 
-import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.DbSavingsGoalWrapper
+import com.sample.android.qapital.data.asDomainModel
+import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.NoDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -12,20 +14,19 @@ import javax.inject.Singleton
  */
 @Singleton
 class QapitalLocalDataSource @Inject constructor(
-        private val goalsDao: GoalsDao
+    private val goalsDao: GoalsDao
 ) : LocalDataSource {
 
-    override fun getSavingsGoals(): Observable<List<SavingsGoal>> =
-            Observable.create { subscriber ->
-                goalsDao.getGoals().subscribe {
-                    if (it.isEmpty()) {
-                        subscriber.onError(NoDataException())
-                    } else {
-                        subscriber.onNext(it)
-                    }
-                }
+    override fun getSavingsGoals(): Observable<SavingsGoalWrapper> =
+        Observable.create { subscriber ->
+            val goals = goalsDao.getGoals()?.asDomainModel()
+            if (goals == null) {
+                subscriber.onError(NoDataException())
+            } else {
+                subscriber.onNext(goals)
             }
+        }
 
-    override fun insertAll(savingsGoals: List<SavingsGoal>): Completable =
-            goalsDao.insertAll(*savingsGoals.toTypedArray())
+    override fun insert(savingsGoals: DbSavingsGoalWrapper): Completable =
+        goalsDao.insert(savingsGoals)
 }

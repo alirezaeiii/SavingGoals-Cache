@@ -4,9 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sample.android.qapital.data.SavingsGoal
+import com.sample.android.qapital.data.DbSavingsGoalWrapper
 import io.reactivex.Completable
-import io.reactivex.Observable
 
 /**
  * Data Access Object for the goals table.
@@ -19,12 +18,12 @@ interface GoalsDao {
      *
      * @return all goals.
      */
-    @Query("SELECT * FROM Goals") fun getGoals(): Observable<List<SavingsGoal>>
+    @Query("SELECT * FROM Goals") fun getGoals(): DbSavingsGoalWrapper?
 
     /**
      * Insert a goal in the database. If the goal already exists, replace it.
      *
      * @param goals the goals to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertAll(vararg goals: SavingsGoal) : Completable
+    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insert(goals: DbSavingsGoalWrapper) : Completable
 }

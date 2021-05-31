@@ -74,7 +74,7 @@ constructor() // Required empty public constructor
 
         viewModel.liveData.observe(viewLifecycleOwner, {
             if (it is Resource.Success) {
-                viewModelAdapter.submitList(it.data)
+                viewModelAdapter.submitList(it.data?.wrapper)
             }
         })
 

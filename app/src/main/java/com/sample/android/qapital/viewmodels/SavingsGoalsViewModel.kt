@@ -2,15 +2,15 @@ package com.sample.android.qapital.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.source.GoalsRepository
+import com.sample.android.qapital.data.source.BaseRepository
+import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
 class SavingsGoalsViewModel(
-    private val repository: GoalsRepository,
+    private val repository: BaseRepository<SavingsGoalWrapper>,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel<List<SavingsGoal>>(schedulerProvider, repository.result) {
+) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider, repository.result) {
 
     init {
         loadSavingsGoals(false)
@@ -24,7 +24,7 @@ class SavingsGoalsViewModel(
     }
 
     class Factory @Inject constructor(
-        private val repository: GoalsRepository,
+        private val repository: BaseRepository<SavingsGoalWrapper>,
         private val schedulerProvider: BaseSchedulerProvider
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

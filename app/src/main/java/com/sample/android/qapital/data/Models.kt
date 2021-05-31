@@ -1,24 +1,29 @@
 package com.sample.android.qapital.data
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.CurrencyFormatterDefault
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 
-@Parcelize
 @Entity(tableName = "goals")
+class DbSavingsGoalWrapper(
+    @PrimaryKey val primaryKey: String = "primaryKey",
+    @SerializedName("savingsGoals")
+    val wrapper: List<SavingsGoal>
+)
+
+@Parcelize
 data class SavingsGoal(
     @SerializedName("goalImageURL")
     val imageUrl: String,
     val targetAmount: Float?,
     val currentBalance: Float,
     val name: String,
-    @PrimaryKey @ColumnInfo(name = "entryid")
     val id: Int
 ) : Parcelable
 
@@ -49,4 +54,18 @@ private fun getAmountIfInCurrentWeek(feed: Feed): Float {
     return if (now.minus(1, ChronoUnit.WEEKS).isBefore(timestamp)) {
         feed.amount
     } else 0f
+}
+
+fun DbSavingsGoalWrapper.asDomainModel(): SavingsGoalWrapper {
+    return SavingsGoalWrapper(
+        wrapper = this.wrapper.map {
+            SavingsGoal(
+                imageUrl = it.imageUrl,
+                targetAmount = it.targetAmount,
+                currentBalance = it.currentBalance,
+                name = it.name,
+                id = it.id
+            )
+        }
+    )
 }

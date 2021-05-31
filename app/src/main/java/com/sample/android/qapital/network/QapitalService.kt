@@ -1,10 +1,6 @@
 package com.sample.android.qapital.network
 
-import com.google.gson.annotations.SerializedName
 import com.sample.android.qapital.BuildConfig
-import com.sample.android.qapital.data.Feed
-import com.sample.android.qapital.data.SavingsGoal
-import com.sample.android.qapital.data.SavingsRule
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Observable
@@ -29,21 +25,6 @@ interface QapitalService {
 
     @GET("/savingsrules")
     fun requestSavingRules(): Observable<SavingsRuleWrapper>
-
-    class SavingsGoalWrapper(
-        @SerializedName("savingsGoals")
-        val wrapper: List<SavingsGoal>
-    )
-
-    class FeedWrapper(
-        @SerializedName("feed")
-        val wrapper: List<Feed>
-    )
-
-    class SavingsRuleWrapper(
-        @SerializedName("savingsRules")
-        val wrapper: List<SavingsRule>
-    )
 }
 
 private fun getLoggerInterceptor(): Interceptor {

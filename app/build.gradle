@@ -61,7 +61,7 @@ dependencies {
     // Architecture components
     implementation Libs.lifecycleExtensions
     implementation Libs.room
-    implementation Libs.roomRxJava
+    implementation Libs.roomKtx
     implementation Libs.navigation_fragment
     implementation Libs.navigation_ui
     kapt Libs.roomCompiler
