@@ -3,7 +3,6 @@ package com.sample.android.qapital.data.source
 import com.sample.android.qapital.data.source.local.LocalDataSource
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.network.SavingsGoalWrapper
-import com.sample.android.qapital.network.asDatabaseModel
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +15,7 @@ class GoalsRepository @Inject constructor(
 
     override val resultRemoteDataSource: Observable<SavingsGoalWrapper>
         get() = remoteDataSource.requestSavingGoals().flatMap {
-            localDataSource.insert(it.asDatabaseModel()).andThen(Observable.fromCallable { it })
+            localDataSource.insert(it).andThen(Observable.fromCallable { it })
         }.doOnComplete { cacheIsDirty = false }
 
 

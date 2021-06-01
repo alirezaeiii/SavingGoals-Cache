@@ -1,8 +1,8 @@
 package com.sample.android.qapital.data.source.local
 
-import com.sample.android.qapital.data.DbSavingsGoalWrapper
 import com.sample.android.qapital.data.asDomainModel
 import com.sample.android.qapital.network.SavingsGoalWrapper
+import com.sample.android.qapital.network.asDatabaseModel
 import com.sample.android.qapital.util.NoDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -27,6 +27,6 @@ class QapitalLocalDataSource @Inject constructor(
             }
         }
 
-    override fun insert(savingsGoals: DbSavingsGoalWrapper): Completable =
-        goalsDao.insert(savingsGoals)
+    override fun insert(savingsGoals: SavingsGoalWrapper): Completable =
+        goalsDao.insert(savingsGoals.asDatabaseModel())
 }

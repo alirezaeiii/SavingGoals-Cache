@@ -6,6 +6,7 @@ import com.sample.android.qapital.data.source.GoalsRepository
 import com.sample.android.qapital.data.source.local.GoalsDao
 import com.sample.android.qapital.data.source.local.QapitalLocalDataSource
 import com.sample.android.qapital.network.QapitalService
+import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
@@ -56,15 +57,15 @@ class SavingsGoalsViewModelTest {
 
         val savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
         val observableResponse =
-                Observable.just(QapitalService.SavingsGoalWrapper(listOf(savingsGoal)))
+            Observable.just(SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
 
         viewModel.liveData.value.let {
             if (it is Resource.Success) {
-                assertFalse(it.data.isNullOrEmpty())
-                assertTrue(it.data?.size == 1)
+                assertFalse(it.data?.wrapper.isNullOrEmpty())
+                assertTrue(it.data?.wrapper?.size == 1)
             }
         }
     }
@@ -73,7 +74,7 @@ class SavingsGoalsViewModelTest {
     fun errorLoadingSavingsGoal() {
         val repository = GoalsRepository(remoteDataSource, localDataSource)
 
-        val observableResponse = Observable.error<QapitalService.SavingsGoalWrapper>(Exception("error"))
+        val observableResponse = Observable.error<SavingsGoalWrapper>(Exception("error"))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)

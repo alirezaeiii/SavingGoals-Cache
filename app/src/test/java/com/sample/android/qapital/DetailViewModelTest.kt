@@ -4,7 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.SavingsRule
+import com.sample.android.qapital.network.FeedWrapper
 import com.sample.android.qapital.network.QapitalService
+import com.sample.android.qapital.network.SavingsRuleWrapper
 import com.sample.android.qapital.util.CurrencyFormatterDefault
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
@@ -53,10 +55,10 @@ class DetailViewModelTest {
 
     @Test
     fun loadFeeds() {
-        val observableResponse1 = Observable.just(QapitalService.FeedWrapper(listOf(feed)))
+        val observableResponse1 = Observable.just(FeedWrapper(listOf(feed)))
         `when`(api.requestFeeds(anyInt())).thenReturn(observableResponse1)
 
-        val observableResponse2 = Observable.just(QapitalService.SavingsRuleWrapper(listOf(savingsRule)))
+        val observableResponse2 = Observable.just(SavingsRuleWrapper(listOf(savingsRule)))
         `when`(api.requestSavingRules()).thenReturn(observableResponse2)
 
         val viewModel = DetailViewModel(
