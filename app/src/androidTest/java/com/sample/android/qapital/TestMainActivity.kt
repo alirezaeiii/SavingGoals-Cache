@@ -10,7 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.sample.android.qapital.ui.MainActivity
-import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter
+import com.sample.android.qapital.ui.SavingsGoalsAdapter
 import com.sample.android.qapital.util.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before

@@ -1,7 +1,7 @@
 package com.sample.android.qapital.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.sample.android.qapital.ui.goals.SavingsGoalsFragment
+import com.sample.android.qapital.ui.SavingsGoalsFragment
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import dagger.Binds
 import dagger.Module

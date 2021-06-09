@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.ui.MainActivity
-import com.sample.android.qapital.ui.detail.DetailFragment
-import com.sample.android.qapital.ui.detail.DetailFragmentArgs
+import com.sample.android.qapital.ui.DetailFragment
+import com.sample.android.qapital.ui.DetailFragmentArgs
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import dagger.Binds
 import dagger.Module

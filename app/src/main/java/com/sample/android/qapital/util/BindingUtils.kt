@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.sample.android.qapital.R
-import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter
+import com.sample.android.qapital.ui.SavingsGoalsAdapter
 import com.sample.android.qapital.viewmodels.DetailViewModel
 
 object BindingUtils {

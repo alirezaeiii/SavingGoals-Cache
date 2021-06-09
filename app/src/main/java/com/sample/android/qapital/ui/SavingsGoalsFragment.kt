@@ -1,4 +1,4 @@
-package com.sample.android.qapital.ui.goals
+package com.sample.android.qapital.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
-import com.sample.android.qapital.ui.BaseFragment
+import com.sample.android.qapital.ui.SavingsGoalsAdapter.*
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
@@ -32,15 +31,14 @@ constructor() // Required empty public constructor
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
-        val viewModel =
-            ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
+        val viewModel = ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
         val binding = FragmentSavingsGoalsBinding.bind(root)
-        applyDataBinding(binding, viewModel, BR.vm)
+        applyDataBinding(binding, viewModel)
 
         val viewModelAdapter = SavingsGoalsAdapter(currencyFormatter, numberFormatter,
-                SavingsGoalsAdapter.OnClickListener { savingGoals ->
+            OnClickListener { savingGoals ->
                     val destination = SavingsGoalsFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
                     with(findNavController()) {
                         currentDestination?.getAction(destination.actionId)

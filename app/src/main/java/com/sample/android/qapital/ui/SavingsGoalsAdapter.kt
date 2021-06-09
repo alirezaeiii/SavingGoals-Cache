@@ -1,4 +1,4 @@
-package com.sample.android.qapital.ui.goals
+package com.sample.android.qapital.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -6,16 +6,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.SavingsGoalItemBinding
-import com.sample.android.qapital.ui.goals.SavingsGoalsAdapter.SavingsGoalViewHolder
+import com.sample.android.qapital.ui.SavingsGoalsAdapter.SavingsGoalViewHolder
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.layoutInflater
 
-
 class SavingsGoalsAdapter(
     private val currencyFormatter: CurrencyFormatter,
     private val numberFormatter: NumberFormatter,
-    private val clickCallback: OnClickListener
+    private val callback: OnClickListener
 ) : ListAdapter<SavingsGoal, SavingsGoalViewHolder>(DiffCallback) {
 
     override fun onBindViewHolder(holder: SavingsGoalViewHolder, position: Int) {
@@ -33,9 +32,7 @@ class SavingsGoalsAdapter(
             parent.context.layoutInflater,
             parent, false
         )
-        with(binding) {
-            callback = clickCallback
-        }
+        binding.callback = callback
         return SavingsGoalViewHolder(binding)
     }
 

@@ -1,4 +1,4 @@
-package com.sample.android.qapital.ui.detail
+package com.sample.android.qapital.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
-import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.util.CurrencyFormatterDefault
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
@@ -41,7 +39,7 @@ constructor() // Required empty public constructor
 
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root)
-        applyDataBinding(binding, viewModel, BR.vm)
+        applyDataBinding(binding, viewModel)
 
         with(activity as AppCompatActivity) {
             setupActionBar(binding.toolbar) {

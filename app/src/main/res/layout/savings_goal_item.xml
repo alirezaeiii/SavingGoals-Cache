@@ -18,7 +18,7 @@
 
         <variable
             name="callback"
-            type="com.sample.android.qapital.ui.goals.SavingsGoalsAdapter.OnClickListener" />
+            type="com.sample.android.qapital.ui.SavingsGoalsAdapter.OnClickListener" />
 
     </data>
 
