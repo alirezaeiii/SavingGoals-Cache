@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
-import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding.*
 import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
@@ -37,23 +36,16 @@ constructor() // Required empty public constructor
             ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
-        val binding = bind(root)
+        val binding = FragmentSavingsGoalsBinding.bind(root)
         applyDataBinding(binding, viewModel, BR.vm)
 
-        val viewModelAdapter =
-            SavingsGoalsAdapter(
-                currencyFormatter,
-                numberFormatter,
+        val viewModelAdapter = SavingsGoalsAdapter(currencyFormatter, numberFormatter,
                 SavingsGoalsAdapter.OnClickListener { savingGoals ->
-                    val destination =
-                        SavingsGoalsFragmentDirections.actionMainFragmentToDetailFragment(
-                            savingGoals
-                        )
+                    val destination = SavingsGoalsFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
                     with(findNavController()) {
                         currentDestination?.getAction(destination.actionId)
                             ?.let { navigate(destination) }
                     }
-
                 })
 
         with(binding) {
