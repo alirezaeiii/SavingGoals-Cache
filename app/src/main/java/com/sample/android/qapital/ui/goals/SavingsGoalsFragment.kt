@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
+import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding.*
 import com.sample.android.qapital.ui.BaseFragment
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 class SavingsGoalsFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment() {
+    : BaseFragment<FragmentSavingsGoalsBinding>() {
 
     @Inject
     lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
@@ -36,10 +37,8 @@ constructor() // Required empty public constructor
             ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
-        val binding = FragmentSavingsGoalsBinding.bind(root).apply {
-            setVariable(BR.vm, viewModel)
-            lifecycleOwner = viewLifecycleOwner
-        }
+        val binding = bind(root)
+        applyDataBinding(binding, viewModel, BR.vm)
 
         val viewModelAdapter =
             SavingsGoalsAdapter(

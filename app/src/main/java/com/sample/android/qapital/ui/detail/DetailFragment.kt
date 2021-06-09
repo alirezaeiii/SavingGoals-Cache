@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment() {
+    : BaseFragment<FragmentDetailBinding>() {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
@@ -40,12 +40,8 @@ constructor() // Required empty public constructor
         val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
-        val binding = FragmentDetailBinding.bind(root).apply {
-            setVariable(BR.vm, viewModel)
-            lifecycleOwner = viewLifecycleOwner
-            goal = this@DetailFragment.goal
-            formatter = currencyFormatter
-        }
+        val binding = FragmentDetailBinding.bind(root)
+        applyDataBinding(binding, viewModel, BR.vm)
 
         with(activity as AppCompatActivity) {
             setupActionBar(binding.toolbar) {
@@ -56,6 +52,9 @@ constructor() // Required empty public constructor
         }
 
         with(binding) {
+            goal = this@DetailFragment.goal
+            formatter = currencyFormatter
+
             toolbar.apply {
                 setNavigationOnClickListener { findNavController().navigateUp() }
             }
