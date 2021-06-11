@@ -99,7 +99,7 @@ dependencies {
     androidTestImplementation TestLibs.espressoCore
     androidTestImplementation TestLibs.espressoContrib
     implementation TestLibs.espressoIdlingResource
-    implementation "com.squareup.rx.idler:rx2-idler:0.11.0"
+    implementation TestLibs.rxIdler
 }
 
 configurations {

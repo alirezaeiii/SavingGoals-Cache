@@ -41,6 +41,7 @@ ext {
     espressoVersion = '3.1.0'
     rulesVersion = '1.1.1'
     archLifecycleTestVersion = '1.1.1'
+    rxIdlerVersion = '0.11.0'
 
     Libs = [
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
@@ -97,6 +98,7 @@ ext {
             androidRules          : "androidx.test:rules:${rulesVersion}",
             espressoCore          : "androidx.test.espresso:espresso-core:${espressoVersion}",
             espressoContrib       : "androidx.test.espresso:espresso-contrib:${espressoVersion}",
-            espressoIdlingResource: "androidx.test.espresso:espresso-idling-resource:${espressoVersion}"
+            espressoIdlingResource: "androidx.test.espresso:espresso-idling-resource:${espressoVersion}",
+            rxIdler               : "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}"
     ]
 }

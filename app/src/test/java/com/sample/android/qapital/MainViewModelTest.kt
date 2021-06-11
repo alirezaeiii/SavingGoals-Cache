@@ -10,7 +10,7 @@ import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider
-import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
+import com.sample.android.qapital.viewmodels.MainViewModel
 import io.reactivex.Observable
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -26,7 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 
 @RunWith(MockitoJUnitRunner::class)
-class SavingsGoalsViewModelTest {
+class MainViewModelTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -60,7 +60,7 @@ class SavingsGoalsViewModelTest {
             Observable.just(SavingsGoalWrapper(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
-        val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
+        val viewModel = MainViewModel(repository, schedulerProvider)
 
         viewModel.liveData.value.let {
             if (it is Resource.Success) {
@@ -77,7 +77,7 @@ class SavingsGoalsViewModelTest {
         val observableResponse = Observable.error<SavingsGoalWrapper>(Exception("error"))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
-        val viewModel = SavingsGoalsViewModel(repository, schedulerProvider)
+        val viewModel = MainViewModel(repository, schedulerProvider)
 
         viewModel.liveData.value.let {
             if (it is Resource.Failure) {

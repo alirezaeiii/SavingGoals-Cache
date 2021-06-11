@@ -7,7 +7,7 @@ import com.sample.android.qapital.network.SavingsGoalWrapper
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
-class SavingsGoalsViewModel(
+class MainViewModel(
     private val repository: BaseRepository<SavingsGoalWrapper>,
     schedulerProvider: BaseSchedulerProvider
 ) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider, repository.result) {
@@ -28,9 +28,9 @@ class SavingsGoalsViewModel(
         private val schedulerProvider: BaseSchedulerProvider
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SavingsGoalsViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SavingsGoalsViewModel(repository, schedulerProvider) as T
+                return MainViewModel(repository, schedulerProvider) as T
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }

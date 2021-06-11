@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.sample.android.qapital.viewmodels.SavingsGoalsViewModel" />
+            type="com.sample.android.qapital.viewmodels.MainViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

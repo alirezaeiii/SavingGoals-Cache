@@ -14,7 +14,7 @@ import com.sample.android.qapital.ui.MainAdapter.*
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
-import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
+import com.sample.android.qapital.viewmodels.MainViewModel
 import javax.inject.Inject
 
 class MainFragment @Inject
@@ -22,7 +22,7 @@ constructor() // Required empty public constructor
     : BaseFragment<FragmentMainBinding>() {
 
     @Inject
-    lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
+    lateinit var viewModelFactory: MainViewModel.Factory
 
     @Inject
     lateinit var numberFormatter: NumberFormatter
@@ -31,7 +31,7 @@ constructor() // Required empty public constructor
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
-        val viewModel = ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
+        val viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_main, container, false)
         val binding = FragmentMainBinding.bind(root)
