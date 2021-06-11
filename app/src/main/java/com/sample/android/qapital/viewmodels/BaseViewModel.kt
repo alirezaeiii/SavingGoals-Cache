@@ -3,7 +3,6 @@ package com.sample.android.qapital.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.android.qapital.util.EspressoIdlingResource
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
@@ -23,23 +22,13 @@ open class BaseViewModel<T>(
 
     protected fun sendRequest() {
         _liveData.value = Resource.Loading
-        composeObservable { requestObservable }.subscribe({
+        requestObservable.subscribe({
             _liveData.postValue(Resource.Success(it))
         }) {
             _liveData.postValue(Resource.Failure(it.localizedMessage))
             Timber.e(it)
         }.also { compositeDisposable.add(it) }
     }
-
-    private inline fun <T> composeObservable(task: () -> Observable<T>): Observable<T> = task()
-        .doOnSubscribe { EspressoIdlingResource.increment() }
-        .subscribeOn(schedulerProvider.io())
-        .observeOn(schedulerProvider.ui())
-        .doFinally {
-            if (!EspressoIdlingResource.getIdlingResource().isIdleNow) {
-                EspressoIdlingResource.decrement()
-            }
-        }
 
     /**
      * Called when the ViewModel is dismantled.

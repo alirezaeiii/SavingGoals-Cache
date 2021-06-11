@@ -24,7 +24,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField "String", "QAPITAL_BASE_URL", "\"http://qapital-ios-testtask.herokuapp.com/\""
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.sample.android.qapital.AppTestRunner"
     }
     buildTypes {
         release {
@@ -95,11 +95,11 @@ dependencies {
     testImplementation TestLibs.mockito
     testImplementation TestLibs.archCore
     androidTestImplementation TestLibs.junitExt
-    androidTestImplementation TestLibs.androidRunner
     androidTestImplementation TestLibs.androidRules
     androidTestImplementation TestLibs.espressoCore
     androidTestImplementation TestLibs.espressoContrib
     implementation TestLibs.espressoIdlingResource
+    implementation "com.squareup.rx.idler:rx2-idler:0.11.0"
 }
 
 configurations {
