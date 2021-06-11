@@ -9,17 +9,17 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.sample.android.qapital.R
-import com.sample.android.qapital.databinding.FragmentSavingsGoalsBinding
-import com.sample.android.qapital.ui.SavingsGoalsAdapter.*
+import com.sample.android.qapital.databinding.FragmentMainBinding
+import com.sample.android.qapital.ui.MainAdapter.*
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.SavingsGoalsViewModel
 import javax.inject.Inject
 
-class SavingsGoalsFragment @Inject
+class MainFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentSavingsGoalsBinding>() {
+    : BaseFragment<FragmentMainBinding>() {
 
     @Inject
     lateinit var viewModelFactory: SavingsGoalsViewModel.Factory
@@ -33,13 +33,13 @@ constructor() // Required empty public constructor
 
         val viewModel = ViewModelProvider(this, viewModelFactory)[SavingsGoalsViewModel::class.java]
 
-        val root = inflater.inflate(R.layout.fragment_savings_goals, container, false)
-        val binding = FragmentSavingsGoalsBinding.bind(root)
+        val root = inflater.inflate(R.layout.fragment_main, container, false)
+        val binding = FragmentMainBinding.bind(root)
         applyDataBinding(binding, viewModel)
 
-        val viewModelAdapter = SavingsGoalsAdapter(currencyFormatter, numberFormatter,
+        val viewModelAdapter = MainAdapter(currencyFormatter, numberFormatter,
             OnClickListener { savingGoals ->
-                    val destination = SavingsGoalsFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
+                    val destination = MainFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
                     with(findNavController()) {
                         currentDestination?.getAction(destination.actionId)
                             ?.let { navigate(destination) }

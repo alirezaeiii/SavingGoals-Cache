@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.SavingsGoalItemBinding
-import com.sample.android.qapital.ui.SavingsGoalsAdapter.SavingsGoalViewHolder
+import com.sample.android.qapital.ui.MainAdapter.SavingsGoalViewHolder
 import com.sample.android.qapital.util.CurrencyFormatter
 import com.sample.android.qapital.util.NumberFormatter
 import com.sample.android.qapital.util.layoutInflater
 
-class SavingsGoalsAdapter(
+class MainAdapter(
     private val currencyFormatter: CurrencyFormatter,
     private val numberFormatter: NumberFormatter,
     private val callback: OnClickListener

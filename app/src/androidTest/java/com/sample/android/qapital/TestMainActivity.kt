@@ -10,7 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.sample.android.qapital.ui.MainActivity
-import com.sample.android.qapital.ui.SavingsGoalsAdapter
+import com.sample.android.qapital.ui.MainAdapter
 import com.sample.android.qapital.util.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before
@@ -59,14 +59,14 @@ class TestMainActivity {
     @Test
     fun shouldBeAbleToScrollViewAndDisplayRuleDetails() {
         onView(withId(R.id.recyclerView)).perform(RecyclerViewActions
-            .actionOnItemAtPosition<SavingsGoalsAdapter.SavingsGoalViewHolder>(5, click()))
+            .actionOnItemAtPosition<MainAdapter.SavingsGoalViewHolder>(5, click()))
         onView(withText(R.string.your_rules)).check(matches(isDisplayed()))
     }
 
     @Test
     fun shouldBeAbleToScrollViewAndDisplayWeekDetails() {
         onView(withId(R.id.recyclerView)).perform(RecyclerViewActions
-            .actionOnItemAtPosition<SavingsGoalsAdapter.SavingsGoalViewHolder>(4, click()))
+            .actionOnItemAtPosition<MainAdapter.SavingsGoalViewHolder>(4, click()))
         onView(withText(R.string.this_week_savings)).check(matches(isDisplayed()))
     }
 

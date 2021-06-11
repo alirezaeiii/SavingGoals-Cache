@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.sample.android.qapital.R
-import com.sample.android.qapital.ui.SavingsGoalsAdapter
+import com.sample.android.qapital.ui.MainAdapter
 import com.sample.android.qapital.viewmodels.DetailViewModel
 
 object BindingUtils {
@@ -61,7 +61,7 @@ object BindingUtils {
     @BindingAdapter("showData")
     fun <T> showData(recyclerView: RecyclerView, resource: Resource<T>?) {
         if (resource is Resource.Failure) {
-            (recyclerView.adapter as SavingsGoalsAdapter).submitList(null)
+            (recyclerView.adapter as MainAdapter).submitList(null)
         }
     }
 

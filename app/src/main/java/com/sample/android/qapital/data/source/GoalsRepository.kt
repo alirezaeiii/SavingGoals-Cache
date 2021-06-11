@@ -22,4 +22,3 @@ class GoalsRepository @Inject constructor(
     override val resultLocalDataSource: Observable<SavingsGoalWrapper>
         get() = localDataSource.getSavingsGoals()
 }
-
