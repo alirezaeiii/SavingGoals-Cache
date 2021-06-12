@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.sample.android.qapital.network.SavingsGoalWrapper
-import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.DefaultCurrencyFormatter
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
@@ -54,7 +54,7 @@ fun DbSavingsGoalWrapper.asDomainModel(): SavingsGoalWrapper {
     )
 }
 
-fun List<Feed>.asWeekSumText(currencyFormatter: CurrencyFormatterDefault): String {
+fun List<Feed>.asWeekSumText(currencyFormatter: DefaultCurrencyFormatter): String {
     var weekSum = 0f
     for (feed in this) {
         weekSum += getAmountIfInCurrentWeek(feed)

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
-import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
@@ -28,7 +28,7 @@ constructor() // Required empty public constructor
     lateinit var goal: SavingsGoal
 
     @Inject
-    lateinit var currencyFormatterDefault: CurrencyFormatterDefault
+    lateinit var defaultCurrencyFormatter: DefaultCurrencyFormatter
 
 
     override fun onCreateView(
@@ -63,7 +63,7 @@ constructor() // Required empty public constructor
             }
             viewModel.liveData.observe(viewLifecycleOwner, { resource ->
                 if (resource is Resource.Success) {
-                    recyclerView.adapter = resource.data?.let { FeedAdapter(it.feeds, currencyFormatterDefault) }
+                    recyclerView.adapter = resource.data?.let { FeedAdapter(it.feeds, defaultCurrencyFormatter) }
                 }
             })
         }

@@ -5,14 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.databinding.FeedItemBinding
 import com.sample.android.qapital.ui.FeedAdapter.FeedViewHolder
-import com.sample.android.qapital.util.CurrencyFormatterDefault
+import com.sample.android.qapital.util.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.DateTimeParser
 import com.sample.android.qapital.util.fromHtml
 import com.sample.android.qapital.util.layoutInflater
 
 class FeedAdapter(
     feeds: List<Feed>,
-    private val currencyFormatter: CurrencyFormatterDefault
+    private val currencyFormatter: DefaultCurrencyFormatter
 ) : RecyclerView.Adapter<FeedViewHolder>() {
 
     private var feeds: List<Feed> = feeds

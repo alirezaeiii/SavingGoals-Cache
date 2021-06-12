@@ -6,9 +6,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CurrencyFormatterDefault @Inject constructor(locale: Locale) {
+open class DefaultCurrencyFormatter @Inject constructor(locale: Locale) {
 
-    private val formatter: NumberFormat = NumberFormat.getCurrencyInstance(locale)
+    protected val formatter: NumberFormat = NumberFormat.getCurrencyInstance(locale)
 
     fun format(number: Any): String = formatter.format(number)
 }
