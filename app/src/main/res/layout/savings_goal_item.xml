@@ -87,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/product_sans_regular"
                 android:text="@{current_balance}"
+                android:textColor="@color/black_translucent_60"
                 android:textSize="18sp" />
 
             <TextView
@@ -96,6 +97,7 @@
                 android:fontFamily="@font/product_sans_regular"
                 android:paddingStart="@dimen/padding_micro"
                 android:paddingEnd="@dimen/padding_micro"
+                android:textColor="@color/black_translucent_60"
                 android:text='@{target_amount != null ? @string/target_amount(target_amount) : ""}'
                 android:textSize="18sp" />
 

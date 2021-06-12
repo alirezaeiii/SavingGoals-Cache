@@ -1,21 +1,17 @@
 package com.sample.android.qapital.util
 
 import java.text.DecimalFormat
-import java.text.NumberFormat
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NumberFormatter @Inject constructor() {
-
-    private val numberFormat = NumberFormat.getCurrencyInstance()
+class NumberFormatter @Inject constructor(locale: Locale) : DefaultCurrencyFormatter(locale) {
 
     init {
-        val decimalFormatSymbols = (numberFormat as DecimalFormat).decimalFormatSymbols
+        val decimalFormatSymbols = (formatter as DecimalFormat).decimalFormatSymbols
         decimalFormatSymbols.currencySymbol = ""
-        numberFormat.decimalFormatSymbols = decimalFormatSymbols
-        numberFormat.maximumFractionDigits = 0
+        formatter.decimalFormatSymbols = decimalFormatSymbols
+        formatter.maximumFractionDigits = 0
     }
-
-    fun format(number: Any): String = numberFormat.format(number)
 }

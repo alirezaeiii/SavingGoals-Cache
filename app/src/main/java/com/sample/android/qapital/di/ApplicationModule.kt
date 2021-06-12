@@ -39,7 +39,7 @@ abstract class ApplicationModule {
         @Provides
         @Singleton
         @JvmStatic
-        internal fun provideNumberFormatter() = NumberFormatter()
+        internal fun provideNumberFormatter() = NumberFormatter(Locale.getDefault())
     }
 }
 
