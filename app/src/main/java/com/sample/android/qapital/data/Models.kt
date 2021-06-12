@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.sample.android.qapital.network.SavingsGoalWrapper
-import com.sample.android.qapital.util.DefaultCurrencyFormatter
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit

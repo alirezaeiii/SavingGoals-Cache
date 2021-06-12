@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.databinding.FeedItemBinding
 import com.sample.android.qapital.ui.FeedAdapter.FeedViewHolder
-import com.sample.android.qapital.util.DefaultCurrencyFormatter
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.DateTimeParser
 import com.sample.android.qapital.util.fromHtml
 import com.sample.android.qapital.util.layoutInflater

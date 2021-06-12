@@ -1,4 +1,4 @@
-package com.sample.android.qapital.util
+package com.sample.android.qapital.util.formatter
 
 import java.util.*
 import javax.inject.Inject

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.SavingsGoalItemBinding
 import com.sample.android.qapital.ui.MainAdapter.SavingsGoalViewHolder
-import com.sample.android.qapital.util.CurrencyFormatter
-import com.sample.android.qapital.util.NumberFormatter
+import com.sample.android.qapital.util.formatter.CurrencyFormatter
+import com.sample.android.qapital.util.formatter.NumberFormatter
 import com.sample.android.qapital.util.layoutInflater
 
 class MainAdapter(

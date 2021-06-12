@@ -2,9 +2,9 @@ package com.sample.android.qapital.di
 
 import android.app.Application
 import android.content.Context
-import com.sample.android.qapital.util.CurrencyFormatter
-import com.sample.android.qapital.util.DefaultCurrencyFormatter
-import com.sample.android.qapital.util.NumberFormatter
+import com.sample.android.qapital.util.formatter.CurrencyFormatter
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
+import com.sample.android.qapital.util.formatter.NumberFormatter
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.SchedulerProvider
 import dagger.Binds

@@ -7,7 +7,7 @@ import com.sample.android.qapital.data.SavingsRule
 import com.sample.android.qapital.network.FeedWrapper
 import com.sample.android.qapital.network.QapitalService
 import com.sample.android.qapital.network.SavingsRuleWrapper
-import com.sample.android.qapital.util.DefaultCurrencyFormatter
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.util.schedulers.ImmediateSchedulerProvider

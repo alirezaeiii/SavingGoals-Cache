@@ -1,4 +1,4 @@
-package com.sample.android.qapital.util
+package com.sample.android.qapital.util.formatter
 
 import java.text.NumberFormat
 import java.util.*

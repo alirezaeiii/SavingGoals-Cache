@@ -6,14 +6,14 @@ import com.sample.android.qapital.data.Feed
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.data.asWeekSumText
 import com.sample.android.qapital.network.QapitalService
-import com.sample.android.qapital.util.DefaultCurrencyFormatter
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import com.sample.android.qapital.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
 import javax.inject.Inject
 
 class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvider,
-    currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
+                      currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
     Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
         api.requestSavingRules().map { it.wrapper },

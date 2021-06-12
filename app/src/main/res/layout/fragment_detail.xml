@@ -15,7 +15,7 @@
 
         <variable
             name="formatter"
-            type="com.sample.android.qapital.util.CurrencyFormatter" />
+            type="com.sample.android.qapital.util.formatter.CurrencyFormatter" />
     </data>
 
     <FrameLayout

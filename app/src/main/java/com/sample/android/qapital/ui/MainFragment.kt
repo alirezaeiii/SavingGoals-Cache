@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentMainBinding
 import com.sample.android.qapital.ui.MainAdapter.*
-import com.sample.android.qapital.util.NumberFormatter
+import com.sample.android.qapital.util.formatter.NumberFormatter
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.MainViewModel

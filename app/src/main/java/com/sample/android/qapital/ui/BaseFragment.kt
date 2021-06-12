@@ -1,7 +1,7 @@
 package com.sample.android.qapital.ui
 
 import androidx.databinding.ViewDataBinding
-import com.sample.android.qapital.util.CurrencyFormatter
+import com.sample.android.qapital.util.formatter.CurrencyFormatter
 import dagger.android.support.DaggerFragment
 import androidx.lifecycle.ViewModel
 import com.sample.android.qapital.BR
