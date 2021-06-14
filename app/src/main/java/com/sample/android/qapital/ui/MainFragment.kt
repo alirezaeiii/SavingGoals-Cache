@@ -34,8 +34,9 @@ constructor() // Required empty public constructor
         val viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_main, container, false)
-        val binding = FragmentMainBinding.bind(root)
-        applyDataBinding(binding, viewModel)
+        val binding = FragmentMainBinding.bind(root).apply {
+            applyDataBinding(this, viewModel)
+        }
 
         val viewModelAdapter = MainAdapter(currencyFormatter, numberFormatter,
             OnClickListener { savingGoals ->

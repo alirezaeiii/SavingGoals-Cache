@@ -38,8 +38,9 @@ constructor() // Required empty public constructor
         val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
 
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
-        val binding = FragmentDetailBinding.bind(root)
-        applyDataBinding(binding, viewModel)
+        val binding = FragmentDetailBinding.bind(root).apply {
+            applyDataBinding(this, viewModel)
+        }
 
         with(activity as AppCompatActivity) {
             setupActionBar(binding.toolbar) {
