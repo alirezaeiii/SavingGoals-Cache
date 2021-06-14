@@ -40,6 +40,8 @@ constructor() // Required empty public constructor
         val root = inflater.inflate(R.layout.fragment_detail, container, false)
         val binding = FragmentDetailBinding.bind(root).apply {
             applyDataBinding(this, viewModel)
+            goal = this@DetailFragment.goal
+            formatter = currencyFormatter
         }
 
         with(activity as AppCompatActivity) {
@@ -51,9 +53,6 @@ constructor() // Required empty public constructor
         }
 
         with(binding) {
-            goal = this@DetailFragment.goal
-            formatter = currencyFormatter
-
             toolbar.apply {
                 setNavigationOnClickListener { findNavController().navigateUp() }
             }
