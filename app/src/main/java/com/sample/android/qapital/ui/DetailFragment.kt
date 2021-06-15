@@ -60,12 +60,14 @@ constructor() // Required empty public constructor
                 setHasFixedSize(true)
                 addItemDecoration(DividerItemDecoration(recyclerView.context,
                         DividerItemDecoration.VERTICAL))
+                viewModel.liveData.observe(viewLifecycleOwner, {
+                    if (it is Resource.Success) {
+                        adapter = it.data?.let { data ->
+                            FeedAdapter(data.feeds, defaultCurrencyFormatter)
+                        }
+                    }
+                })
             }
-            viewModel.liveData.observe(viewLifecycleOwner, { resource ->
-                if (resource is Resource.Success) {
-                    recyclerView.adapter = resource.data?.let { FeedAdapter(it.feeds, defaultCurrencyFormatter) }
-                }
-            })
         }
         return binding.root
     }
