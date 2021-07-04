@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentMainBinding
 import com.sample.android.qapital.ui.MainAdapter.*
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 class MainFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentMainBinding>() {
+    : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     @Inject
     lateinit var viewModelFactory: MainViewModel.Factory
@@ -31,21 +32,22 @@ constructor() // Required empty public constructor
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
-        val viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+        super.onCreateView(inflater, container, savedInstanceState)
 
-        val root = inflater.inflate(R.layout.fragment_main, container, false)
-        val binding = FragmentMainBinding.bind(root).apply {
-            applyDataBinding(this, viewModel)
+        val viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+        binding.apply {
+            setVariable(BR.vm, viewModel)
         }
 
         val viewModelAdapter = MainAdapter(currencyFormatter, numberFormatter,
             OnClickListener { savingGoals ->
-                    val destination = MainFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
-                    with(findNavController()) {
-                        currentDestination?.getAction(destination.actionId)
-                            ?.let { navigate(destination) }
-                    }
-                })
+                val destination =
+                    MainFragmentDirections.actionMainFragmentToDetailFragment(savingGoals)
+                with(findNavController()) {
+                    currentDestination?.getAction(destination.actionId)
+                        ?.let { navigate(destination) }
+                }
+            })
 
         with(binding) {
             swipeRefresh.apply {

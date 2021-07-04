@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentDetailBinding>() {
+    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail) {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
@@ -35,11 +36,11 @@ constructor() // Required empty public constructor
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
 
-        val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+        super.onCreateView(inflater, container, savedInstanceState)
 
-        val root = inflater.inflate(R.layout.fragment_detail, container, false)
-        val binding = FragmentDetailBinding.bind(root).apply {
-            applyDataBinding(this, viewModel)
+        val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+        binding.apply {
+            setVariable(BR.vm, viewModel)
             goal = this@DetailFragment.goal
             formatter = currencyFormatter
         }
