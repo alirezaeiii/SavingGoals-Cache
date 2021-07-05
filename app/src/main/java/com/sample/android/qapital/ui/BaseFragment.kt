@@ -14,8 +14,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 abstract class BaseFragment<T: ViewDataBinding>(
-    @LayoutRes private val layoutId: Int,
-    private val vmVariableId : Int
+    @LayoutRes private val layoutId: Int
 ) : DaggerFragment() {
 
     @Inject

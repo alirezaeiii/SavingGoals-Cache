@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentMainBinding
 import com.sample.android.qapital.ui.MainAdapter.OnClickListener
@@ -20,7 +19,7 @@ import javax.inject.Inject
 
 class MainFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentMainBinding>(R.layout.fragment_main, BR.vm) {
+    : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     @Inject
     lateinit var viewModelFactory: MainViewModel.Factory

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
@@ -20,7 +19,7 @@ import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail, BR.vm) {
+    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail) {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
