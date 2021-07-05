@@ -12,15 +12,15 @@ import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.data.SavingsGoal
 import com.sample.android.qapital.databinding.FragmentDetailBinding
-import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.Resource
+import com.sample.android.qapital.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.DetailViewModel
 import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail) {
+    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail, BR.vm) {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
@@ -31,6 +31,9 @@ constructor() // Required empty public constructor
     @Inject
     lateinit var defaultCurrencyFormatter: DefaultCurrencyFormatter
 
+    override val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -38,9 +41,7 @@ constructor() // Required empty public constructor
 
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
         binding.apply {
-            setVariable(BR.vm, viewModel)
             goal = this@DetailFragment.goal
             formatter = currencyFormatter
         }

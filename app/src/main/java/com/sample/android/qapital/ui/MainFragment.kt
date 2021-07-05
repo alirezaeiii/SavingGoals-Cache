@@ -11,16 +11,16 @@ import androidx.navigation.fragment.findNavController
 import com.sample.android.qapital.BR
 import com.sample.android.qapital.R
 import com.sample.android.qapital.databinding.FragmentMainBinding
-import com.sample.android.qapital.ui.MainAdapter.*
-import com.sample.android.qapital.util.formatter.NumberFormatter
+import com.sample.android.qapital.ui.MainAdapter.OnClickListener
 import com.sample.android.qapital.util.Resource
+import com.sample.android.qapital.util.formatter.NumberFormatter
 import com.sample.android.qapital.util.setupActionBar
 import com.sample.android.qapital.viewmodels.MainViewModel
 import javax.inject.Inject
 
 class MainFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
+    : BaseFragment<FragmentMainBinding>(R.layout.fragment_main, BR.vm) {
 
     @Inject
     lateinit var viewModelFactory: MainViewModel.Factory
@@ -28,16 +28,15 @@ constructor() // Required empty public constructor
     @Inject
     lateinit var numberFormatter: NumberFormatter
 
+    override val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         super.onCreateView(inflater, container, savedInstanceState)
-
-        val viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        binding.apply {
-            setVariable(BR.vm, viewModel)
-        }
 
         val viewModelAdapter = MainAdapter(currencyFormatter, numberFormatter,
             OnClickListener { savingGoals ->
