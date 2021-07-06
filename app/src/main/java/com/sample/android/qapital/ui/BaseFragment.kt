@@ -13,7 +13,7 @@ import com.sample.android.qapital.util.formatter.CurrencyFormatter
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<T: ViewDataBinding>(
+abstract class BaseFragment<VM: ViewModel, T: ViewDataBinding>(
     @LayoutRes private val layoutId: Int
 ) : DaggerFragment() {
 
@@ -22,7 +22,7 @@ abstract class BaseFragment<T: ViewDataBinding>(
 
     protected lateinit var binding: T
 
-    protected abstract val viewModel: ViewModel
+    protected abstract val viewModel: VM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

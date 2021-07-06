@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class DetailFragment @Inject
 constructor() // Required empty public constructor
-    : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail) {
+    : BaseFragment<DetailViewModel, FragmentDetailBinding>(R.layout.fragment_detail) {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModel.Factory
