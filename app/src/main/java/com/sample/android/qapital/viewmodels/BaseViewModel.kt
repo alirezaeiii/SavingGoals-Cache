@@ -21,6 +21,10 @@ open class BaseViewModel<T>(
         get() = _liveData
 
     protected fun sendRequest() {
+        sendRequest(requestObservable)
+    }
+
+    protected fun sendRequest(requestObservable: Observable<T>) {
         _liveData.value = Resource.Loading
         requestObservable.subscribe({
             _liveData.postValue(Resource.Success(it))
