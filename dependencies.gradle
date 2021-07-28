@@ -98,7 +98,6 @@ ext {
             androidRules          : "androidx.test:rules:${rulesVersion}",
             espressoCore          : "androidx.test.espresso:espresso-core:${espressoVersion}",
             espressoContrib       : "androidx.test.espresso:espresso-contrib:${espressoVersion}",
-            espressoIdlingResource: "androidx.test.espresso:espresso-idling-resource:${espressoVersion}",
             rxIdler               : "com.squareup.rx.idler:rx2-idler:${rxIdlerVersion}"
     ]
 }

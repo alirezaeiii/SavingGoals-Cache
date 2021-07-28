@@ -98,8 +98,7 @@ dependencies {
     androidTestImplementation TestLibs.androidRules
     androidTestImplementation TestLibs.espressoCore
     androidTestImplementation TestLibs.espressoContrib
-    implementation TestLibs.espressoIdlingResource
-    implementation TestLibs.rxIdler
+    androidTestImplementation TestLibs.rxIdler
 }
 
 configurations {
