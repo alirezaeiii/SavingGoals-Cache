@@ -28,8 +28,8 @@ open class BaseViewModel<T>(
 
     protected fun sendRequest(requestObservable: Observable<T>) {
         _liveData.value = Resource.Loading
-        requestObservable.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+        requestObservable.subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui()).subscribe({
                 _liveData.postValue(Resource.Success(it))
             }) {
                 _liveData.postValue(Resource.Failure(it.localizedMessage))
