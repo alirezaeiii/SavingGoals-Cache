@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 open class BaseViewModel<T>(
@@ -26,14 +28,14 @@ open class BaseViewModel<T>(
 
     protected fun sendRequest(requestObservable: Observable<T>) {
         _liveData.value = Resource.Loading
-        requestObservable.subscribe({
-            _liveData.postValue(Resource.Success(it))
-        }) {
-            _liveData.postValue(Resource.Failure(it.localizedMessage))
-            Timber.e(it)
-        }.also { compositeDisposable.add(it) }
+        requestObservable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                _liveData.postValue(Resource.Success(it))
+            }) {
+                _liveData.postValue(Resource.Failure(it.localizedMessage))
+                Timber.e(it)
+            }.also { compositeDisposable.add(it) }
     }
-
     /**
      * Called when the ViewModel is dismantled.
      * At this point, we want to cancel all disposables;
