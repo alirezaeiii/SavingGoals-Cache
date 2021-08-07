@@ -21,10 +21,6 @@ open class BaseViewModel<T>(
         get() = _liveData
 
     fun sendRequest() {
-        sendRequest(requestObservable)
-    }
-
-    protected fun sendRequest(requestObservable: Observable<T>) {
         _liveData.value = Resource.Loading
         requestObservable.subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui()).subscribe({

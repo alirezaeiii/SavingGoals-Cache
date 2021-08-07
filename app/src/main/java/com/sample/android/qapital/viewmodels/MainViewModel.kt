@@ -20,7 +20,7 @@ class MainViewModel(
         if (isRefreshing) {
             repository.refresh()
         }
-        super.sendRequest(repository.result)
+        super.sendRequest()
     }
 
     class Factory @Inject constructor(
