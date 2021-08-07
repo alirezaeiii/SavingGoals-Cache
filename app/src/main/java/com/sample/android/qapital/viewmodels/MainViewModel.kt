@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MainViewModel(
     private val repository: BaseRepository<SavingsGoalWrapper>,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider) {
+) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider, repository.result) {
 
     init {
         loadSavingsGoals(false)
