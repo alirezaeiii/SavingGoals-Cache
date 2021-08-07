@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MainViewModel(
     private val repository: BaseRepository<SavingsGoalWrapper>,
     schedulerProvider: BaseSchedulerProvider
-) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider, repository.result) {
+) : BaseViewModel<SavingsGoalWrapper>(schedulerProvider) {
 
     init {
         loadSavingsGoals(false)
@@ -20,7 +20,7 @@ class MainViewModel(
         if (isRefreshing) {
             repository.refresh()
         }
-        super.sendRequest()
+        super.sendRequest(repository.result)
     }
 
     class Factory @Inject constructor(

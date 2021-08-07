@@ -14,16 +14,15 @@ import javax.inject.Inject
 
 class DetailViewModel(api: QapitalService, schedulerProvider: BaseSchedulerProvider,
                       currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
-) : BaseViewModel<DetailWrapper>(schedulerProvider,
-    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
-        api.requestSavingRules().map { it.wrapper },
-        { feeds, savingRules -> DetailWrapper(feeds,
-            savingRules.joinToString { it.type },
-            feeds.asWeekSumText(currencyFormatter)
-        ) })) {
+) : BaseViewModel<DetailWrapper>(schedulerProvider) {
 
     init {
-        sendRequest()
+        sendRequest(Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
+            api.requestSavingRules().map { it.wrapper },
+            { feeds, savingRules -> DetailWrapper(feeds,
+                savingRules.joinToString { it.type },
+                feeds.asWeekSumText(currencyFormatter)
+            ) }))
     }
 
     class DetailWrapper(

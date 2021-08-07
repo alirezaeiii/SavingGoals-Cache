@@ -6,14 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.sample.android.qapital.util.Resource
 import com.sample.android.qapital.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 open class BaseViewModel<T>(
-    private val schedulerProvider: BaseSchedulerProvider,
-    private val requestObservable: Observable<T>
+    private val schedulerProvider: BaseSchedulerProvider
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -21,10 +18,6 @@ open class BaseViewModel<T>(
     private val _liveData = MutableLiveData<Resource<T>>()
     val liveData: LiveData<Resource<T>>
         get() = _liveData
-
-    protected fun sendRequest() {
-        sendRequest(requestObservable)
-    }
 
     protected fun sendRequest(requestObservable: Observable<T>) {
         _liveData.value = Resource.Loading
