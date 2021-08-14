@@ -17,14 +17,14 @@ android {
 
     compileSdkVersion globalConfiguration["compileSdkVersion"]
     defaultConfig {
-        applicationId "com.sample.android.qapital"
+        applicationId "com.sample.android.goals"
         minSdkVersion globalConfiguration["minSdkVersion"]
         targetSdkVersion globalConfiguration["targetSdkVersion"]
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "QAPITAL_BASE_URL", "\"http://qapital-ios-testtask.herokuapp.com/\""
-        testInstrumentationRunner "com.sample.android.qapital.AppTestRunner"
+        buildConfigField "String", "BASE_URL", "\"http://qapital-ios-testtask.herokuapp.com/\""
+        testInstrumentationRunner "com.sample.android.goals.AppTestRunner"
     }
     buildTypes {
         release {

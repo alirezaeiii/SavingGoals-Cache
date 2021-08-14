@@ -6,7 +6,7 @@
 
         <variable
             name="savingsGoal"
-            type="com.sample.android.qapital.data.SavingsGoal" />
+            type="com.sample.android.goals.data.SavingsGoal" />
 
         <variable
             name="current_balance"
@@ -18,7 +18,7 @@
 
         <variable
             name="callback"
-            type="com.sample.android.qapital.ui.MainAdapter.OnClickListener" />
+            type="com.sample.android.goals.ui.MainAdapter.OnClickListener" />
 
     </data>
 

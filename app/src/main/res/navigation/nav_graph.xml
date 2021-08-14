@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.sample.android.qapital.ui.MainFragment"
+        android:name="com.sample.android.goals.ui.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.sample.android.qapital.ui.DetailFragment"
+        android:name="com.sample.android.goals.ui.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="savingGoal"
-            app:argType="com.sample.android.qapital.data.SavingsGoal" />
+            app:argType="com.sample.android.goals.data.SavingsGoal" />
     </fragment>
 
 </navigation>

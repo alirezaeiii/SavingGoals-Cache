@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Qapital</string>
+    <string name="app_name">Saving_Goals</string>
     <string name="savings_goals">Goals</string>
     <string name="retry">Retry</string>
     <string name="target_amount">of %s</string>

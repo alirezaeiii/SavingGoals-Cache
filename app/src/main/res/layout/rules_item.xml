@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.sample.android.qapital.viewmodels.DetailViewModel" />
+            type="com.sample.android.goals.viewmodels.DetailViewModel" />
     </data>
 
     <LinearLayout
