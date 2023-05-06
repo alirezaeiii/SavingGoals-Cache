@@ -1,8 +1,5 @@
 package com.sample.android.goals.data.source.local
 
-import com.sample.android.goals.data.asDomainModel
-import com.sample.android.goals.network.SavingsGoalWrapper
-import com.sample.android.goals.network.asDatabaseModel
 import com.sample.android.goals.util.NoDataException
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -17,9 +14,9 @@ class LocalDataSourceImpl @Inject constructor(
     private val goalsDao: GoalsDao
 ) : LocalDataSource {
 
-    override fun getSavingsGoals(): Observable<SavingsGoalWrapper> =
+    override fun getSavingsGoals(): Observable<SavingsGoalWrapperEntity> =
         Observable.create { subscriber ->
-            val goals = goalsDao.getGoals()?.asDomainModel()
+            val goals = goalsDao.getGoals()
             if (goals == null) {
                 subscriber.onError(NoDataException())
             } else {
@@ -27,6 +24,6 @@ class LocalDataSourceImpl @Inject constructor(
             }
         }
 
-    override fun insert(savingsGoals: SavingsGoalWrapper): Completable =
-        goalsDao.insert(savingsGoals.asDatabaseModel())
+    override fun insert(savingsGoals: SavingsGoalWrapperEntity): Completable =
+        goalsDao.insert(savingsGoals)
 }

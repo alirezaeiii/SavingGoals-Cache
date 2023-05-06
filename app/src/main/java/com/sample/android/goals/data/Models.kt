@@ -1,25 +1,17 @@
 package com.sample.android.goals.data
 
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import com.sample.android.goals.network.SavingsGoalWrapper
 import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.ChronoUnit
 
-@Entity(tableName = "goals")
-class DbSavingsGoalWrapper(
-    @PrimaryKey val primaryKey: String = "primaryKey",
-    @SerializedName("savingsGoals")
+class SavingsGoalWrapper(
     val wrapper: List<SavingsGoal>
 )
 
 @Parcelize
 data class SavingsGoal(
-    @SerializedName("goalImageURL")
     val imageUrl: String,
     val targetAmount: Float?,
     val currentBalance: Float,
@@ -39,20 +31,6 @@ class SavingsRule(
     val id: Int,
     val type: String
 )
-
-fun DbSavingsGoalWrapper.asDomainModel(): SavingsGoalWrapper {
-    return SavingsGoalWrapper(
-        wrapper = this.wrapper.map {
-            SavingsGoal(
-                imageUrl = it.imageUrl,
-                targetAmount = it.targetAmount,
-                currentBalance = it.currentBalance,
-                name = it.name,
-                id = it.id
-            )
-        }
-    )
-}
 
 fun List<Feed>.asWeekSumText(currencyFormatter: DefaultCurrencyFormatter): String {
     var weekSum = 0f

@@ -18,13 +18,13 @@ import javax.inject.Singleton
 interface ApiService {
 
     @GET("/savingsgoals")
-    fun requestSavingGoals(): Observable<SavingsGoalWrapper>
+    fun requestSavingGoals(): Observable<SavingsGoalWrapperResponse>
 
     @GET("/savingsgoals/{id}/feed")
-    fun requestFeeds(@Path("id") id: Int): Observable<FeedWrapper>
+    fun requestFeeds(@Path("id") id: Int): Observable<FeedWrapperResponse>
 
     @GET("/savingsrules")
-    fun requestSavingRules(): Observable<SavingsRuleWrapper>
+    fun requestSavingRules(): Observable<SavingsRuleWrapperResponse>
 }
 
 private fun getLoggerInterceptor(): Interceptor {

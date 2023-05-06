@@ -6,6 +6,8 @@ import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.asWeekSumText
 import com.sample.android.goals.network.ApiService
+import com.sample.android.goals.network.asFeedDomainModel
+import com.sample.android.goals.network.asSavingsRuleDomainModel
 import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import com.sample.android.goals.viewmodels.DetailViewModel.DetailWrapper
@@ -15,12 +17,15 @@ import javax.inject.Inject
 class DetailViewModel(api: ApiService, schedulerProvider: BaseSchedulerProvider,
                       currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
-    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper },
-    api.requestSavingRules().map { it.wrapper },
-    { feeds, savingRules -> DetailWrapper(feeds,
-        savingRules.joinToString { it.type },
-        feeds.asWeekSumText(currencyFormatter)
-    ) })) {
+    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper }.map { it.asFeedDomainModel() },
+    api.requestSavingRules().map { it.wrapper }.map { it.asSavingsRuleDomainModel() }
+    ) { feeds, savingRules ->
+        DetailWrapper(
+            feeds,
+            savingRules.joinToString { it.type },
+            feeds.asWeekSumText(currencyFormatter)
+        )
+    }) {
 
     init {
         sendRequest()
@@ -38,7 +43,7 @@ class DetailViewModel(api: ApiService, schedulerProvider: BaseSchedulerProvider,
         private val currencyFormatter: DefaultCurrencyFormatter,
         private val goal: SavingsGoal
     ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return DetailViewModel(api, schedulerProvider, currencyFormatter, goal) as T

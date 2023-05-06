@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sample.android.goals.data.DbSavingsGoalWrapper
 import io.reactivex.Completable
 
 /**
@@ -18,12 +17,12 @@ interface GoalsDao {
      *
      * @return all goals.
      */
-    @Query("SELECT * FROM Goals") fun getGoals(): DbSavingsGoalWrapper?
+    @Query("SELECT * FROM Goals") fun getGoals(): SavingsGoalWrapperEntity?
 
     /**
      * Insert a goal in the database. If the goal already exists, replace it.
      *
      * @param goals the goals to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insert(goals: DbSavingsGoalWrapper) : Completable
+    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insert(goals: SavingsGoalWrapperEntity) : Completable
 }

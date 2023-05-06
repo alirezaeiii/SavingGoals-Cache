@@ -2,10 +2,10 @@ package com.sample.android.goals.data.source
 
 import android.app.Application
 import androidx.room.Room
-import com.sample.android.goals.data.source.local.LocalDataSource
+import com.sample.android.goals.data.SavingsGoalWrapper
 import com.sample.android.goals.data.source.local.GoalsDatabase
+import com.sample.android.goals.data.source.local.LocalDataSource
 import com.sample.android.goals.data.source.local.LocalDataSourceImpl
-import com.sample.android.goals.network.SavingsGoalWrapper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

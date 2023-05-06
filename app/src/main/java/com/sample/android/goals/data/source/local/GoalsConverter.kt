@@ -8,10 +8,10 @@ object GoalsConverter {
 
     @TypeConverter
     @JvmStatic
-    fun jsonToList(value: String): List<SavingsGoal> =
-        Gson().fromJson(value, Array<SavingsGoal>::class.java).toList()
+    fun jsonToList(value: String): List<SavingsGoalEntity> =
+        Gson().fromJson(value, Array<SavingsGoalEntity>::class.java).toList()
 
     @TypeConverter
     @JvmStatic
-    fun listToJson(list: List<SavingsGoal>): String = Gson().toJson(list)
+    fun listToJson(list: List<SavingsGoalEntity>): String = Gson().toJson(list)
 }
