@@ -1,4 +1,4 @@
-package com.sample.android.goals.data.source
+package com.sample.android.goals.data
 
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsRule

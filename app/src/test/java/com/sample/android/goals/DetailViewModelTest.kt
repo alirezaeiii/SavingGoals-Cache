@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.SavingsRule
-import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.data.DetailsRepository
 import com.sample.android.goals.network.*
 import com.sample.android.goals.util.Resource
 import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter

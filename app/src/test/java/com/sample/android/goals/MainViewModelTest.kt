@@ -2,8 +2,8 @@ package com.sample.android.goals
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.goals.repository.GoalsRepository
-import com.sample.android.goals.data.source.local.GoalsDao
-import com.sample.android.goals.data.source.local.LocalDataSourceImpl
+import com.sample.android.goals.data.local.GoalsDao
+import com.sample.android.goals.data.local.LocalDataSourceImpl
 import com.sample.android.goals.network.ApiService
 import com.sample.android.goals.network.SavingsGoalResponse
 import com.sample.android.goals.network.SavingsGoalWrapperResponse

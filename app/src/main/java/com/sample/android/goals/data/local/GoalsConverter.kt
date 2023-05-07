@@ -1,4 +1,4 @@
-package com.sample.android.goals.data.source.local
+package com.sample.android.goals.data.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

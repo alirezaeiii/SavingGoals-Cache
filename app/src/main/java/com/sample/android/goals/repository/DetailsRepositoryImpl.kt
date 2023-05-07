@@ -2,7 +2,7 @@ package com.sample.android.goals.repository
 
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsRule
-import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.data.DetailsRepository
 import com.sample.android.goals.network.ApiService
 import com.sample.android.goals.network.asFeedDomainModel
 import com.sample.android.goals.network.asSavingsRuleDomainModel

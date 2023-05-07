@@ -1,12 +1,12 @@
 package com.sample.android.goals.di
 
 import com.sample.android.goals.data.SavingsGoalWrapper
-import com.sample.android.goals.data.source.BaseRepository
-import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.data.BaseRepository
+import com.sample.android.goals.data.DetailsRepository
 import com.sample.android.goals.repository.DetailsRepositoryImpl
 import com.sample.android.goals.repository.GoalsRepository
-import com.sample.android.goals.data.source.local.LocalDataSource
-import com.sample.android.goals.data.source.local.LocalDataSourceImpl
+import com.sample.android.goals.data.local.LocalDataSource
+import com.sample.android.goals.data.local.LocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

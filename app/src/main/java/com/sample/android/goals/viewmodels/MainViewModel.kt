@@ -3,7 +3,7 @@ package com.sample.android.goals.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sample.android.goals.data.SavingsGoalWrapper
-import com.sample.android.goals.data.source.BaseRepository
+import com.sample.android.goals.data.BaseRepository
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 

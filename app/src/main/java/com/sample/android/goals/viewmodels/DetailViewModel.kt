@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.asWeekSumText
-import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.data.DetailsRepository
 import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import com.sample.android.goals.viewmodels.DetailViewModel.DetailWrapper

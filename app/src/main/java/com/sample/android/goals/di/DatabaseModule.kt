@@ -2,7 +2,7 @@ package com.sample.android.goals.di
 
 import android.app.Application
 import androidx.room.Room
-import com.sample.android.goals.data.source.local.GoalsDatabase
+import com.sample.android.goals.data.local.GoalsDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

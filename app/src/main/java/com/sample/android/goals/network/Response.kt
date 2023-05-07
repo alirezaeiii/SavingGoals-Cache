@@ -5,8 +5,8 @@ import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.SavingsGoalWrapper
 import com.sample.android.goals.data.SavingsRule
-import com.sample.android.goals.data.source.local.SavingsGoalEntity
-import com.sample.android.goals.data.source.local.SavingsGoalWrapperEntity
+import com.sample.android.goals.data.local.SavingsGoalEntity
+import com.sample.android.goals.data.local.SavingsGoalWrapperEntity
 
 class SavingsGoalWrapperResponse(
     @SerializedName("savingsGoals")

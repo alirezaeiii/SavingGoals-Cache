@@ -1,4 +1,4 @@
-package com.sample.android.goals.data.source
+package com.sample.android.goals.data
 
 import io.reactivex.Observable
 

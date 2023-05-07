@@ -1,4 +1,4 @@
-package com.sample.android.goals.data.source.local
+package com.sample.android.goals.data.local
 
 import com.sample.android.goals.util.NoDataException
 import io.reactivex.Completable

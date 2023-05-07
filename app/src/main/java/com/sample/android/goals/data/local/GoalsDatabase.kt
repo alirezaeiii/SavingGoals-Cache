@@ -1,4 +1,4 @@
-package com.sample.android.goals.data.source.local
+package com.sample.android.goals.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
