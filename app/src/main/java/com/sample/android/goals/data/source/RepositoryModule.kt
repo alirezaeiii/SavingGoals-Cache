@@ -12,7 +12,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-abstract class GoalsRepositoryModule {
+abstract class RepositoryModule {
 
     @Singleton
     @Binds
@@ -22,6 +22,10 @@ abstract class GoalsRepositoryModule {
     @Binds
     internal abstract fun bindGoalsRepository(repository: GoalsRepository): BaseRepository<SavingsGoalWrapper>
 
+    @Singleton
+    @Binds
+    internal abstract fun bindDetailsRepository(repository: DetailsRepositoryImpl): DetailsRepository
+
     @Module
     companion object {
 
@@ -29,9 +33,11 @@ abstract class GoalsRepositoryModule {
         @Provides
         @JvmStatic
         internal fun provideDb(context: Application) =
-            Room.databaseBuilder(context.applicationContext,
+            Room.databaseBuilder(
+                context.applicationContext,
                 GoalsDatabase::class.java,
-                "Goals.db").build()
+                "Goals.db"
+            ).build()
 
         @Singleton
         @Provides

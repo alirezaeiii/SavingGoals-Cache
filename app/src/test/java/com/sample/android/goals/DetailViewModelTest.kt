@@ -4,11 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.SavingsRule
-import com.sample.android.goals.network.FeedWrapper
-import com.sample.android.goals.network.ApiService
-import com.sample.android.goals.network.SavingsRuleWrapper
-import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
+import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.network.*
 import com.sample.android.goals.util.Resource
+import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import com.sample.android.goals.util.schedulers.ImmediateSchedulerProvider
 import com.sample.android.goals.viewmodels.DetailViewModel
@@ -21,8 +20,8 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyInt
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
@@ -34,7 +33,7 @@ class DetailViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var api: ApiService
+    private lateinit var repository: DetailsRepository
     private lateinit var schedulerProvider: BaseSchedulerProvider
 
     private lateinit var savingsGoal: SavingsGoal
@@ -55,14 +54,14 @@ class DetailViewModelTest {
 
     @Test
     fun loadFeeds() {
-        val observableResponse1 = Observable.just(FeedWrapper(listOf(feed)))
-        `when`(api.requestFeeds(anyInt())).thenReturn(observableResponse1)
+        val observableResponse1 = Observable.just((listOf(feed)))
+        `when`(repository.getFeeds(anyInt())).thenReturn(observableResponse1)
 
-        val observableResponse2 = Observable.just(SavingsRuleWrapper(listOf(savingsRule)))
-        `when`(api.requestSavingRules()).thenReturn(observableResponse2)
+        val observableResponse2 = Observable.just(listOf(savingsRule))
+        `when`(repository.getSavingRules()).thenReturn(observableResponse2)
 
         val viewModel = DetailViewModel(
-            api,
+            repository,
             schedulerProvider,
             DefaultCurrencyFormatter(Locale.getDefault()),
             savingsGoal

@@ -1,12 +1,12 @@
 package com.sample.android.goals
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.source.GoalsRepository
 import com.sample.android.goals.data.source.local.GoalsDao
 import com.sample.android.goals.data.source.local.LocalDataSourceImpl
 import com.sample.android.goals.network.ApiService
-import com.sample.android.goals.network.SavingsGoalWrapper
+import com.sample.android.goals.network.SavingsGoalResponse
+import com.sample.android.goals.network.SavingsGoalWrapperResponse
 import com.sample.android.goals.util.Resource
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import com.sample.android.goals.util.schedulers.ImmediateSchedulerProvider
@@ -55,9 +55,9 @@ class MainViewModelTest {
     fun loadSavingsGoal() {
         val repository = GoalsRepository(remoteDataSource, localDataSourceImpl)
 
-        val savingsGoal = SavingsGoal("", .0f, 12f, "name", 1)
+        val savingsGoal = SavingsGoalResponse("", .0f, 12f, "name", 1)
         val observableResponse =
-            Observable.just(SavingsGoalWrapper(listOf(savingsGoal)))
+            Observable.just(SavingsGoalWrapperResponse(listOf(savingsGoal)))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = MainViewModel(repository, schedulerProvider)
@@ -74,7 +74,7 @@ class MainViewModelTest {
     fun errorLoadingSavingsGoal() {
         val repository = GoalsRepository(remoteDataSource, localDataSourceImpl)
 
-        val observableResponse = Observable.error<SavingsGoalWrapper>(Exception("error"))
+        val observableResponse = Observable.error<SavingsGoalWrapperResponse>(Exception("error"))
         `when`(remoteDataSource.requestSavingGoals()).thenReturn(observableResponse)
 
         val viewModel = MainViewModel(repository, schedulerProvider)

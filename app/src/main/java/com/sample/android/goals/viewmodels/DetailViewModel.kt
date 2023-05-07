@@ -5,20 +5,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.sample.android.goals.data.Feed
 import com.sample.android.goals.data.SavingsGoal
 import com.sample.android.goals.data.asWeekSumText
-import com.sample.android.goals.network.ApiService
-import com.sample.android.goals.network.asFeedDomainModel
-import com.sample.android.goals.network.asSavingsRuleDomainModel
+import com.sample.android.goals.data.source.DetailsRepository
 import com.sample.android.goals.util.formatter.DefaultCurrencyFormatter
 import com.sample.android.goals.util.schedulers.BaseSchedulerProvider
 import com.sample.android.goals.viewmodels.DetailViewModel.DetailWrapper
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class DetailViewModel(api: ApiService, schedulerProvider: BaseSchedulerProvider,
-                      currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
+class DetailViewModel(
+    repository: DetailsRepository, schedulerProvider: BaseSchedulerProvider,
+    currencyFormatter: DefaultCurrencyFormatter, goal: SavingsGoal
 ) : BaseViewModel<DetailWrapper>(schedulerProvider,
-    Observable.zip(api.requestFeeds(goal.id).map { it.wrapper }.map { it.asFeedDomainModel() },
-    api.requestSavingRules().map { it.wrapper }.map { it.asSavingsRuleDomainModel() }
+    Observable.zip(
+        repository.getFeeds(goal.id), repository.getSavingRules()
     ) { feeds, savingRules ->
         DetailWrapper(
             feeds,
@@ -38,7 +37,7 @@ class DetailViewModel(api: ApiService, schedulerProvider: BaseSchedulerProvider,
     )
 
     class Factory @Inject constructor(
-        private val api: ApiService,
+        private val repository: DetailsRepository,
         private val schedulerProvider: BaseSchedulerProvider,
         private val currencyFormatter: DefaultCurrencyFormatter,
         private val goal: SavingsGoal
@@ -46,7 +45,7 @@ class DetailViewModel(api: ApiService, schedulerProvider: BaseSchedulerProvider,
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return DetailViewModel(api, schedulerProvider, currencyFormatter, goal) as T
+                return DetailViewModel(repository, schedulerProvider, currencyFormatter, goal) as T
             }
             throw IllegalArgumentException("Unable to construct ViewModel")
         }
