@@ -2,7 +2,6 @@ package com.sample.android.goals.di
 
 import android.app.Application
 import com.sample.android.goals.SampleApp
-import com.sample.android.goals.data.source.RepositoryModule
 import com.sample.android.goals.network.Network
 
 import javax.inject.Singleton
@@ -15,6 +14,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Singleton
 @Component(
     modules = [RepositoryModule::class,
+        DatabaseModule::class,
         ApplicationModule::class,
         ActivityBindingModule::class,
         AndroidSupportInjectionModule::class,

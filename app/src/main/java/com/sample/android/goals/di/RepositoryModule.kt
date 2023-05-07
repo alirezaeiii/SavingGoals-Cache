@@ -1,14 +1,14 @@
-package com.sample.android.goals.data.source
+package com.sample.android.goals.di
 
-import android.app.Application
-import androidx.room.Room
 import com.sample.android.goals.data.SavingsGoalWrapper
-import com.sample.android.goals.data.source.local.GoalsDatabase
+import com.sample.android.goals.data.source.BaseRepository
+import com.sample.android.goals.data.source.DetailsRepository
+import com.sample.android.goals.repository.DetailsRepositoryImpl
+import com.sample.android.goals.repository.GoalsRepository
 import com.sample.android.goals.data.source.local.LocalDataSource
 import com.sample.android.goals.data.source.local.LocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
@@ -25,23 +25,4 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     internal abstract fun bindDetailsRepository(repository: DetailsRepositoryImpl): DetailsRepository
-
-    @Module
-    companion object {
-
-        @Singleton
-        @Provides
-        @JvmStatic
-        internal fun provideDb(context: Application) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                GoalsDatabase::class.java,
-                "Goals.db"
-            ).build()
-
-        @Singleton
-        @Provides
-        @JvmStatic
-        internal fun provideGoalsDao(db: GoalsDatabase) = db.goalDao()
-    }
 }

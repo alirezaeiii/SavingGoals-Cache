@@ -1,6 +1,7 @@
-package com.sample.android.goals.data.source
+package com.sample.android.goals.repository
 
 import com.sample.android.goals.data.SavingsGoalWrapper
+import com.sample.android.goals.data.source.BaseRepository
 import com.sample.android.goals.data.source.local.LocalDataSource
 import com.sample.android.goals.data.source.local.asDomainModel
 import com.sample.android.goals.network.ApiService
